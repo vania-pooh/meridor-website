@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory
 import java.util.Properties
 
 import com.jolbox.bonecp.BoneCPDataSource
-import scala.slick.driver.MySQLDriver.simple._
+import scala.slick.driver.PostgresDriver.simple._
 import Database.threadLocalSession
 
 /**
