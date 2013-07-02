@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<site xmlns="http://interactive-answers.webmaster.yandex.ru/schemas/site/0.0.1"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://interactive-answers.webmaster.yandex.ru/schemas/site/0.0.1 http://interactive-answers.webmaster.yandex.ru/schemas/site-0.0.1.xsd">
+
+    <title>Kомпания &quot;Меридор&quot;</title>
+    <description>Вызов электрика. Электромонтажные работы. Светодизайн.</description>
+    <rootUrl>http://meridor.ru/</rootUrl>
+    <protocol>HTTP</protocol>
+    <resource>
+        <fixed name="meridor.ru" terminal="false">
+            <fixed name="order"/>
+        </fixed>
+    </resource>
+    <filters>
+        <textBox type="NoFilling">
+            <description caption="Для вызова электрика введите ФИО...">
+                <setParameter name="name" />
+            </description>
+        </textBox>
+        <textBox type="NoFilling">
+            <description caption="...телефон в формате +79211234567">
+                <setParameter name="phone"/>
+            </description>
+        </textBox>
+    </filters>
+</site>
