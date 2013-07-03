@@ -123,6 +123,7 @@
             return 'mr_price_' + table.attr('id');
         };
 
+        //Adding event handlers and loading cells data
         tables.each(function(){
             var currentTable = $(this);
             $('tr.price', currentTable).each(function(){
@@ -160,6 +161,11 @@
                 saveTableStateToStorage(currentTable);
             });
 
+            $('caption', currentTable).click(function(){
+                $('thead, tbody, tfoot', currentTable).fadeToggle(500);
+            });
+
+            //Loading cells data
             loadTableStateFromStorage(currentTable);
         });
 
