@@ -1,8 +1,9 @@
 /**
  * Contains a script for price calculator
  * Prices table is marked with "prices" class. Every price row of the table (tr) is marked with "price" class.
- * A cell with price total is marked with "total" class. A cell with sum of total prices of all tables is marked with "totalPrice" id.
- * The following classes are used in the table to mark individual cells:
+ * A cell with price total is marked with "total" class. A cell with sum of total prices of all tables is marked
+ * with "totalPrice" id. The following classes are used in the table to mark individual cells:
+ *  id - price numeric ID
  *  title - price title
  *  uom - price unit of measure like meters, hours, etc.
  *  unit_price - price value for 1 uom
@@ -12,6 +13,115 @@
 (function($){
     $.fn.createCalculator = function(){
         var tables = this;
+
+        //Updating row value cell
+        var updateRowValue = function(quantityField, row){
+            var quantityFieldVal = quantityField.val();
+            var quantity = isPositiveNumber(quantityFieldVal) ? quantityFieldVal : 0;
+            if (!quantityFieldVal){
+                quantityField.val(0);
+            }
+            var unitPriceCell = $('td.unit_price', row);
+            var unitPrice = (!!unitPriceCell.html()) ? unitPriceCell.html() : 0;
+            var valueCell = $('td.value', row);
+            valueCell.html(parseFloat(unitPrice * quantity));
+        };
+
+        //Whether this value is a positive integer
+        var isPositiveNumber = function(value){
+            return (!!value && (value > 0));
+        };
+
+        //Updates total price of a single table
+        var updateTableTotal = function(table){
+            var perTableTotalPrice = 0;
+            $('td.value', table).each(function(){
+                perTableTotalPrice += parseFloat($(this).html());
+            });
+            var tableTotalPriceCell = $('td.total', table);
+            tableTotalPriceCell.html(perTableTotalPrice);
+        };
+
+        //Updates sum of total prices at the bottom of the table
+        var updateGlobalTotal = function(){
+            var totalPriceCell = $('td#totalPrice');
+            if (totalPriceCell.length > 0){
+                var globalTotalPrice = 0;
+                $('table.prices td.total').each(function(){
+                    globalTotalPrice += parseFloat($(this).html());
+                });
+                totalPriceCell.html(globalTotalPrice);
+            }
+        };
+
+        //Saves table state to available persistent storage.
+        //We're storing (priceId; quantity) pairs list for each table.
+        var saveTableStateToStorage = function(table){
+            if (!!$.getStorage()){
+                var tableState = {};
+                $('tr.price', table).each(function(){
+                    var priceRow = $(this);
+                    var priceCell = $('span.id', priceRow);
+                    var quantityField = $('input.quantity', priceRow);
+                    if (
+                        (priceCell.length == 1)
+                        && (quantityField.length == 1)
+                    ){
+                        var priceId = priceCell.html();
+                        var quantityFieldVal = quantityField.val();
+                        if (
+                            isPositiveNumber(priceId)
+                            && isPositiveNumber(quantityFieldVal)
+                        ){
+                            tableState[priceId] = quantityFieldVal;
+                        }
+                    }
+                });
+
+                $.getStorage().setItem(
+                    getStorageKey(table),
+                    JSON.stringify(tableState)
+                );
+            }
+        };
+
+        //Loads table state from available persistent storage
+        var loadTableStateFromStorage = function(table){
+            if (!!$.getStorage()){
+                var tableState = JSON.parse(
+                    $.getStorage().getItem(
+                        getStorageKey(table)
+                    )
+                );
+                if (!!tableState){
+                    $('tr.price', table).each(function(){
+                        var priceRow = $(this);
+                        var priceCell = $('span.id', priceRow);
+                        var quantityField = $('input.quantity', priceRow);
+                        if (
+                            (priceCell.length == 1)
+                            && (quantityField.length == 1)
+                        ){
+                            var priceId = priceCell.html();
+                            if (isPositiveNumber(priceId)){
+                                var quantityFromStorage = tableState[priceId];
+                                if (isPositiveNumber(quantityFromStorage)){
+                                    quantityField.val(quantityFromStorage);
+                                    updateRowValue(quantityField, priceRow);
+                                }
+                            }
+                        }
+                    });
+                    updateTableTotal(table);
+                    updateGlobalTotal();
+                }
+            }
+        };
+
+        //Returns a key to be used for accessing storage property for this table
+        var getStorageKey = function(table){
+            return 'mr_price_' + table.attr('id');
+        };
 
         tables.each(function(){
             var currentTable = $(this);
@@ -23,6 +133,7 @@
                     updateRowValue($(this), priceRow);
                     updateTableTotal(currentTable);
                     updateGlobalTotal();
+                    saveTableStateToStorage(currentTable);
                 });
 
                 //Input field focus handler
@@ -36,6 +147,7 @@
                     $('td.value', priceRow).html(0);
                     updateTableTotal(currentTable);
                     updateGlobalTotal();
+                    saveTableStateToStorage(currentTable);
                 });
             });
 
@@ -45,45 +157,15 @@
                 $('td.value', currentTable).html(0);
                 updateTableTotal(currentTable);
                 updateGlobalTotal();
+                saveTableStateToStorage(currentTable);
             });
+
+            loadTableStateFromStorage(currentTable);
         });
+
         return this;
     };
 
-    //Updating row value cell
-    var updateRowValue = function(quantityField, row){
-        var quantityFieldVal = quantityField.val();
-        var quantity = (!!quantityFieldVal && (quantityFieldVal > 0)) ? quantityFieldVal : 0;
-        if (!quantityFieldVal){
-            quantityField.val(0);
-        }
-        var unitPriceCell = $('td.unit_price', row);
-        var unitPrice = (!!unitPriceCell.html()) ? unitPriceCell.html() : 0;
-        var valueCell = $('td.value', row);
-        valueCell.html(parseFloat(unitPrice * quantity));
-    };
-
-    //Updates total price of a single table
-    var updateTableTotal = function(table){
-        var perTableTotalPrice = 0;
-        $('td.value', table).each(function(){
-            perTableTotalPrice += parseFloat($(this).html());
-        });
-        var tableTotalPriceCell = $('td.total', table);
-        tableTotalPriceCell.html(perTableTotalPrice);
-    };
-
-    //Updates sum of total prices at the bottom of the table
-    var updateGlobalTotal = function(){
-        var totalPriceCell = $('td#totalPrice');
-        if (totalPriceCell.length > 0){
-            var globalTotalPrice = 0;
-            $('table.prices td.total').each(function(){
-                globalTotalPrice += parseFloat($(this).html());
-            });
-            totalPriceCell.html(globalTotalPrice);
-        }
-    };
 })(jQuery);
 
 //Creating calculator for all existing price tables on the page
