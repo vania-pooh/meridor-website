@@ -4,13 +4,20 @@ import org.scalatra._
 import scalate.ScalateSupport
 import org.slf4j.LoggerFactory
 import ru.meridor.website.db.SlickSupport
+import org.fusesource.scalate.scaml.ScamlOptions
 
 class WebsiteServlet extends WebsiteStack with SlickSupport {
+
+  /**
+   * HTML minification settings
+   */
+  ScamlOptions.indent = ""
+  ScamlOptions.nl = ""
 
   private val logger = LoggerFactory.getLogger(this.getClass)
   
   logger.info("Starting application...")
-  
+
   /**
    * Initializing routes...
    */
@@ -18,11 +25,9 @@ class WebsiteServlet extends WebsiteStack with SlickSupport {
   for (staticRoute <- Array(
     //Core routes
     ("/" -> "/index"),
-    ("/services" -> "/services"),
     ("/bundles" -> "/bundles"),
     ("/prices" -> "/prices"),
     ("/contact" -> "/contact"),
-    ("/articles" -> "/articles"),
 
     //Services routes
     ("/services/electrical-works" -> "/services/electrical_works"),
@@ -30,7 +35,6 @@ class WebsiteServlet extends WebsiteStack with SlickSupport {
     ("/services/technical-maintenance" -> "/services/technical_maintenance"),
     ("/services/lighting" -> "/services/lighting"),
     ("/services/electrical-appliances" -> "/services/electrical_appliances"),
-    ("/services/building-equipment" -> "/services/building_equipment"),
     ("/services/telecommunication-technologies" -> "/services/telecommunication_technologies"),
     ("/services/it" -> "/services/it"),
 

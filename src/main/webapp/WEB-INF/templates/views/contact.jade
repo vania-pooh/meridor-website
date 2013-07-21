@@ -1,4 +1,92 @@
-- attributes("title") = "Contact page title"
-- attributes("headline") = "Contact page header"
+- import ru.meridor.website.ui.PageCategory._
+- attributes("title") = "Вызов электрика, контакты и реквизиты"
+- attributes("pageCategory") = Contact
 
-p= "Contact page"
+.jumbotron
+    .container
+        ul.breadcrumbs.contacty
+            li.active
+                a(href='/contact') Контакты
+            li
+                a(href='/') Главная
+        form.form-order.form-inline
+            label(for='phone')
+                | Чтобы заказать услуги, введите номер телефона:
+            input.span2{:name => 'phone', :id => 'phone', :type => 'text', :placeholder => '+79051234567'}
+            label(for='client_name')
+                | Как вас зовут:
+            input.input-large.input-fo-name{:name => 'client_name', :id => 'client_name', :type => 'text', :placeholder => 'Иван Иванов'}
+            button.button(type='submit')
+                | Заказать
+                i.icon-share-alt
+.container
+    .case.text-center
+        .row-fluid
+            .span6
+                h2 Контактная информация
+                .muted_bg
+                    p
+                        strong Время работы:
+                    p
+                        | Пн-Пт 10:00 - 20:00
+                        br
+                        | Сб 10:00 - 18:00
+                        br
+                        | Вс 10:00 - 16:00
+                        br
+                    br
+                    p
+                        strong Телефон:
+                    p(style='font-size: 24px; font-family: Calibri, Arial; font-style: italic;')
+                        | (812) 123 45 67
+                        br
+                    br
+                    p
+                        strong Email:
+                    p
+                        a(href='mailto:info@meridor.ru') info@meridor.ru
+                        br
+                br
+                h2 Следуй за нами
+                ul.socials
+                    li.soc_vk
+                        a(href='http://vk.com/meridor')
+                    li.soc_tw
+                        a(href='http://twitter.com/iMeridor')
+                    li.soc_ln
+                        a(href='#')
+                    li.soc_picasa
+                        a(href='#')
+                br
+            .span6.my-bordered
+                h2 Реквизиты организации
+                .muted_bg
+                    p
+                        strong ООО "Меридор"
+                        br
+                        | ИНН: 7812345678
+                        br
+                        | КПП: 7801001
+                        br
+                        | БИК: 1234567789
+                        br
+                    p
+                        strong Адрес:
+                        br
+                        | 195067, Россия, Санкт-Петербург
+                        br
+                        | ул. Бестужевская, д. 75, лит. А, пом. 13Н
+                        br
+                -# h3 Мы на карте:
+                -# img.bordered(src='photos/map.png', alt='map')
+                -# br
+                br
+                p.text-justify
+                    | Для многих жителей России в последние годы слово “электрик” ассоциируется с неприятным человеком из ЖЭКа, который приходит только в случае крайней необходимости. Компания “Меридор” была создана, чтобы доказать, что ваш опыт может быть совершенно другим. Наши специалисты имеют более чем двадцатилетний опыт решения электротехнических проблем различной сложности. Многие мастера не один год проработали в государственных предприятиях городского электрического транспорта.
+                p.text-justify
+                    | Воспользоваться нашими услугами очень просто, ведь существует множество способов вызвать электрика на дом. Вы можете отправить заявку прямо с этой страницы, введя свое имя и контактный телефон! Также для вызова электрика или решения срочных вопросов напишите нам сообщение на сайте&nbsp;
+                    a(href='http://vk.com/meridor') Вконтакте
+                    | &nbsp; или в&nbsp;
+                    a(href='http://twitter.com/iMeridor') Твиттере
+                    |. Наконец, просто позвоните нам по контактному телефону.
+                br

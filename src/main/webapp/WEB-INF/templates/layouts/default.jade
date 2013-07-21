@@ -1,12 +1,112 @@
+- import org.joda.time.DateTime
+- import ru.meridor.website.ui.PageCategory
+- import ru.meridor.website.ui.PageCategory._
+
 -@ val title: String
--@ val headline: String = title
+-@ val pageCategory: PageCategory = Home
+-@ val pageTitleCategory: String = PageCategory.getPageTitleCategory(pageCategory)
 -@ val body: String
 
 !!! 5
-html
-  head
-    title= title
-  body
-    #content
-      h1= headline
-      != body
+html(lang='en')
+    head
+        -# Meta-tags
+        meta(charset='utf-8')
+        meta{:name => 'viewport', :content => 'width=device-width initial-scale=1.0'}
+        meta{:name => 'description', :content => ''}
+        meta{:name => 'author', :content => ''}
+        title= "Компания \"Меридор\" | " + {if (pageTitleCategory.length() > 0) pageTitleCategory + " | " else "" } + title
+
+        -# Stylesheets
+        link{:href => '/css/bootstrap.min.css', :rel => 'stylesheet'}
+        link{:href => '/css/bootstrap-responsive.min.css', :rel => 'stylesheet'}
+        link{:href => '/css/style.css', :rel => 'stylesheet'}
+
+        -# HTML5 shim, for IE6-8 support of HTML5 elements
+        /[if lt IE 9]
+            script(src='http://html5shiv.googlecode.com/svn/trunk/html5.js')
+
+        -# Favicon
+        link{:rel => 'apple-touch-icon-precomposed', :sizes => '144x144', :href => 'ico/apple-touch-icon-144-precomposed.png'}
+        link{:rel => 'apple-touch-icon-precomposed', :sizes => '114x114', :href => 'ico/apple-touch-icon-114-precomposed.png'}
+        link{:rel => 'apple-touch-icon-precomposed', :sizes => '72x72', :href => 'ico/apple-touch-icon-72-precomposed.png'}
+        link{:rel => 'apple-touch-icon-precomposed', :href => 'ico/apple-touch-icon-57-precomposed.png'}
+        link{:rel => 'shortcut icon', :href => 'ico/favicon.ico'}
+    body
+        -# Site header and navigation menu
+        .masthead
+            .container
+                .row-fluid
+                    .span3
+                        a.logo(href='/')
+                    .span6
+                        ul.nav.nav-pills.main-nav
+                            li{:class => {if (pageCategory.equals(Home)) "active" else ""}}
+                                a(href='/') Главная
+                            li{:class => {if (pageCategory.equals(Services)) "deeper active" else "deeper"}}
+                                a(href='javascript:void(0)') Услуги
+                                ul
+                                    li
+                                        a(href='/services/electrical-works') Электромонтажные работы
+                                    li
+                                        a(href='/services/husband-for-an-hour') Муж на час
+                                    li
+                                        a(href='/services/technical-maintenance') Техническое обслуживание
+                                    li
+                                        a(href='/services/lighting') Освещение и светодизайн
+                                    li
+                                        a(href='/services/electrical-appliances') Электроприборы
+                                    li
+                                        a(href='/services/telecommunication-technologies') Телекоммуникации
+                            li{:class => {if (pageCategory.equals(Bundles)) "active" else ""}}
+                                a(href='/bundles') Пакеты услуг
+                            li{:class => {if (pageCategory.equals(Prices)) "active" else ""}}
+                                a(href='/prices') Цены
+                            li{:class => {if (pageCategory.equals(Contact)) "active" else ""}}
+                                a(href='/contact') Контакты
+                            li{:class => {if (pageCategory.equals(Articles)) "deeper active" else "deeper"}}
+                                a(href='javascript:void(0)') Прочти
+                                ul
+                                    li
+                                        a(href='/articles/electrical-tools') Инструмент электрика
+                    .span3
+                        .tell.pull-right
+                            span (812) 123 45 67
+
+        != body
+
+        -# Site footer
+        .footer
+            .container
+                a.logo.pull-left(href='/')
+                .pull-right.faddress
+                    address
+                        | ©
+                        = String.valueOf(new DateTime().getYear())
+                        | &nbsp;
+                        a(href='/') ООО "Меридор"
+                        br
+                        | 195067, Россия, Санкт-Петербург
+                        br
+                        | ул. Бестужевская, д. 75, лит. А
+                        br
+                        | (812) 123 45 67
+                        br
+                        a(href='mailto:info@meridor.ru') info@meridor.ru
+                        br
+                        | Дизайн и верстка -&nbsp;
+                        a(href='http://an-kor.net') an-kor.net
+                ul.nav
+                    li.active
+                        a(href='/') Главная
+                    li
+                        a(href='/bundles') Пакеты услуг
+                    li
+                        a(href='/prices') Цены
+                    li
+                        a(href='/contact') Контакты
+
+        -# Javascript files
+        script(src='/js/jquery-1.9.1.min.js')
+        script(src='/js/bootstrap.min.js')
+        script(src='/js/script.js')
