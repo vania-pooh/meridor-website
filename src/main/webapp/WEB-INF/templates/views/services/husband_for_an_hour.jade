@@ -1,4 +1,51 @@
-- attributes("title") = "Husband for an hour page title"
-- attributes("headline") = "Husband for an hour page header"
-
-p= "Husband for an hour page"
+- import ru.meridor.website.ui.PageCategory._
+- import ru.meridor.diana.db.entities.{Service, ServiceGroup}
+- attributes("title") = "Муж на час"
+- attributes("pageCategory") = Services
+-@ val servicesMap: Map[ServiceGroup, List[Service]]
+.jumbotron
+    .container
+        ul.breadcrumbs.breadcrumbs_ico
+            li.active
+                h1
+                    a Муж на час
+            li
+                a(href='/') Главная
+        h1.lead Хотите проводить больше времени с близкими? Закажите услугу “муж на час” и решите все проблемы, отнимающие у вас свободное время!
+.container
+    ul#myTab.nav.nav-tabs
+        li.active.ico-nav-tab1
+            a(href='#tab1') Стоимость
+        li.ico-nav-tab2
+            a(href='#tab2') Зачем мне это
+        li.ico-nav-tab3
+            a(href='#tab3') Как заказать
+    .tab-content.mytab-tab-content
+        #tab1.tab-pane.active
+            - render("../pieces/pricesTable.jade", Map("servicesMap" -> servicesMap))
+            - render("../pieces/orderForm.jade", Map("phoneTitle" -> "Чтобы вызвать мужа на час, введите номер телефона:", "additionalData" -> "husband_for_an_hour"))
+        #tab2.tab-pane
+            p
+                | Существует множество мелких проблем, с которыми нам приходится сталкиваться практически каждый день:
+                ul
+                    li Заменить розетки и выключатели
+                    li Заменить лампы и светильники
+                    li Проложить телевизионный, телефонный и сетевой кабель
+                    li Отремонтировать электропроводку
+                    li Починить электрический щиток
+                    li Повесить полочки и крепления под бытовую технику
+                    li Собрать и разобрать мебель, в том числе офисную
+                    li Установить дверной замок
+            p Это и многое другое может сделать за вас наш мастер на час.
+        #tab3.tab-pane
+            p
+                | Сделать заказ очень просто:
+                ol
+                    li
+                        |Вы оставляете заказ на работы одним из
+                        a(href='/contact') способов
+                        |.
+                    li Мастер связывается с вами и договаривается об удобном для вас времени. В большинстве случаев, мастер готов приехать к вам в день заказа или на следующий день.
+                    li В назначенное время мастер приезжает по указанному вами адресу и начинает устранять все имеющиеся у вас проблемы.
+                    li По окончании работ вы оплачиваете мастеру стоимость его работ по числу часов, затраченных на решение проблем. Минимальный заказ составляет 2 часа. Если вы живете в удалении от Санкт-Петербурга, то к стоимости дополнительно прибавляются расходы на дорогу.
+    br

@@ -1,24 +1,16 @@
 - import ru.meridor.website.ui.PageCategory._
-- attributes("title") = "Вызов электрика, контакты и реквизиты"
+- attributes("title") = "Вызов электрика. Контакты и реквизиты"
 - attributes("pageCategory") = Contact
 
 .jumbotron
     .container
         ul.breadcrumbs.contacty
             li.active
-                a(href='/contact') Контакты
+                h1
+                    a(href='/contact') Контакты
             li
                 a(href='/') Главная
-        form.form-order.form-inline
-            label(for='phone')
-                | Чтобы заказать услуги, введите номер телефона:
-            input.span2{:name => 'phone', :id => 'phone', :type => 'text', :placeholder => '+79051234567'}
-            label(for='client_name')
-                | Как вас зовут:
-            input.input-large.input-fo-name{:name => 'client_name', :id => 'client_name', :type => 'text', :placeholder => 'Иван Иванов'}
-            button.button(type='submit')
-                | Заказать
-                i.icon-share-alt
+        - render("pieces/orderFormJumbotron.jade", Map("phoneTitle" -> "Чтобы заказать звонок, введите номер телефона:", "additionalData" -> "contact"))
 .container
     .case.text-center
         .row-fluid

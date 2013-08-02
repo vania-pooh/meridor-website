@@ -20,6 +20,7 @@ object WebsiteBuild extends Build {
       name := Name,
       version := Version,
       scalaVersion := ScalaVersion,
+      scalacOptions ++= Seq("-feature", "-deprecation"),
       resolvers += Classpaths.typesafeReleases,
       libraryDependencies ++= Seq(
         "org.scalatra" %% "scalatra" % ScalatraVersion,
@@ -44,5 +45,7 @@ object WebsiteBuild extends Build {
         )
       }
     )
-  )
+  ) dependsOn(diana)
+
+  lazy val diana = ProjectRef(uri("../diana"), "diana")
 }

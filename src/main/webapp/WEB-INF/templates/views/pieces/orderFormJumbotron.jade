@@ -1,0 +1,15 @@
+-@ val phoneTitle: String = "Чтобы заказать услуги, введите номер телефона:"
+-@ val nameTitle: String = "Как вас зовут:"
+-@ val additionalData: String = "none"
+
+form.form-order.form-inline
+    label(for='phone')
+        = phoneTitle + " "
+    input.span2{:name => 'phone', :id => 'phone', :type => 'text', :placeholder => '+79051234567'}
+    label(for='client_name')
+        = nameTitle
+    input.input-large.input-fo-name{:name => 'client_name', :id => 'client_name', :type => 'text', :placeholder => 'Иван Иванов'}
+    input{:name => 'additional_data', :type => 'hidden', :value => additionalData}
+    button.button(type='submit')
+        | Заказать
+        i.icon-share-alt

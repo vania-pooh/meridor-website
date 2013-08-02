@@ -21,6 +21,14 @@
     $('.responsive-nav').on('change', function() {
             window.location = $(this).val();
     });    
-// end  
+// end
+
+//Adding click handlers to tab panels of service pages
+jQuery(document).ready(function() {
+    $('#myTab a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+})
 
 

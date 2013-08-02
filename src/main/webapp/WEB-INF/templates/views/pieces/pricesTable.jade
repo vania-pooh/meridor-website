@@ -1,0 +1,24 @@
+- import ru.meridor.diana.db.entities.{Service, ServiceGroup}
+-@ val servicesMap: Map[ServiceGroup, List[Service]]
+-@ val showGlobalTotals: Boolean = false
+- val showTableCaption = servicesMap.size > 1
+table.table.tables
+    tbody
+        tr
+            td
+                - for ((serviceGroup, services) <- servicesMap)
+                    - render("serviceGroupPriceTable.jade", Map("serviceGroup" -> serviceGroup, "services" -> services, "showTableCaption" -> showTableCaption))
+    tfoot
+        tr
+            td
+                table.table
+                    tbody
+                        tr
+                            - val colspan = if (showGlobalTotals) 3 else 5
+                            td{:colspan => colspan}
+                                a.button(href='javascript:void(0)')
+                                    | Сохранить расчет
+                                    i.icon-download-alt
+                            - if (showGlobalTotals)
+                                td Итого:
+                                td#totalPrice 0

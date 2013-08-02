@@ -783,6 +783,10 @@ th .i_clear {
     background-image: url(../img/services_open3_2_03.png);
 }
 
+.tab-content .tab-pane p, .tab-content .tab-pane ul, .tab-content .tab-pane ol {
+    text-align: justify;
+}
+
 /*.case {position: relative; margin-bottom: 41px; padding: 20px 30px; border: 1px solid #e6e6e0; color: #555555; background-color: #f9f9f9;
 -webkit-border-radius: 5px;
 -moz-border-radius: 5px;

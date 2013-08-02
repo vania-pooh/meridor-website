@@ -1,5 +1,19 @@
 - import ru.meridor.website.ui.PageCategory._
-- attributes("title") = "Цены на электромонтажные работы, электромонтаж расценки"
+- import ru.meridor.diana.db.entities.{Service, ServiceGroup}
+- attributes("title") = "Цены на электромонтажные работы. Электромонтаж расценки"
 - attributes("pageCategory") = Prices
+-@ val servicesMap: Map[ServiceGroup, List[Service]]
 
-p= "Prices page"
+.jumbotron
+    .container
+        ul.breadcrumbs.ceny
+            li.active
+                h1
+                    a(href='/prices') Цены
+            li
+                a(href='/') Главная
+        - render("pieces/orderFormJumbotron.jade", Map("additionalData" -> "prices"))
+.container
+    .case
+        - render("pieces/pricesTable.jade", Map("servicesMap" -> servicesMap, "showGlobalTotals" -> true))
+        - render("pieces/orderForm.jade", Map("additionalData" -> "prices"))

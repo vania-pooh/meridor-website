@@ -22,9 +22,9 @@
                 quantityField.val(0);
             }
             var unitPriceCell = $('td.unit_price', row);
-            var unitPrice = (!!unitPriceCell.html()) ? unitPriceCell.html() : 0;
+            var unitPrice = parsePrice(unitPriceCell.html());
             var valueCell = $('td.value', row);
-            valueCell.html(parseFloat(unitPrice * quantity));
+            valueCell.html(formatPrice(parseFloat(unitPrice * quantity)));
         };
 
         //Whether this value is a positive integer
@@ -32,14 +32,23 @@
             return (!!value && (value > 0));
         };
 
+        var parsePrice = function(s){
+            var price = parseFloat(s.replace(/\s|&nbsp;/g, ''));
+            return !isNaN(price) ? price : 0;
+        };
+
+        var formatPrice = function(p){
+            return p.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        };
+
         //Updates total price of a single table
         var updateTableTotal = function(table){
             var perTableTotalPrice = 0;
             $('td.value', table).each(function(){
-                perTableTotalPrice += parseFloat($(this).html());
+                perTableTotalPrice += parsePrice($(this).html());
             });
             var tableTotalPriceCell = $('td.total', table);
-            tableTotalPriceCell.html(perTableTotalPrice);
+            tableTotalPriceCell.html(formatPrice(perTableTotalPrice));
         };
 
         //Updates sum of total prices at the bottom of the table
@@ -48,9 +57,9 @@
             if (totalPriceCell.length > 0){
                 var globalTotalPrice = 0;
                 $('table.prices td.total').each(function(){
-                    globalTotalPrice += parseFloat($(this).html());
+                    globalTotalPrice += parsePrice($(this).html());
                 });
-                totalPriceCell.html(globalTotalPrice);
+                totalPriceCell.html(formatPrice(globalTotalPrice));
             }
         };
 

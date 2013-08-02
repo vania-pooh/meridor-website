@@ -3,10 +3,12 @@ package ru.meridor.website
 import org.scalatra._
 import scalate.ScalateSupport
 import org.slf4j.LoggerFactory
-import ru.meridor.website.db.SlickSupport
 import org.fusesource.scalate.scaml.ScamlOptions
+import ru.meridor.diana.db.entities.{Service, ServiceGroup}
+import ru.meridor.diana.db.{ConnectionPooler, ConnectionPoolerSupport}
+import ru.meridor.website.entities.AvailableServiceGroups
 
-class WebsiteServlet extends WebsiteStack with SlickSupport {
+class WebsiteServlet extends WebsiteStack with ConnectionPoolerSupport {
 
   /**
    * HTML minification settings
@@ -14,8 +16,6 @@ class WebsiteServlet extends WebsiteStack with SlickSupport {
   ScamlOptions.indent = ""
   ScamlOptions.nl = ""
 
-  private val logger = LoggerFactory.getLogger(this.getClass)
-  
   logger.info("Starting application...")
 
   /**
@@ -26,17 +26,10 @@ class WebsiteServlet extends WebsiteStack with SlickSupport {
     //Core routes
     ("/" -> "/index"),
     ("/bundles" -> "/bundles"),
-    ("/prices" -> "/prices"),
     ("/contact" -> "/contact"),
 
     //Services routes
-    ("/services/electrical-works" -> "/services/electrical_works"),
-    ("/services/husband-for-an-hour" -> "/services/husband_for_an_hour"),
-    ("/services/technical-maintenance" -> "/services/technical_maintenance"),
-    ("/services/lighting" -> "/services/lighting"),
-    ("/services/electrical-appliances" -> "/services/electrical_appliances"),
-    ("/services/telecommunication-technologies" -> "/services/telecommunication_technologies"),
-    ("/services/it" -> "/services/it"),
+//    ("/services/it" -> "/services/it"),
 
     //Articles routes
     ("/articles/electrical-tools" -> "/articles/electrical_tools"),
@@ -55,8 +48,45 @@ class WebsiteServlet extends WebsiteStack with SlickSupport {
     get(route){
 	    renderView(viewName)
     }
+
+    get("/prices"){
+      renderView("/prices", ("servicesMap" -> loadServices(AvailableServiceGroups.*)))
+    }
+
+    get("/services/electrical-works"){
+      renderView("/services/electrical_works", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.ElectricalWorks))))
+    }
+
+    get("/services/husband-for-an-hour"){
+      renderView("/services/husband_for_an_hour", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.HusbandForAnHour))))
+    }
+
+    get("/services/technical-maintenance"){
+      renderView("/services/technical_maintenance", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.TechnicalMaintenance))))
+    }
+
+    get("/services/lighting"){
+      renderView("/services/lighting", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.Lighting))))
+    }
+
+    get("/services/electrical-appliances"){
+      renderView("/services/electrical_appliances", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.ElectricalAppliances))))
+    }
+
+    get("/services/telecommunication-technologies"){
+      renderView("/services/telecommunication_technologies", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.TelecommunicationTechnologies))))
+    }
+
   }
-  
+
+  /**
+   * Actions to be done when shutting down application
+   */
+  override def destroy() {
+    super.destroy()
+    ConnectionPooler.shutdown()
+  }
+
   /**
    * Renders view with the specified name and set of attributes to be passed to this view
    */
@@ -65,5 +95,7 @@ class WebsiteServlet extends WebsiteStack with SlickSupport {
     contentType = "text/html"
     jade(viewName, attributes:_*)
   }
+
+  private def loadServices(groups: List[String]): Map[ServiceGroup, List[Service]] = Service.getByGroups(groups)
 
 }
