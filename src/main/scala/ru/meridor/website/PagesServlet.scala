@@ -1,14 +1,14 @@
 package ru.meridor.website
 
-import org.scalatra._
-import scalate.ScalateSupport
-import org.slf4j.LoggerFactory
 import org.fusesource.scalate.scaml.ScamlOptions
 import ru.meridor.diana.db.entities.{Service, ServiceGroup}
-import ru.meridor.diana.db.{ConnectionPooler, ConnectionPoolerSupport}
-import ru.meridor.website.entities.AvailableServiceGroups
+import ru.meridor.website.processing.AvailableServiceGroups
+import ru.meridor.diana.log.LoggingSupport
 
-class WebsiteServlet extends WebsiteStack with ConnectionPoolerSupport {
+/**
+ * A servlet used to process HTML pages requests
+ */
+class PagesServlet extends WebsiteStack with LoggingSupport {
 
   /**
    * HTML minification settings
@@ -77,14 +77,6 @@ class WebsiteServlet extends WebsiteStack with ConnectionPoolerSupport {
       renderView("/services/telecommunication_technologies", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.TelecommunicationTechnologies))))
     }
 
-  }
-
-  /**
-   * Actions to be done when shutting down application
-   */
-  override def destroy() {
-    super.destroy()
-    ConnectionPooler.shutdown()
   }
 
   /**

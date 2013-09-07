@@ -1,4 +1,5 @@
 - import ru.meridor.website.ui.PageCategory._
+- import ru.meridor.website.processing.{OrderFormAdditionalData => ad}
 - import ru.meridor.diana.db.entities.{Service, ServiceGroup}
 - attributes("title") = "Муж на час"
 - attributes("pageCategory") = Services
@@ -23,7 +24,7 @@
     .tab-content.mytab-tab-content
         #tab1.tab-pane.active
             - render("../pieces/pricesTable.jade", Map("servicesMap" -> servicesMap))
-            - render("../pieces/orderForm.jade", Map("phoneTitle" -> "Чтобы вызвать мужа на час, введите номер телефона:", "additionalData" -> "husband_for_an_hour"))
+            - render("../pieces/orderForm.jade", Map("phoneTitle" -> "Чтобы вызвать мужа на час, введите номер телефона:", "additionalData" -> ad.HusbandForAnHour))
         #tab2.tab-pane
             p
                 | Существует множество мелких проблем, с которыми нам приходится сталкиваться практически каждый день:

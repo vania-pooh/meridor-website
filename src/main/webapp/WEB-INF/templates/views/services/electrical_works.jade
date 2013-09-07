@@ -1,4 +1,5 @@
 - import ru.meridor.website.ui.PageCategory._
+- import ru.meridor.website.processing.{OrderFormAdditionalData => ad}
 - import ru.meridor.diana.db.entities.{Service, ServiceGroup}
 - attributes("title") = "Электромонтажные работы"
 - attributes("pageCategory") = Services
@@ -23,7 +24,7 @@
     .tab-content.mytab-tab-content
         #tab1.tab-pane.active
             - render("../pieces/pricesTable.jade", Map("servicesMap" -> servicesMap))
-            - render("../pieces/orderForm.jade", Map("phoneTitle" -> "Чтобы заказать работы, введите номер телефона:", "additionalData" -> "electrical_works"))
+            - render("../pieces/orderForm.jade", Map("phoneTitle" -> "Чтобы заказать работы, введите номер телефона:", "additionalData" -> ad.ElectricalWorks))
         #tab2.tab-pane
             p
                 | Как правило электромонтажные работы проводятся в два этапа:

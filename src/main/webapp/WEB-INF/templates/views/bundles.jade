@@ -1,4 +1,5 @@
 - import ru.meridor.website.ui.PageCategory._
+- import ru.meridor.website.processing.{OrderFormAdditionalData => ad}
 - attributes("title") = "Пакеты услуг и пакетные предложения"
 - attributes("pageCategory") = Bundles
 -@ val phoneTitle: String = "Чтобы заказать пакет, введите номер телефона: "
@@ -56,7 +57,7 @@
             p По вашему желанию в данный пакет могут также быть включены такие услуги, как замена ламп, выключателей, техническая чистка и ремонт бытовой техники, ведение показаний счетчиков и любые другие. Мы также можем взять на себя все заботы по закупке сопутствующих расходных материалов. Стоимость пакета при заказе дополнительных опций оговаривается индивидуально.
             h3 Пакет в подарок
             p Вы можете заказать любое пакетное предложение не только для себя, но и в подарок друзьям или близким. При этом договор будет заключен с вами, а для получателя подарка будет выписана доверенность, дающая ему право воспользоваться нашими услугами за ваш счет. При заказе в подарок все расчеты стоимости и документы об оплате будут переданы вам на отдельном бланке, который легко убрать из подарка.
-        - render("pieces/orderForm.jade", Map("phoneTitle" -> phoneTitle, "additionalData" -> "electrical_bundle"))
+        - render("pieces/orderForm.jade", Map("phoneTitle" -> phoneTitle, "additionalData" -> ad.ElectricalBundle))
     .case
         h2 Пакет “Компьютерный гений”
         p
@@ -98,7 +99,7 @@
                     | &nbsp;и, если вы заказываете пакет впервые - оплатить всего
                     strong &nbsp;два пробных месяца.
                     | &nbsp;Вы также можете заказать данный пакет в подарок.
-        - render("pieces/orderForm.jade", Map("phoneTitle" -> phoneTitle, "additionalData" -> "computer_bundle"))
+        - render("pieces/orderForm.jade", Map("phoneTitle" -> phoneTitle, "additionalData" -> ad.ComputerBundle))
     .case
         h2 Пакет “Яркий мир”
         p
@@ -137,7 +138,7 @@
                     | &nbsp;может равняться 100 Вт, т.е. ваши&nbsp;
                     strong расходы на освещение снизятся в пять раз.
                     | &nbsp;А самое главное – правильное освещение благоприятно скажется на здоровье и самочувствии ваших близких, что само по себе бесценно.
-        - render("pieces/orderForm.jade", Map("phoneTitle" -> phoneTitle, "additionalData" -> "lighting_bundle"))
+        - render("pieces/orderForm.jade", Map("phoneTitle" -> phoneTitle, "additionalData" -> ad.LightingBundle))
     .case
         h2 Пакет “Муж на год”
         p
@@ -162,4 +163,4 @@
                 strong
                     | &nbsp;35 рублей в день,
                 | &nbsp;если мастер на час требуется раз в месяц и 120 рублей в день, если вы планируете пользоваться услугами мастера раз в неделю. В обоих случаях вы получаете скидку более 30% по сравнению с разовым вызовом мастера на час.
-        - render("pieces/orderForm.jade", Map("phoneTitle" -> phoneTitle, "additionalData" -> "lighting_bundle"))
+        - render("pieces/orderForm.jade", Map("phoneTitle" -> phoneTitle, "additionalData" -> ad.HusbandForAnHourBundle))

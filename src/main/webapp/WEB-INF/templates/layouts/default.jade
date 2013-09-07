@@ -97,13 +97,13 @@ html(lang='en')
                         | Дизайн и верстка -&nbsp;
                         a(href='http://an-kor.net') an-kor.net
                 ul.nav
-                    li.active
+                    li{:class => {if (pageCategory.equals(Home)) "active" else ""}}
                         a(href='/') Главная
-                    li
+                    li{:class => {if (pageCategory.equals(Bundles)) "active" else ""}}
                         a(href='/bundles') Пакеты услуг
-                    li
+                    li{:class => {if (pageCategory.equals(Prices)) "active" else ""}}
                         a(href='/prices') Цены
-                    li
+                    li{:class => {if (pageCategory.equals(Contact)) "active" else ""}}
                         a(href='/contact') Контакты
 
         -# Javascript files
@@ -112,3 +112,4 @@ html(lang='en')
         script(src='/js/script.js')
         script(src='/js/calculator.js')
         script(src='/js/clientStorage.js')
+        script(src='/js/order.js')

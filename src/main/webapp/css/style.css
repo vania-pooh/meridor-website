@@ -458,7 +458,7 @@ h3 {
     margin-right: 5px;
 }
 
-.form-order button[type="submit"] {
+.form-order button {
     display: inline-block;
     height: 37px;
     line-height: 37px;

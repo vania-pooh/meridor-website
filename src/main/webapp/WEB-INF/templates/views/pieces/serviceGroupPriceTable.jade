@@ -1,14 +1,14 @@
 - import ru.meridor.diana.db.entities.{Service, ServiceGroup}
-- import ru.meridor.website.entities.AvailableServiceGroups._
+- import ru.meridor.website.processing.AvailableServiceGroups._
 -@ val serviceGroup: ServiceGroup
 -@ val services: List[Service]
 -@ val showTableCaption: Boolean = true
-- val serviceGroupName: String = serviceGroup.getName
+- val serviceGroupName: String = serviceGroup.name
 table.table.table-ceny.table-striped.table-bordered.table-bordered-custom.prices{:id => serviceGroupName}
     - if (showTableCaption)
         caption
             - val serviceGroupClass: String = headerClass(serviceGroupName)
-            h2{:class => serviceGroupClass}= serviceGroup.getDisplayName
+            h2{:class => serviceGroupClass}= serviceGroup.displayName
     thead
         tr
             th Наименование
@@ -23,12 +23,12 @@ table.table.table-ceny.table-striped.table-bordered.table-bordered-custom.prices
         - for (service <- services)
             tr.price
                 td
-                    span.id(style='display: none;')= service.getId
+                    span.id(style='display: none;')= service.id
                     span.title
-                        != service.getDisplayName
+                        != service.displayName
                 td.uom
-                    != service.getUnitOfMeasure.getDisplayName
-                td.unit_price= service.getPrice
+                    != service.unitOfMeasure.displayName
+                td.unit_price= service.price
                 td.inputs
                     input.input-small.quantity{:value => '0', :type => 'text'}
                     a.i_clear(href='javascript:void(0)')

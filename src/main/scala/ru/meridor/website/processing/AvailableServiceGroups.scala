@@ -1,4 +1,4 @@
-package ru.meridor.website.entities
+package ru.meridor.website.processing
 
 /**
  * Stores a list of available service group names

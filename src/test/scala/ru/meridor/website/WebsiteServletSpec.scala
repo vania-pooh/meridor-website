@@ -8,7 +8,7 @@ class WebsiteServletSpec extends ScalatraSpec { def is =
     "should return status 200"                  ! root200^
                                                 end
 
-  addServlet(classOf[WebsiteServlet], "/*")
+  addServlet(classOf[PagesServlet], "/*")
 
   def root200 = get("/") {
     status must_== 200

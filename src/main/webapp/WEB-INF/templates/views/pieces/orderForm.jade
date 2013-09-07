@@ -1,15 +1,18 @@
+- import ru.meridor.website.processing.{OrderFormAdditionalData => AD}
+- import AD._
 -@ val phoneTitle: String = "Чтобы заказать услуги, введите номер телефона:"
 -@ val nameTitle: String = "Как вас зовут:"
--@ val additionalData: String = "none"
+-@ val additionalData: AD = None
 
-form.well.form-order.form-inline
+form.well.form-order.form-inline{:action => '/api/order', :method => 'post'}
     label(for='phone')
         = phoneTitle + " "
     input.input-large.input-fo-tell{:name => 'phone', :id => 'phone', :type => 'text', :placeholder => '+79051234567'}
     label(for='client_name')
         = nameTitle
     input.input-large.input-fo-name{:name => 'client_name', :id => 'client_name', :type => 'text', :placeholder => 'Иван Иванов'}
-    input{:name => 'additional_data', :type => 'hidden', :value => additionalData}
-    button.button(type='submit')
+    - val additionalDataVal: String = additionalData.toString
+    input{:name => 'additional_data', :type => 'hidden', :value => additionalDataVal}
+    button.button
         | Заказать
         i.icon-share-alt
