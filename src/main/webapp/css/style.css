@@ -1008,3 +1008,31 @@ border-radius: 5px;}
         right: 20px;
     }
 }
+
+/* Alert styles */
+.alert {
+    text-align: center;
+    width:600px;
+    border-radius: 5px;
+    color: #FFF;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+    font-weight: 700;
+    display:none;
+}
+
+.alert.red{
+    background: -moz-linear-gradient(center top , #EE5F5B, #C43C35);
+    border: 1px solid #C43C35;
+}
+
+.alert.yellow{
+    background: -moz-linear-gradient(center top , #f5eb43, #fbb450);
+    border: 1px solid #fbb450;
+    color: #222222;
+}
+
+.alert.green{
+    background: -moz-linear-gradient(center top , #7aba7b, #408140);
+    border: 1px solid #408140;
+}
