@@ -58,15 +58,19 @@ $(document).ready(function(){
                     data: JSON.stringify(getFormData()),
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
-                    method: 'post',
-                    success: function(data){
+                    method: 'post'
+                })
+                .done(function(data){
                         $('#alert-loading').trigger('closeModal');
                         if (!!data && !!data['code'] && (data['code'] == 'ok')){
                             $('#alert-ok').trigger('openModal');
                         } else {
                             $('#alert-submit-error').trigger('openModal');
                         }
-                    }
+                })
+                .fail(function(){
+                        $('#alert-loading').trigger('closeModal');
+                        $('#alert-submit-error').trigger('openModal');
                 });
             }else if (!isPhoneValid()){
                 $('#alert-invalid-phone').trigger('openModal');
