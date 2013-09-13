@@ -4,20 +4,23 @@
 -@ val services: List[Service]
 -@ val showTableCaption: Boolean = true
 - val serviceGroupName: String = serviceGroup.name
-table.table.table-ceny.table-striped.table-bordered.table-bordered-custom.prices{:id => serviceGroupName}
+- var tableClass = "table table-ceny table-striped table-bordered table-bordered-custom prices"
+- if (showTableCaption)
+    - tableClass += " withCaption"
+table{:id => serviceGroupName, :class => tableClass}
     - if (showTableCaption)
         caption
             - val serviceGroupClass: String = headerClass(serviceGroupName)
-            h2{:class => serviceGroupClass}= serviceGroup.displayName
+            h2{:class => serviceGroupClass, :title => 'Нажмите, чтобы скрыть или показать таблицу'}= serviceGroup.displayName
     thead
         tr
-            th Наименование
-            th Ед.изм.
-            th Цена за ед.изм.
-            th.inputs
+            th{:title => 'Наименование вида работ'} Наименование
+            th{:title => 'Единица измерения (штуки, метры, часы и т.д.)'} Ед.изм.
+            th{:title => 'Цена за одну единицу измерения'} Цена за ед.изм.
+            th.inputs{:title => 'Сколько единиц измерения требуется выполнить'}
                 | Объем
-                a.i_clear(href='javascript:void(0)')
-            th Полная стоимость
+                a.i_clear{:href => 'javascript:void(0)', :title => 'Очистить раздел'}
+            th{:title => 'Стоимость каждого вида работ с учетом количества'} Полная стоимость
 
     tbody
         - for (service <- services)
@@ -31,11 +34,11 @@ table.table.table-ceny.table-striped.table-bordered.table-bordered-custom.prices
                 td.unit_price= service.price
                 td.inputs
                     input.input-small.quantity{:value => '0', :type => 'text'}
-                    a.i_clear(href='javascript:void(0)')
+                    a.i_clear{:href => 'javascript:void(0)', :title => 'Очистить строку'}
                 td.value 0
 
     tfoot
         tr
             td(colspan='3')
             td(colspan='1') Итого по разделу:
-            td.total 0
+            td.total{:title => 'Отображает стоимость работ в данном разделе'} 0

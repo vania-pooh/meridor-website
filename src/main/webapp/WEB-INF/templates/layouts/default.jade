@@ -64,14 +64,14 @@ html(lang='en')
                                 a(href='/prices') Цены
                             li{:class => {if (pageCategory.equals(Contact)) "active" else ""}}
                                 a(href='/contact') Контакты
-                            li{:class => {if (pageCategory.equals(Articles)) "deeper active" else "deeper"}}
-                                a(href='javascript:void(0)') Прочти
-                                ul
-                                    li
-                                        a(href='/articles/electrical-tools') Инструмент электрика
+                            -#li{:class => {if (pageCategory.equals(Articles)) "deeper active" else "deeper"}}
+                            -#    a(href='javascript:void(0)') Прочти
+                            -#    ul
+                            -#        li
+                            -#            a(href='/articles/electrical-tools') Инструмент электрика
                     .span3
                         .tell.pull-right
-                            span (812) 123 45 67
+                            span (812) 929 89 96
 
         != body
 
@@ -103,8 +103,8 @@ html(lang='en')
                         a(href='/bundles') Пакеты услуг
                     li{:class => {if (pageCategory.equals(Prices)) "active" else ""}}
                         a(href='/prices') Цены
-                    li{:class => {if (pageCategory.equals(Contact)) "active" else ""}}
-                        a(href='/contact') Контакты
+                    -# li{:class => {if (pageCategory.equals(Contact)) "active" else ""}}
+                    -#    a(href='/contact') Контакты
 
         -# Javascript files
         script(src='/js/jquery-1.9.1.min.js')

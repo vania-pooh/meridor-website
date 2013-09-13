@@ -16,9 +16,10 @@ table.table.tables
                         tr
                             - val colspan = if (showGlobalTotals) 3 else 5
                             td{:colspan => colspan}
-                                a.button(href='javascript:void(0)')
-                                    | Сохранить расчет
-                                    i.icon-download-alt
+                                | &nbsp;
+                                -# a.button(href='javascript:void(0)')
+                                -#    | Сохранить расчет
+                                -#    i.icon-download-alt
                             - if (showGlobalTotals)
                                 td Итого:
-                                td#totalPrice 0
+                                td#totalPrice{:title => 'Отображает полную стоимость работ'} 0

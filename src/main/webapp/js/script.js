@@ -31,5 +31,14 @@ jQuery(document).ready(function() {
         });
     })();
 
+    //Adding click handlers to bundles toggle details links
+    //Adding click handlers to tab panels of service pages
+    (function(){
+        $('.bundle').find('a.toggleDetails').click(function(e) {
+//            e.preventDefault();
+            $(this).parent().next('.details').slideToggle();
+        });
+    })();
+
 });
 

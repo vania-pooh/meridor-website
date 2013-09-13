@@ -24,12 +24,12 @@ object AvailableServiceGroups {
   def * = availableGroups
 
   def headerClass(serviceGroupName: String): String = serviceGroupName match {
-    case ElectricalWorks => "sprite-_07"
-    case HusbandForAnHour => "sprite-_15"
-    case TechnicalMaintenance => "sprite-_19"
-    case Lighting => "sprite-_07"
-    case ElectricalAppliances => "sprite-_07"
-    case TelecommunicationTechnologies => "sprite-_07"
+    case ElectricalWorks => "electrical_works"
+    case HusbandForAnHour => "husband_for_an_hour"
+    case TechnicalMaintenance => "technical_maintenance"
+    case Lighting => "lighting"
+    case ElectricalAppliances => "electrical_appliances"
+    case TelecommunicationTechnologies => "telecommunication_technologies"
     case _ => ""
   }
 }

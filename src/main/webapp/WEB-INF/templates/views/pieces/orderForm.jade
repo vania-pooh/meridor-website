@@ -13,7 +13,7 @@ form.well.form-order.form-inline{:action => '/api/order', :method => 'post'}
     input.input-large.input-fo-name{:name => 'client_name', :id => 'client_name', :type => 'text', :placeholder => 'Иван Иванов'}
     - val additionalDataVal: String = additionalData.toString
     input{:name => 'additional_data', :type => 'hidden', :value => additionalDataVal}
-    button.button
+    button.button{:title => 'Нажмите, чтобы отправить заказ'}
         | Заказать
         i.icon-share-alt
 - render("orderFormAlerts.jade")

@@ -96,6 +96,8 @@ h3 {
     -webkit-border-radius: 5px 5px 0 0;
     -moz-border-radius: 5px 5px 0 0;
     border-radius: 5px 5px 0 0;
+    text-decoration: none !important;
+    cursor: default;
 }
 
 .main-nav .deeper.active > a {
@@ -258,7 +260,7 @@ h3 {
     border: 1px solid #D6D6D0;
     border-top: 0;
     color: #555555;
-    background-color: #FBFBFB;
+    background-color: #F9F9F9;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -311,6 +313,10 @@ h3 {
     opacity: .7;
 }
 
+a.button[href]{
+    text-decoration: none !important;
+}
+
 .footer {
     position: relative;
     padding-top: 30px;
@@ -359,7 +365,13 @@ h3 {
     font-size: 12px;
 }
 
-.footer a, .footer li:hover {
+.footer a[href],
+.footer a[href]:active,
+.footer li:hover,
+.container a[href],
+.container a[href]:hover,
+.container a[href]:active,
+.container a[href]:focus {
     text-decoration: underline;
 }
 
@@ -370,8 +382,7 @@ h3 {
     padding-left: 70px;
     font-size: 12px;
     text-align: left;
-    background-position: 0 0;
-    background-repeat: no-repeat;
+    background: no-repeat 0 0;
 }
 
 .breadcrumbs li:first-child {
@@ -398,7 +409,7 @@ h3 {
 }
 
 .breadcrumbs li:first-child a:hover {
-    text-decoration: none;
+    /*text-decoration: none;*/
 }
 
 .breadcrumbs.pakety_uslug {
@@ -486,6 +497,10 @@ form.well {
 
 .well {
     text-align: justify;
+}
+
+.bundle .details {
+    display: none;
 }
 
 .article {
@@ -621,6 +636,14 @@ img.pull-center {
     text-align: left;
 }
 
+.table:last-child {
+    margin-bottom: 20px !important;
+}
+
+.table {
+    margin-bottom: 0 !important;
+}
+
 .table th {
     /*line-height: 45px;*/
     padding-top: 20px;
@@ -638,6 +661,10 @@ img.pull-center {
 
 .table-ceny {
     border: 0 none;
+}
+
+.table-ceny.withCaption thead, .table-ceny.withCaption tbody, .table-ceny.withCaption tfoot{
+    display: none;
 }
 
 .table-ceny th, .table-ceny td {
@@ -670,7 +697,7 @@ img.pull-center {
 .table-ceny tfoot td {
     font-size: 18px;
     color: #8f8f8f;
-    background-color: rgb(251, 251, 251);
+    background-color: #f9f9f9;
     border-left-color: transparent;
     border-right-color: transparent;
 }
@@ -709,21 +736,39 @@ th .i_clear {
 /*.total-summ {font-size: 18px; color: #8f8f8f;}
 .total-summ span {padding-left: 40px;}*/
 
-.sprite-_07, .sprite-_15, .sprite-_19 {
+.electrical_works,
+.husband_for_an_hour,
+.technical_maintenance,
+.lighting,
+.electrical_appliances,
+.telecommunication_technologies {
     background: url(../img/csg-51c1b5cedcdb1.png) no-repeat top left;
 }
 
-.sprite-_07 {
-    background-position: 0 10px;
+.electrical_works {
+    background-position: 0 14px;
 }
 
-.sprite-_15 {
-    background-position: 0 -64px;
+.husband_for_an_hour {
+    background-position: 0 -60px;
 }
 
-.sprite-_19 {
+.technical_maintenance {
     background-position: 0 -140px;
 }
+
+.lighting {
+    background-position: 0 -214px;
+}
+
+.electrical_appliances {
+    background-position: 0 -364px;
+}
+
+.telecommunication_technologies {
+    background-position: 0 -290px;
+}
+
 
 /*tabs*/
 #myTab {
@@ -797,6 +842,7 @@ border-radius: 5px;}
     margin: 0 55px;
     padding: 20px 10px 10px 10px;
     background-color: #f4f4f2;
+    border: solid 1px #D6D6D0;
 }
 
 .socials {
@@ -856,6 +902,39 @@ border-radius: 5px;}
     -ms-transition: all 0.3s ease 0s;
     -o-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
+}
+
+/* Alert styles */
+.alert {
+    text-align: center;
+    width:600px;
+    border-radius: 5px;
+    color: #FFF;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+    font-weight: 700;
+    display:none;
+}
+
+.alert.red{
+    background: -moz-linear-gradient(center top , #EE5F5B, #C43C35);
+    border: 1px solid #C43C35;
+}
+
+.alert.yellow{
+    background: -moz-linear-gradient(center top , #f5eb43, #fbb450);
+    border: 1px solid #fbb450;
+    color: #222222;
+}
+
+.alert.green{
+    background: -moz-linear-gradient(center top , #7aba7b, #408140);
+    border: 1px solid #408140;
+}
+
+table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:focus, table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:active {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 /* Large desktop */
@@ -1007,32 +1086,4 @@ border-radius: 5px;}
         top: 15px;
         right: 20px;
     }
-}
-
-/* Alert styles */
-.alert {
-    text-align: center;
-    width:600px;
-    border-radius: 5px;
-    color: #FFF;
-    text-shadow: 0 1px 0 rgba(0,0,0,0.5);
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-    font-weight: 700;
-    display:none;
-}
-
-.alert.red{
-    background: -moz-linear-gradient(center top , #EE5F5B, #C43C35);
-    border: 1px solid #C43C35;
-}
-
-.alert.yellow{
-    background: -moz-linear-gradient(center top , #f5eb43, #fbb450);
-    border: 1px solid #fbb450;
-    color: #222222;
-}
-
-.alert.green{
-    background: -moz-linear-gradient(center top , #7aba7b, #408140);
-    border: 1px solid #408140;
 }
