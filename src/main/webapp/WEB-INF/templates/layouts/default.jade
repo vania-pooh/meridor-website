@@ -1,21 +1,36 @@
 - import org.joda.time.DateTime
 - import ru.meridor.website.ui.PageCategory
 - import ru.meridor.website.ui.PageCategory._
+- import ru.meridor.website.processing.RequestUtils._
 
 -@ val title: String
+-@ val keywords: String
+-@ val description: String
 -@ val pageCategory: PageCategory = Home
 -@ val pageTitleCategory: String = PageCategory.getPageTitleCategory(pageCategory)
 -@ val body: String
 
 !!! 5
-html(lang='en')
+html(lang='en' itemscope itemtype='http://schema.org/WebPage')
     head
         -# Meta-tags
         meta(charset='utf-8')
+        meta(http-equiv='content-type' content='text/html; charset=utf-8')
         meta{:name => 'viewport', :content => 'width=device-width initial-scale=1.0'}
-        meta{:name => 'description', :content => ''}
-        meta{:name => 'author', :content => ''}
-        title= "Компания \"Меридор\" | " + {if (pageTitleCategory.length() > 0) pageTitleCategory + " | " else "" } + title
+        meta{:name => 'keywords', :content => keywords}
+        meta{:name => 'description', :content => description}
+        meta{:name => 'author', :content => 'Компания "Меридор"'}
+        meta{:property => "og:site_name", :content => 'Компания "Меридор"'}
+        - val finalTitle = "Компания \"Меридор\" | " + {if (pageTitleCategory.length() > 0) pageTitleCategory + " | " else "" } + title
+        meta{:property => "og:title", :content => finalTitle}
+        meta{:name => "title", :itemprop => "name", :content => finalTitle}
+        - val ogType = if (isRootUrl(absoluteUrl)) "website" else "article.section"
+        meta{:property => "og:type", :content => ogType}
+        meta{:property => "og:description", :itemprop => "description", :content => description}
+        meta{:property => "og:url", :content => absoluteUrl}
+        -val logoAbsoluteUrl = absoluteUrlFromRelative("/img/logo.png")
+        meta{:property => "og:image", :content => logoAbsoluteUrl}
+        title= finalTitle
 
         -# Stylesheets
         link{:href => '/css/bootstrap.min.css', :rel => 'stylesheet'}
@@ -27,11 +42,11 @@ html(lang='en')
             script(src='http://html5shiv.googlecode.com/svn/trunk/html5.js')
 
         -# Favicon
-        link{:rel => 'apple-touch-icon-precomposed', :sizes => '144x144', :href => 'ico/apple-touch-icon-144-precomposed.png'}
-        link{:rel => 'apple-touch-icon-precomposed', :sizes => '114x114', :href => 'ico/apple-touch-icon-114-precomposed.png'}
-        link{:rel => 'apple-touch-icon-precomposed', :sizes => '72x72', :href => 'ico/apple-touch-icon-72-precomposed.png'}
-        link{:rel => 'apple-touch-icon-precomposed', :href => 'ico/apple-touch-icon-57-precomposed.png'}
-        link{:rel => 'shortcut icon', :href => 'ico/favicon.ico'}
+        link{:rel => 'apple-touch-icon-precomposed', :sizes => '144x144', :href => '/ico/apple-touch-icon-144-precomposed.png'}
+        link{:rel => 'apple-touch-icon-precomposed', :sizes => '114x114', :href => '/ico/apple-touch-icon-114-precomposed.png'}
+        link{:rel => 'apple-touch-icon-precomposed', :sizes => '72x72', :href => '/ico/apple-touch-icon-72-precomposed.png'}
+        link{:rel => 'apple-touch-icon-precomposed', :href => '/ico/apple-touch-icon-57-precomposed.png'}
+        link{:rel => 'shortcut icon', :href => '/ico/favicon.ico'}
     body
         -# Site header and navigation menu
         .masthead
@@ -76,7 +91,7 @@ html(lang='en')
         != body
 
         -# Site footer
-        .footer
+        .footer(itemscope itemtype='http://schema.org/LocalBusiness')
             .container
                 a.logo.pull-left(href='/')
                 .pull-right.faddress
@@ -84,15 +99,23 @@ html(lang='en')
                         | ©
                         = String.valueOf(new DateTime().getYear())
                         | &nbsp;
-                        a(href='/') ООО "Меридор"
+                        a(href='/')
+                            |ООО "
+                            span(itemprop='name') Меридор
+                            |"
                         br
-                        | 195067, Россия, Санкт-Петербург
+                        span(itemprop='address' itemscope itemtype='http://schema.org/PostalAddress')
+                            span(itemprop="postalCode") 195067
+                            |, Россия,&nbsp;
+                            span(itemprop="addressLocality") Санкт-Петербург
+                            br
+                            span(itemprop="streetAddress") ул. Бестужевская, д. 75, лит. А
+                            span(itemprop="addressCountry" class="hidden") RU
                         br
-                        | ул. Бестужевская, д. 75, лит. А
+                        span(itemprop="telephone") +7 812 929-89-96
                         br
-                        | (812) 123 45 67
-                        br
-                        a(href='mailto:info@meridor.ru') info@meridor.ru
+                        a{:href => 'mailto:info@meridor.ru', :title => 'Нажмите, чтобы отправить нам электронное письмо'}
+                            span(itemprop="email") info@meridor.ru
                         br
                         | Дизайн и верстка -&nbsp;
                         a(href='http://an-kor.net') an-kor.net

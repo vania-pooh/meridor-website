@@ -1,6 +1,8 @@
 - import ru.meridor.website.ui.PageCategory._
 - import ru.meridor.website.processing.{OrderFormAdditionalData => ad}
-- attributes("title") = "Вызов электрика. Контакты и реквизиты"
+- attributes("title") = "Вызов электрика | Контакты и реквизиты"
+- attributes("keywords") = "вызов электрика, электрик вызов, электрик услуги, вызвать электрика, контактная информация, реквизиты, юридический адрес"
+- attributes("description") = "Вызов электрика. Контактная информация и реквизиты. Время работы."
 - attributes("pageCategory") = Contact
 
 .jumbotron
@@ -12,7 +14,7 @@
                 a(href='/') Главная
         - render("pieces/orderFormJumbotron.jade", Map("phoneTitle" -> "Чтобы заказать звонок, введите номер телефона:", "additionalData" -> ad.Contact))
 .container
-    .case.text-center
+    .case.text-center(itemscope itemtype='http://schema.org/LocalBusiness')
         .row-fluid
             .span6
                 h2 Контактная информация
@@ -20,19 +22,20 @@
                     p
                         strong Время работы:
                     p
-                        | Пн-Пт 10:00 - 20:00
+                        time(itemprop="openingHours" datetime="Mo-Fr 10:00-20:00") Пн-Пт 10:00 - 20:00
                         br
-                        | Сб, Вс 10:00 - 18:00
+                        time(itemprop="openingHours" datetime="Sa,Su 10:00-18:00") Сб, Вс 10:00 - 18:00
                         br
                     p
                         strong Телефон:
                     p(style='font-size: 24px; font-family: Calibri, Arial; font-style: italic;')
-                        | (812) 929 89 96
+                        span(itemprop="telephone") +7 812 929-89-96
                         br
                     p
                         strong Email:
                     p
-                        a{:href => 'mailto:info@meridor.ru', :title => 'Нажмите, чтобы отправить нам электронное письмо'} info@meridor.ru
+                        a{:href => 'mailto:info@meridor.ru', :title => 'Нажмите, чтобы отправить нам электронное письмо'}
+                            span(itemprop="email") info@meridor.ru
                         br
                 br
                 h2 Социальные сети
@@ -50,20 +53,27 @@
                 h2 Реквизиты организации
                 .muted_bg
                     p
-                        strong ООО "Меридор"
+                        strong
+                            |ООО "
+                            span(itemprop='name') Меридор
+                            |"
                         br
-                        | ИНН: 7812345678
+                        | ИНН: 7806506412
                         br
-                        | КПП: 7801001
+                        | КПП: 780601001
                         br
                         | ОГРН: 1137847282418
                         br
-                    p
+                    p(itemprop='address' itemscope itemtype='http://schema.org/PostalAddress')
                         strong Юр. адрес:
                         br
-                        | 195067, Россия, Санкт-Петербург
+                        span(itemprop="postalCode") 195067
+                        |, Россия,&nbsp;
+                        span(itemprop="addressLocality") Санкт-Петербург
                         br
-                        | ул. Бестужевская, д. 75, лит. А, пом. 13Н
+                        span(itemprop="streetAddress") ул. Бестужевская, д. 75, лит. А
+                        |, пом. 13Н
+                        span(itemprop="addressCountry" class="hidden") RU
                         br
                     p
                         strong Банковские реквизиты

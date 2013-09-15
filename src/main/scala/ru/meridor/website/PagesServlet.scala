@@ -21,15 +21,12 @@ class PagesServlet extends WebsiteStack with LoggingSupport {
   /**
    * Initializing routes...
    */
-  logger.info("Initializing static routes...")
+  logger.info("Initializing static pages routes...")
   for (staticRoute <- Array(
     //Core routes
     ("/" -> "/index"),
     ("/bundles" -> "/bundles"),
     ("/contact" -> "/contact"),
-
-    //Services routes
-//    ("/services/it" -> "/services/it"),
 
     //Articles routes
     ("/articles/electrical-tools" -> "/articles/electrical_tools"),
@@ -44,40 +41,41 @@ class PagesServlet extends WebsiteStack with LoggingSupport {
   )){
     val route = staticRoute._1
     val viewName = staticRoute._2
-    logger.info("Assigning view \"" + viewName + "\" to route \"" + route + "\"...")
     get(route){
 	    renderView(viewName)
     }
-
-    get("/prices"){
-      renderView("/prices", ("servicesMap" -> loadServices(AvailableServiceGroups.*)))
-    }
-
-    get("/services/electrical-works"){
-      renderView("/services/electrical_works", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.ElectricalWorks))))
-    }
-
-    get("/services/husband-for-an-hour"){
-      renderView("/services/husband_for_an_hour", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.HusbandForAnHour))))
-    }
-
-    get("/services/technical-maintenance"){
-      renderView("/services/technical_maintenance", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.TechnicalMaintenance))))
-    }
-
-    get("/services/lighting"){
-      renderView("/services/lighting", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.Lighting))))
-    }
-
-    get("/services/electrical-appliances"){
-      renderView("/services/electrical_appliances", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.ElectricalAppliances))))
-    }
-
-    get("/services/telecommunication-technologies"){
-      renderView("/services/telecommunication_technologies", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.TelecommunicationTechnologies))))
-    }
-
   }
+
+  logger.info("Initializing dynamic pages routes...")
+  get("/prices"){
+    renderView("/prices", ("servicesMap" -> loadServices(AvailableServiceGroups.*)))
+  }
+
+  get("/services/electrical-works"){
+    renderView("/services/electrical_works", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.ElectricalWorks))))
+  }
+
+  get("/services/husband-for-an-hour"){
+    renderView("/services/husband_for_an_hour", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.HusbandForAnHour))))
+  }
+
+  get("/services/technical-maintenance"){
+    renderView("/services/technical_maintenance", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.TechnicalMaintenance))))
+  }
+
+  get("/services/lighting"){
+    renderView("/services/lighting", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.Lighting))))
+  }
+
+  get("/services/electrical-appliances"){
+    renderView("/services/electrical_appliances", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.ElectricalAppliances))))
+  }
+
+  get("/services/telecommunication-technologies"){
+    renderView("/services/telecommunication_technologies", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.TelecommunicationTechnologies))))
+  }
+  logger.info("Done initializing routes.")
+
 
   /**
    * Renders view with the specified name and set of attributes to be passed to this view
