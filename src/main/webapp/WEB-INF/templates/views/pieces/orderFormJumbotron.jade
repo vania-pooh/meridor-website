@@ -1,16 +1,20 @@
 - import ru.meridor.website.processing.{OrderFormAdditionalData => AD}
 - import AD._
+- import java.util.Date
 -@ val phoneTitle: String = "Чтобы заказать услуги, введите номер телефона:"
 -@ val nameTitle: String = "Как вас зовут:"
 -@ val additionalData: AD = None
+- val timestamp = new Date().getTime
 
 form.form-order.form-inline{:action => '/api/order', :method => 'post'}
-    label(for='phone')
+    - val phoneId = "client_name" + timestamp
+    label(for=phoneId)
         = phoneTitle + " "
-    input.span2{:name => 'phone', :id => 'phone', :type => 'text', :placeholder => '+79051234567'}
-    label(for='client_name')
+    input.span2.phone{:name => 'phone', :id => phoneId, :type => 'text', :placeholder => '+79051234567'}
+    - val clientNameId = "client_name" + timestamp
+    label(for=clientNameId)
         = nameTitle
-    input.input-large.input-fo-name{:name => 'client_name', :id => 'client_name', :type => 'text', :placeholder => 'Иван Иванов'}
+    input.input-large.input-fo-name.client_name{:name => 'client_name', :id => clientNameId, :type => 'text', :placeholder => 'Иван Иванов'}
     - val additionalDataVal: String = additionalData.toString
     input{:name => 'additional_data', :type => 'hidden', :value => additionalDataVal}
     button.button{:title => 'Нажмите, чтобы отправить заказ'}
