@@ -28,6 +28,9 @@ $(document).ready(function(){
     (function(){
         $('form.form-order').each(function(){
             var form = $(this);
+            var phoneField = form.find('input.phone');
+            var clientNameField = form.find('input.client_name');
+            var button = form.find('button');
 
             var isPhoneValid = function(){
                 var phone = getFormData()['phone'];
@@ -49,14 +52,48 @@ $(document).ready(function(){
                 return data;
             };
 
-            var button = form.find('button');
-            //TODO: implement values saving in the local storage
+            var getStorageKey = function(fieldName){
+                return 'mr_order_form' + fieldName;
+            };
+
+            var saveFormDataToStorage = function(formData){
+                if (!!$.getStorage()){
+                    var storage = $.getStorage();
+                    for (var name in formData){
+                        var value = formData[name];
+                        if (
+                            !!value
+                            && ( (name == 'phone') || (name == 'client_name') )
+                        ){
+                            storage.setItem(getStorageKey(name), value);
+                        }
+                    }
+                }
+            };
+
+            var loadFormDataFromStorage = function(){
+                if (!!$.getStorage()){
+                    var storage = $.getStorage();
+                    var phone = storage.getItem(getStorageKey('phone'));
+                    if (!!phone){
+                        phoneField.val(phone);
+                    }
+                    var clientName = storage.getItem(getStorageKey('client_name'));
+                    if (!!clientName){
+                        clientNameField.val(clientName);
+                    }
+                }
+            };
+
+            //Submit button click handler
             button.click(function(){
                 if (isFormValid()){
+                    var formData = getFormData();
+                    saveFormDataToStorage(formData);
                     $('#alert-loading').trigger('openModal');
                     $.ajax({
                         url: '/api/order',
-                        data: JSON.stringify(getFormData()),
+                        data: JSON.stringify(formData),
                         contentType: 'application/json; charset=utf-8',
                         dataType: 'json',
                         method: 'post'
@@ -80,6 +117,8 @@ $(document).ready(function(){
                 }
                 return false;
             });
+
+            loadFormDataFromStorage();
 
         });
 
