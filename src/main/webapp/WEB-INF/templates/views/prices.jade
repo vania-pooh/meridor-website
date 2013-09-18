@@ -6,6 +6,7 @@
 - attributes("description") = "Текущие расценки на все виды выполняемых работ. Калькулятор стоимости работ. Отправить заявку на выполнение работ."
 - attributes("pageCategory") = Prices
 -@ val servicesMap: Map[ServiceGroup, List[Service]]
+- val phoneTitle = "Чтобы заказать звонок, введите номер телефона: "
 
 .jumbotron
     .container
@@ -14,8 +15,8 @@
                 h1 Цены
             li
                 a(href='/') Главная
-        - render("pieces/orderFormJumbotron.jade", Map("additionalData" -> ad.Prices))
+        - render("pieces/orderFormJumbotron.jade", Map("phoneTitle" -> phoneTitle, "additionalData" -> ad.Prices))
 .container
     .case
         - render("pieces/pricesTable.jade", Map("servicesMap" -> servicesMap, "showGlobalTotals" -> true))
-        - render("pieces/orderForm.jade", Map("additionalData" -> ad.Prices))
+        - render("pieces/orderForm.jade", Map("phoneTitle" -> phoneTitle, "additionalData" -> ad.Prices))

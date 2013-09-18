@@ -180,6 +180,7 @@ object MessageProvider {
       case Telecommunication => "телекоммуникации"
       case Prices => "цены"
       case ElectricalBundle => "пакет \"Добрый электрик\""
+      case ComputerBundle => "пакет \"Компьютерный гений\""
       case LightingBundle => "пакет \"Яркий мир\""
       case HusbandForAnHourBundle => "пакет \"Муж на год\""
       case Contact => "контакты"
