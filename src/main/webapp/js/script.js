@@ -2,19 +2,22 @@ jQuery(document).ready(function() {
     //Making top navigation responsive
     (function(){
         var optionsList = '<option value="" selected>Навигация по сайту</option>';
-
+        var previousDepth = 0;
         $('.main-nav').find('li').each(function() {
             var $this   = $(this),
                 $anchor = $this.children('a'),
+                href = $anchor.attr('href'),
                 depth   = $this.parents('ul').length - 1,
-                indent  = '';
-            if( depth ) {
-                while( depth > 0 ) {
-                    indent += ' - ';
-                    depth--;
+                label = $anchor.text();
+            if (!!href){
+                if (depth < previousDepth){
+                    optionsList += '</optgroup>';
                 }
+                optionsList += '<option value="' + href + '">' + label + '</option>';
+            } else {
+                optionsList += '<optgroup label="' + label + '">';
             }
-            optionsList += '<option value="' + $anchor.attr('href') + '">' + indent + ' ' + $anchor.text() + '</option>';
+            previousDepth = depth;
         }).end().last()
             .after('<select class="responsive-nav">' + optionsList + '</select>');
 

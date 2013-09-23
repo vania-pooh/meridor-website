@@ -20,7 +20,7 @@ table{:id => serviceGroupName, :class => tableClass}
             th.inputs{:title => 'Сколько единиц измерения требуется выполнить'}
                 | Объем
                 a.i_clear{:href => 'javascript:void(0)', :title => 'Очистить раздел'}
-            th{:title => 'Стоимость каждого вида работ с учетом количества'} Полная стоимость
+            th.value{:title => 'Стоимость каждого вида работ с учетом количества'} Полная стоимость
 
     tbody
         - for (service <- services)

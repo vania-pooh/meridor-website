@@ -19,4 +19,4 @@
 .container
     .case
         - render("pieces/pricesTable.jade", Map("servicesMap" -> servicesMap, "showGlobalTotals" -> true))
-        - render("pieces/orderForm.jade", Map("phoneTitle" -> phoneTitle, "additionalData" -> ad.Prices))
+        - render("pieces/orderForm.jade", Map("phoneTitle" -> phoneTitle, "additionalData" -> ad.Prices, "isFirstOrderForm" -> false))
