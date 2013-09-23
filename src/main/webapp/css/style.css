@@ -48,6 +48,17 @@ h3 {
     padding: 14px 24px;
 }
 
+.jumbotron .text {
+    font-size: 30px;
+    line-height: 56px;
+    font-weight: 300;
+}
+
+.jumbotron .text .highlighted {
+    color: #010101;
+    font-size: 33px;
+}
+
 /* Supporting marketing content */
 .marketing {
     margin: 60px 0;
@@ -950,6 +961,7 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
     .form-order .input-fo-tell {
         width: 165px;
     }
+
 }
 
 /* Portrait tablet to landscape and desktop */
@@ -968,12 +980,20 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
         margin: 10px auto 0 auto;
     }
 
+    .form-order button, .form-order label {
+        margin-top: 5px;
+    }
+
     #myTab li a {
         font-size: 14px;
     }
 
     .table-ceny h2 {
         margin-left: 0;
+    }
+
+    .table-ceny .inputs input {
+        width: 40px;
     }
 }
 
@@ -1030,6 +1050,10 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
         padding-left: 36px;
     }
 
+    table.prices caption h2 {
+        font-size: 18px;
+    }
+
     .my-bordered {
         border-right: 0;
     }
@@ -1042,12 +1066,24 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
         display: block;
     }
 
+    .form-order label, .form-order input, .form-order button {
+        font-size: 12px;
+    }
+
+    .form-order button {
+        margin-top: 5px;
+    }
+
     #myTab li a {
         font-size: 14px;
     }
 
     #myTab li {
         float: none;
+    }
+
+    .table {
+        font-size: 12px;
     }
 
     .table-ceny h2 {
@@ -1057,6 +1093,28 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
     .jumbotron {
         padding-left: 20px;
         padding-right: 20px;
+        font-size: 60%;
+    }
+
+    .jumbotron .text {
+        font-size: 18px;
+    }
+
+    .jumbotron .text .highlighted, .jumbotron h1 {
+        font-size: 20px;
+    }
+
+    table.table-ceny tfoot,
+    .tables > tfoot,
+    table.table-ceny td.inputs,
+    table.table-ceny th.inputs,
+    table.table-ceny td.value,
+    table.table-ceny th.value{
+        display: none !important;
+    }
+
+    .my-bordered:before {
+        border-style: none;
     }
 
 }
@@ -1074,7 +1132,12 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
     }
 
     .case {
-        padding: 50px 20px 20px 20px;
+        padding: 20px;
+    }
+
+    .case h2{
+        font-size: 16px;
+        /*line-height: 60px;*/
     }
 
     .article-nav-left {
@@ -1086,4 +1149,21 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
         top: 15px;
         right: 20px;
     }
+
+    .jumbotron {
+        display: none;
+    }
+
+    table.prices caption h2 {
+        font-size: 16px;
+    }
+
+    [class*="header_ico"] {
+        font-size: 16px;
+        font-weight: bold;
+        padding: 0;
+        background-image: none;
+        min-height: 20px;
+    }
+
 }
