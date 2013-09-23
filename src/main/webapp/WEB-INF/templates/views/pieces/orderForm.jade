@@ -4,10 +4,11 @@
 -@ val phoneTitle: String = "Чтобы заказать услуги, введите номер телефона:"
 -@ val nameTitle: String = "Как вас зовут:"
 -@ val additionalData: AD = None
+-@ val isFirstOrderForm: Boolean = true
 - val timestamp = new Date().getTime
 
 form.well.form-order.form-inline{:action => '/api/order', :method => 'post'}
-    - val phoneId = "client_name" + timestamp
+    - val phoneId = "phone" + timestamp
     label(for=phoneId)
         = phoneTitle + " "
     input.input-large.input-fo-tell.phone{:name => 'phone', :id => phoneId, :type => 'text', :placeholder => '+79051234567'}
@@ -20,4 +21,5 @@ form.well.form-order.form-inline{:action => '/api/order', :method => 'post'}
     button.button{:title => 'Нажмите, чтобы отправить заказ'}
         | Заказать
         i.icon-share-alt
-- render("orderFormAlerts.jade")
+- if (isFirstOrderForm)
+    - render("orderFormAlerts.jade")

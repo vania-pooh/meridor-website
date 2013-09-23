@@ -8,18 +8,18 @@ table.table.tables
             td
                 - for ((serviceGroup, services) <- servicesMap)
                     - render("serviceGroupPriceTable.jade", Map("serviceGroup" -> serviceGroup, "services" -> services, "showTableCaption" -> showTableCaption))
-    tfoot
-        tr
-            td
-                table.table
-                    tbody
+    - if (showGlobalTotals)
+        tfoot
+            tr
+                td
+                    table.table
                         tr
-                            - val colspan = if (showGlobalTotals) 3 else 5
-                            td{:colspan => colspan}
+                            td
                                 | &nbsp;
                                 -# a.button(href='javascript:void(0)')
                                 -#    | Сохранить расчет
                                 -#    i.icon-download-alt
-                            - if (showGlobalTotals)
-                                td Итого:
-                                td#totalPrice{:title => 'Отображает полную стоимость работ'} 0
+                            td &nbsp;
+                            td &nbsp;
+                            td Итого:
+                            td#totalPrice{:title => 'Отображает полную стоимость работ'} 0

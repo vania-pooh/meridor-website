@@ -23,10 +23,9 @@ html(lang='en' itemscope itemtype='http://schema.org/WebPage')
         meta{:property => "og:site_name", :content => 'Компания "Меридор"'}
         - val finalTitle = "Компания \"Меридор\" | " + {if (pageTitleCategory.length() > 0) pageTitleCategory + " | " else "" } + title
         meta{:property => "og:title", :content => finalTitle}
-        meta{:name => "title", :itemprop => "name", :content => finalTitle}
         - val ogType = if (isRootUrl(absoluteUrl)) "website" else "article.section"
         meta{:property => "og:type", :content => ogType}
-        meta{:property => "og:description", :itemprop => "description", :content => description}
+        meta{:property => "og:description", :content => description}
         meta{:property => "og:url", :content => absoluteUrl}
         -val logoAbsoluteUrl = absoluteUrlFromRelative("/img/logo.png")
         meta{:property => "og:image", :content => logoAbsoluteUrl}
@@ -49,6 +48,11 @@ html(lang='en' itemscope itemtype='http://schema.org/WebPage')
         link{:rel => 'apple-touch-icon-precomposed', :href => '/ico/apple-touch-icon-57-precomposed.png'}
         link{:rel => 'shortcut icon', :href => '/ico/favicon.ico'}
     body
+        -# Schema.org metadata
+        .hidden
+            span(itemprop="name")=title
+            span(itemprop="description")=description
+
         -# Site header and navigation menu
         .masthead
             .container
@@ -129,7 +133,6 @@ html(lang='en' itemscope itemtype='http://schema.org/WebPage')
                         a(href='/prices') Цены
                     -# li{:class => {if (pageCategory.equals(Contact)) "active" else ""}}
                     -#    a(href='/contact') Контакты
-
         -# Yandex.Metrika counter
         script(type="text/javascript") (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter22343563 = new Ya.Metrika({id:22343563, webvisor:true, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");
         noscript
