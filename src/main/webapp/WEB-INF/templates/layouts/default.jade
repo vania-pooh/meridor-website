@@ -21,7 +21,7 @@ html(lang='en' itemscope itemtype='http://schema.org/WebPage')
         meta{:name => 'description', :content => description}
         meta{:name => 'author', :content => 'Компания "Меридор"'}
         meta{:property => "og:site_name", :content => 'Компания "Меридор"'}
-        - val finalTitle = "Компания \"Меридор\" | " + {if (pageTitleCategory.length() > 0) pageTitleCategory + " | " else "" } + title
+        - val finalTitle = title + {if (pageTitleCategory.length() > 0) " | " + pageTitleCategory else "" } + " | Компания \"Меридор\""
         meta{:property => "og:title", :content => finalTitle}
         - val ogType = if (isRootUrl(absoluteUrl)) "website" else "article.section"
         meta{:property => "og:type", :content => ogType}
