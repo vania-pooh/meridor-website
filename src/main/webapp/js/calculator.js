@@ -33,7 +33,7 @@
         };
 
         var parsePrice = function(s){
-            var price = parseFloat(s.replace(/\s|&nbsp;/g, ''));
+            var price = parseFloat(s.replace(/\s|&nbsp;|,|\.|'/g, ''));
             return !isNaN(price) ? price : 0;
         };
 
