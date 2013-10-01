@@ -2,13 +2,17 @@ package ru.meridor.website
 
 import org.fusesource.scalate.scaml.ScamlOptions
 import ru.meridor.diana.db.entities.{Service, ServiceGroup}
-import ru.meridor.website.processing.AvailableServiceGroups
+import ru.meridor.website.processing.{LastModifiedSupport, AvailableServiceGroups}
 import ru.meridor.diana.log.LoggingSupport
+import java.util.Date
+import ru.meridor.website.processing.HeaderUtils._
+import ru.meridor.diana.db.entities.ServiceGroup
+import scala.Some
 
 /**
  * A servlet used to process HTML pages requests
  */
-class PagesServlet extends WebsiteStack with LoggingSupport {
+class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSupport {
 
   /**
    * HTML minification settings
@@ -26,10 +30,10 @@ class PagesServlet extends WebsiteStack with LoggingSupport {
     //Core routes
     ("/" -> "/index"),
     ("/bundles" -> "/bundles"),
-    ("/contact" -> "/contact")
+    ("/contact" -> "/contact"),
 
     //Articles routes
-//    ("/articles/electrical-tools" -> "/articles/electrical_tools"),
+    ("/articles/electrical-tools" -> "/articles/electrical_tools")
 //    ("/articles/wires-and-cables" -> "/articles/wires_and_cables"),
 //    ("/articles/apartment-wiring" -> "/articles/apartment_wiring"),
 //    ("/articles/safe-electricity" -> "/articles/safe_electricity"),
@@ -42,40 +46,67 @@ class PagesServlet extends WebsiteStack with LoggingSupport {
     val route = staticRoute._1
     val viewName = staticRoute._2
     get(route){
-	    renderView(viewName)
+	    processView(viewName)
     }
   }
 
   logger.info("Initializing dynamic pages routes...")
   get("/prices"){
-    renderView("/prices", ("servicesMap" -> loadServices(AvailableServiceGroups.*)))
+    processView("/prices", ("servicesMap" -> loadServices(AvailableServiceGroups.*)))
   }
 
   get("/services/electrical-works"){
-    renderView("/services/electrical_works", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.ElectricalWorks))))
+    processView("/services/electrical_works", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.ElectricalWorks))))
   }
 
   get("/services/husband-for-an-hour"){
-    renderView("/services/husband_for_an_hour", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.HusbandForAnHour))))
+    processView("/services/husband_for_an_hour", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.HusbandForAnHour))))
   }
 
   get("/services/technical-maintenance"){
-    renderView("/services/technical_maintenance", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.TechnicalMaintenance))))
+    processView("/services/technical_maintenance", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.TechnicalMaintenance))))
   }
 
   get("/services/lighting"){
-    renderView("/services/lighting", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.Lighting))))
+    processView("/services/lighting", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.Lighting))))
   }
 
   get("/services/electrical-appliances"){
-    renderView("/services/electrical_appliances", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.ElectricalAppliances))))
+    processView("/services/electrical_appliances", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.ElectricalAppliances))))
   }
 
   get("/services/telecommunication-technologies"){
-    renderView("/services/telecommunication_technologies", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.TelecommunicationTechnologies))))
+    processView("/services/telecommunication_technologies", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.TelecommunicationTechnologies))))
   }
   logger.info("Done initializing routes.")
 
+
+  /**
+   * Processes view with the specified name and set of attributes to be passed to this view.
+   * Processing includes sending Last-Modified header and handling If-Modified-Since header
+   */
+  private def processView(viewName: String, attributes: (String, Any)*): String = {
+    import ru.meridor.website.processing.HeaderUtils._
+    ifModifiedSinceDate(request) match {
+      case Some(date) => {
+        val lastModificationDate: Date = new Date(lastModificationTimestamp(viewName, attributes:_*))
+        if (date after lastModificationDate)
+          halt(
+            status = 304,
+            reason = "Not Modified"
+          )
+          else renderViewWithLastModifiedHeader(viewName, attributes:_*)
+      }
+      case None => renderViewWithLastModifiedHeader(viewName, attributes:_*)
+    }
+  }
+
+  private def renderViewWithLastModifiedHeader(viewName: String, attributes: (String, Any)*): String = {
+    response.setHeader("Last-Modified", dateToHeaderString(
+      new Date(lastModificationTimestamp(viewName, attributes:_*)))
+    )
+    renderView(viewName, attributes:_*)
+  }
 
   /**
    * Renders view with the specified name and set of attributes to be passed to this view

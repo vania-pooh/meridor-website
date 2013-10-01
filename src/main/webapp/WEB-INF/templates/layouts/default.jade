@@ -84,11 +84,11 @@ html(lang='en' itemscope itemtype='http://schema.org/WebPage')
                                 a(href='/prices') Цены
                             li{:class => {if (pageCategory.equals(Contact)) "active" else ""}}
                                 a(href='/contact') Контакты
-                            -#li{:class => {if (pageCategory.equals(Articles)) "deeper active" else "deeper"}}
-                            -#    a(href='javascript:void(0)') Прочти
-                            -#    ul
-                            -#        li
-                            -#            a(href='/articles/electrical-tools') Инструмент электрика
+                            li{:class => {if (pageCategory.equals(Articles)) "deeper active" else "deeper"}}
+                                a(href='javascript:void(0)') Прочти
+                                ul
+                                    li
+                                        a(href='/articles/electrical-tools') Инструмент электрика
                     .span3
                         .tell.pull-right
                             span (812) 929 89 96
@@ -124,6 +124,9 @@ html(lang='en' itemscope itemtype='http://schema.org/WebPage')
                         br
                         | Дизайн и верстка -&nbsp;
                         a(href='http://an-kor.net') an-kor.net
+                        br
+                        | Изображения -&nbsp;
+                        a(href='http://lori.ru') фотобанк Лори
                 ul.nav
                     li{:class => {if (pageCategory.equals(Home)) "active" else ""}}
                         a(href='/') Главная
@@ -131,8 +134,8 @@ html(lang='en' itemscope itemtype='http://schema.org/WebPage')
                         a(href='/bundles') Пакеты услуг
                     li{:class => {if (pageCategory.equals(Prices)) "active" else ""}}
                         a(href='/prices') Цены
-                    -# li{:class => {if (pageCategory.equals(Contact)) "active" else ""}}
-                    -#    a(href='/contact') Контакты
+                    li{:class => {if (pageCategory.equals(Contact)) "active" else ""}}
+                        a(href='/contact') Контакты
         -# Yandex.Metrika counter
         script(type="text/javascript") (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter22343563 = new Ya.Metrika({id:22343563, webvisor:true, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");
         noscript
