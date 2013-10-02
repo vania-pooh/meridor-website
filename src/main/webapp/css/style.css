@@ -962,11 +962,31 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
         width: 165px;
     }
 
+    .table-ceny .inputs input {
+        width: 80px;
+    }
+
+}
+
+@media (min-width: 979px) and (max-width: 1200px) {
+
+    .table-ceny .inputs input {
+        width: 60px;
+    }
+
+    .form-order label, .form-order input, .form-order button {
+        font-size: 14px;
+    }
+
 }
 
 /* Portrait tablet to landscape and desktop */
 @media (min-width: 768px) and (max-width: 979px) {
-    /*.form-order button[type="submit"] {display: table; margin: 0 auto;}*/
+
+    .form-order {
+        margin-bottom: 0;
+    }
+
     .form-order label {
         display: block;
     }
@@ -974,14 +994,19 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
     .form-order input {
         display: block;
         margin-top: 10px;
+        width: auto;
     }
 
     .jumbotron .form-order input {
-        margin: 10px auto 0 auto;
+        margin: 5px auto 0 auto;
     }
 
     .form-order button, .form-order label {
         margin-top: 5px;
+    }
+
+    .form-order label, .form-order input, .form-order button {
+        font-size: 12px;
     }
 
     #myTab li a {
