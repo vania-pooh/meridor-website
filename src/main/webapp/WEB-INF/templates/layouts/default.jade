@@ -33,9 +33,7 @@ html(lang='en' itemscope itemtype='http://schema.org/WebPage')
         title= finalTitle
 
         -# Stylesheets
-        link{:href => '/css/bootstrap.min.css', :rel => 'stylesheet'}
-        link{:href => '/css/bootstrap-responsive.min.css', :rel => 'stylesheet'}
-        link{:href => '/css/style.css', :rel => 'stylesheet'}
+        link{:href => '/style.css', :rel => 'stylesheet'}
 
         -# HTML5 shim, for IE6-8 support of HTML5 elements
         /[if lt IE 9]
@@ -143,11 +141,5 @@ html(lang='en' itemscope itemtype='http://schema.org/WebPage')
                 img(src="//mc.yandex.ru/watch/22343563" style="position:absolute; left:-9999px;" alt="")
         script(type="text/javascript") (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-44153703-1', 'meridor.ru'); ga('send', 'pageview');
 
-        -# Javascript files
-        script(src='/js/jquery-1.9.1.min.js')
-        script(src='/js/jquery.easyModal.js')
-        script(src='/js/bootstrap.min.js')
-        script(src='/js/script.js')
-        script(src='/js/calculator.js')
-        script(src='/js/clientStorage.js')
-        script(src='/js/order.js')
+        -# Compressed Javascript
+        script(src='/script.js')
