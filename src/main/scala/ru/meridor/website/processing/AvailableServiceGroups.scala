@@ -8,7 +8,7 @@ object AvailableServiceGroups {
   private var availableGroups = List[String]()
 
   val ElectricalWorks = defineGroup("electrical_works")
-  val HusbandForAnHour = defineGroup("husband_for_an_hour")
+  val CallElectrician = defineGroup("call_electrician")
   val TechnicalMaintenance = defineGroup("technical_maintenance")
   val Lighting = defineGroup("lighting")
   val ElectricalAppliances = defineGroup("electrical_appliances")
@@ -25,7 +25,7 @@ object AvailableServiceGroups {
 
   def headerClass(serviceGroupName: String): String = serviceGroupName match {
     case ElectricalWorks => "electrical_works"
-    case HusbandForAnHour => "husband_for_an_hour"
+    case CallElectrician => "call_electrician"
     case TechnicalMaintenance => "technical_maintenance"
     case Lighting => "lighting"
     case ElectricalAppliances => "electrical_appliances"

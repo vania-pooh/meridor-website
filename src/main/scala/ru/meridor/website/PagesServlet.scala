@@ -1,11 +1,11 @@
 package ru.meridor.website
 
 import org.fusesource.scalate.scaml.ScamlOptions
-import ru.meridor.diana.db.entities.{Service, ServiceGroup}
+import ru.meridor.diana.db.entities.Service
 import ru.meridor.website.processing.{LastModifiedSupport, AvailableServiceGroups}
 import ru.meridor.diana.log.LoggingSupport
+import ru.meridor.website.processing.RequestUtils._
 import java.util.Date
-import ru.meridor.website.processing.HeaderUtils._
 import ru.meridor.diana.db.entities.ServiceGroup
 import scala.Some
 
@@ -28,12 +28,12 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
   logger.info("Initializing static pages routes...")
   for (staticRoute <- Array(
     //Core routes
-    ("/" -> "/index"),
-    ("/bundles" -> "/bundles"),
-    ("/contact" -> "/contact"),
+    "/" -> "/index",
+    "/bundles" -> "/bundles",
+    "/contact" -> "/contact",
 
     //Articles routes
-    ("/articles/electrical-tools" -> "/articles/electrical_tools")
+    "/articles/electrical-tools" -> "/articles/electrical_tools"
 //    ("/articles/wires-and-cables" -> "/articles/wires_and_cables"),
 //    ("/articles/apartment-wiring" -> "/articles/apartment_wiring"),
 //    ("/articles/safe-electricity" -> "/articles/safe_electricity"),
@@ -52,31 +52,35 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
 
   logger.info("Initializing dynamic pages routes...")
   get("/prices"){
-    processView("/prices", ("servicesMap" -> loadServices(AvailableServiceGroups.*)))
+    processView("/prices", "servicesMap" -> loadServices(AvailableServiceGroups.*))
   }
 
   get("/services/electrical-works"){
-    processView("/services/electrical_works", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.ElectricalWorks))))
+    processView("/services/electrical_works", "servicesMap" -> loadServices(List[String](AvailableServiceGroups.ElectricalWorks)))
   }
 
   get("/services/husband-for-an-hour"){
-    processView("/services/husband_for_an_hour", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.HusbandForAnHour))))
+    permanentRedirect("/services/call-electrician")
+  }
+
+  get("/services/call-electrician"){
+    processView("/services/call_electrician", "servicesMap" -> loadServices(List[String](AvailableServiceGroups.CallElectrician)))
   }
 
   get("/services/technical-maintenance"){
-    processView("/services/technical_maintenance", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.TechnicalMaintenance))))
+    processView("/services/technical_maintenance", "servicesMap" -> loadServices(List[String](AvailableServiceGroups.TechnicalMaintenance)))
   }
 
   get("/services/lighting"){
-    processView("/services/lighting", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.Lighting))))
+    processView("/services/lighting", "servicesMap" -> loadServices(List[String](AvailableServiceGroups.Lighting)))
   }
 
   get("/services/electrical-appliances"){
-    processView("/services/electrical_appliances", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.ElectricalAppliances))))
+    processView("/services/electrical_appliances", "servicesMap" -> loadServices(List[String](AvailableServiceGroups.ElectricalAppliances)))
   }
 
   get("/services/telecommunication-technologies"){
-    processView("/services/telecommunication_technologies", ("servicesMap" -> loadServices(List[String](AvailableServiceGroups.TelecommunicationTechnologies))))
+    processView("/services/telecommunication_technologies", "servicesMap" -> loadServices(List[String](AvailableServiceGroups.TelecommunicationTechnologies)))
   }
   logger.info("Done initializing routes.")
 
@@ -86,15 +90,11 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
    * Processing includes sending Last-Modified header and handling If-Modified-Since header
    */
   private def processView(viewName: String, attributes: (String, Any)*): String = {
-    import ru.meridor.website.processing.HeaderUtils._
-    ifModifiedSinceDate(request) match {
+    ifModifiedSinceDate match {
       case Some(date) => {
         val lastModificationDate: Date = new Date(lastModificationTimestamp(viewName, attributes:_*))
         if (date after lastModificationDate)
-          halt(
-            status = 304,
-            reason = "Not Modified"
-          )
+          notModified
           else renderViewWithLastModifiedHeader(viewName, attributes:_*)
       }
       case None => renderViewWithLastModifiedHeader(viewName, attributes:_*)

@@ -10,7 +10,7 @@ import ScalateKeys._
 object WebsiteBuild extends Build {
   val Organization = "ru.meridor"
   val Name = "website"
-  val Version = "0.1.0"
+  val Version = "0.1.4"
   val ScalaVersion = "2.10.0"
   val ScalatraVersion = "2.2.0"
 
