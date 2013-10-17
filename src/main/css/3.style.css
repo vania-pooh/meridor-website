@@ -748,7 +748,7 @@ th .i_clear {
 .total-summ span {padding-left: 40px;}*/
 
 .electrical_works,
-.husband_for_an_hour,
+.call_electrician,
 .technical_maintenance,
 .lighting,
 .electrical_appliances,
@@ -760,7 +760,7 @@ th .i_clear {
     background-position: 0 14px;
 }
 
-.husband_for_an_hour {
+.call_electrician {
     background-position: 0 -60px;
 }
 

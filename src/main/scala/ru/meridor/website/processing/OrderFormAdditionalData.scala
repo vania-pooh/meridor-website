@@ -15,7 +15,7 @@ object OrderFormAdditionalData {
 
   val None = define("none")
   val ElectricalWorks = define("electrical_works")
-  val HusbandForAnHour = define("husband_for_an_hour")
+  val CallElectrician = define("call_electrician")
   val TechnicalMaintenance = define("technical_maintenance")
   val Lighting = define("lighting")
   val ElectricalAppliances = define("electrical_appliances")
@@ -24,7 +24,6 @@ object OrderFormAdditionalData {
   val ElectricalBundle = define("electrical_bundle")
   val ComputerBundle = define("computer_bundle")
   val LightingBundle = define("lighting_bundle")
-  val HusbandForAnHourBundle = define("husband_for_an_hour_bundle")
   val Contact = define("contact")
 
   def getAvailableValues = availableValues.toMap
