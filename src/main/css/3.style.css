@@ -270,7 +270,7 @@ h3 {
     padding: 20px 30px;
     border: 1px solid #D6D6D0;
     border-top: 0;
-    color: #555555;
+    color: #222222;
     background-color: #F9F9F9;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -680,6 +680,12 @@ img.pull-center {
 
 .table-ceny th, .table-ceny td {
     vertical-align: middle;
+}
+
+.table-ceny .subcategory_header a {
+    font-size: 150%;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .table-ceny tr td:first-child, .table-ceny tr th:first-child {
