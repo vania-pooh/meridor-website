@@ -1081,7 +1081,7 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
         padding-left: 36px;
     }
 
-    table.prices caption h2 {
+    table.prices caption h2, .table-ceny .subcategory_header a {
         font-size: 18px;
     }
 
@@ -1189,7 +1189,7 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
         display: none;
     }
 
-    table.prices caption h2 {
+    table.prices caption h2, .table-ceny .subcategory_header a {
         font-size: 16px;
     }
 
