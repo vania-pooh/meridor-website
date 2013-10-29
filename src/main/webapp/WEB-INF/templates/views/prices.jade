@@ -1,11 +1,11 @@
 - import ru.meridor.website.ui.PageCategory._
 - import ru.meridor.website.processing.{OrderFormAdditionalData => ad}
-- import ru.meridor.diana.db.entities.{Service, ServiceGroup}
+- import ru.meridor.diana.db.entities.{ServiceGroup, ServiceGroupContents}
 - attributes("title") = "Цены на электромонтажные работы"
 - attributes("keywords") = "цены на электромонтажные работы, электромонтаж цены, цены электромонтажных работ, электромонтажные работы прайс, электромонтаж прайс"
 - attributes("description") = "Текущие расценки на все виды выполняемых работ. Калькулятор стоимости работ. Отправить заявку на выполнение работ."
 - attributes("pageCategory") = Prices
--@ val servicesMap: Map[ServiceGroup, List[Service]]
+-@ val servicesMap: Map[ServiceGroup, ServiceGroupContents]
 - val phoneTitle = "Чтобы заказать звонок, введите номер телефона: "
 
 .jumbotron

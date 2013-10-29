@@ -1,13 +1,15 @@
-- import ru.meridor.diana.db.entities.{Service, ServiceGroup}
--@ val servicesMap: Map[ServiceGroup, List[Service]]
+- import ru.meridor.diana.db.entities.{Service, ServiceGroup, ServiceGroupContents}
+-@ val servicesMap: Map[ServiceGroup, ServiceGroupContents]
 -@ val showGlobalTotals: Boolean = false
 - val showTableCaption = servicesMap.size > 1
 table.table.tables
     tbody
         tr
             td
-                - for ((serviceGroup, services) <- servicesMap)
-                    - render("serviceGroupPriceTable.jade", Map("serviceGroup" -> serviceGroup, "services" -> services, "showTableCaption" -> showTableCaption))
+                - for ((serviceGroup, serviceGroupContents) <- servicesMap)
+                    - val childGroupsData: Map[ServiceGroup, ServiceGroupContents] = serviceGroupContents.childGroupsData
+                    - val services: List[Service] = serviceGroupContents.services
+                    - render("serviceGroupPriceTable.jade", Map("serviceGroup" -> serviceGroup, "services" -> services, "childGroupsData" -> childGroupsData, "showTableCaption" -> showTableCaption))
     - if (showGlobalTotals)
         tfoot
             tr

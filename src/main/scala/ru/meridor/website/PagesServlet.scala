@@ -7,6 +7,7 @@ import ru.meridor.diana.log.LoggingSupport
 import ru.meridor.website.processing.RequestUtils._
 import java.util.Date
 import ru.meridor.diana.db.entities.ServiceGroup
+import ru.meridor.diana.db.entities.ServiceGroupContents
 import scala.Some
 
 /**
@@ -56,7 +57,7 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
   }
 
   get("/services/electrical-works"){
-    processView("/services/electrical_works", "servicesMap" -> loadServices(List[String](AvailableServiceGroups.ElectricalWorks)))
+    processView("/services/electrical_works", "servicesMap" -> loadServices(AvailableServiceGroups.ElectricalWorks :: Nil))
   }
 
   get("/services/husband-for-an-hour"){
@@ -64,23 +65,23 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
   }
 
   get("/services/call-electrician"){
-    processView("/services/call_electrician", "servicesMap" -> loadServices(List[String](AvailableServiceGroups.CallElectrician)))
+    processView("/services/call_electrician", "servicesMap" -> loadServices(AvailableServiceGroups.CallElectrician :: Nil))
   }
 
   get("/services/technical-maintenance"){
-    processView("/services/technical_maintenance", "servicesMap" -> loadServices(List[String](AvailableServiceGroups.TechnicalMaintenance)))
+    processView("/services/technical_maintenance", "servicesMap" -> loadServices(AvailableServiceGroups.TechnicalMaintenance :: Nil))
   }
 
   get("/services/lighting"){
-    processView("/services/lighting", "servicesMap" -> loadServices(List[String](AvailableServiceGroups.Lighting)))
+    processView("/services/lighting", "servicesMap" -> loadServices(AvailableServiceGroups.Lighting :: Nil))
   }
 
   get("/services/electrical-appliances"){
-    processView("/services/electrical_appliances", "servicesMap" -> loadServices(List[String](AvailableServiceGroups.ElectricalAppliances)))
+    processView("/services/electrical_appliances", "servicesMap" -> loadServices(AvailableServiceGroups.ElectricalAppliances :: Nil))
   }
 
   get("/services/telecommunication-technologies"){
-    processView("/services/telecommunication_technologies", "servicesMap" -> loadServices(List[String](AvailableServiceGroups.TelecommunicationTechnologies)))
+    processView("/services/telecommunication_technologies", "servicesMap" -> loadServices(AvailableServiceGroups.TelecommunicationTechnologies :: Nil))
   }
   logger.info("Done initializing routes.")
 
@@ -117,6 +118,8 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
     jade(viewName, attributes:_*)
   }
 
-  private def loadServices(groups: List[String]): Map[ServiceGroup, List[Service]] = Service.getByGroups(groups)
+  private def loadServices(topGroups: List[String]): Map[ServiceGroup, ServiceGroupContents] = Service.getByGroups(
+    ServiceGroup.topGroups filter (tg => topGroups.contains(tg.name)) map (g => g.name)
+  )
 
 }

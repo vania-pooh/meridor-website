@@ -170,8 +170,14 @@
                 saveTableStateToStorage(currentTable);
             });
 
+            //Fade toggle table main categories
             $('caption', currentTable).click(function(){
-                $('thead, tbody, tfoot', currentTable).fadeToggle(500);
+                $('thead, tbody.services, tbody.subcategory_header, tfoot', currentTable).fadeToggle(500);
+            });
+
+            //Fade toggle table subcategories
+            $('th.subcategory_header', currentTable).find('a').click(function(){
+                $(this).parent().parent().parent().next('tbody.subcategory_services').fadeToggle(500);
             });
 
             //Loading cells data
