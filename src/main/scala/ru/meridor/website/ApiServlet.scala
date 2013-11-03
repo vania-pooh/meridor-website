@@ -176,6 +176,7 @@ object MessageProvider {
       case TechnicalMaintenance => "техническое обслуживание"
       case Lighting => "освещение"
       case CallElectrician => "вызов электрика"
+      case RoomRepair => "ремонт квартир и офисов"
       case ElectricalAppliances => "электроприборы"
       case Telecommunication => "телекоммуникации"
       case Prices => "цены"
