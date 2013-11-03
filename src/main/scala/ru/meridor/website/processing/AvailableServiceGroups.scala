@@ -13,6 +13,7 @@ object AvailableServiceGroups {
   val Lighting = defineGroup("lighting")
   val ElectricalAppliances = defineGroup("electrical_appliances")
   val TelecommunicationTechnologies = defineGroup("telecommunication_technologies")
+  val RoomRepair = defineGroup("room_repair")
 
   private def defineGroup(groupName: String): String = {
     if (!availableGroups.contains(groupName)){
@@ -30,6 +31,7 @@ object AvailableServiceGroups {
     case Lighting => "lighting"
     case ElectricalAppliances => "electrical_appliances"
     case TelecommunicationTechnologies => "telecommunication_technologies"
+    case RoomRepair => "room_repair"
     case _ => ""
   }
 }

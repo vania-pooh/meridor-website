@@ -16,6 +16,7 @@ object OrderFormAdditionalData {
   val None = define("none")
   val ElectricalWorks = define("electrical_works")
   val CallElectrician = define("call_electrician")
+  val RoomRepair = define("room_repair")
   val TechnicalMaintenance = define("technical_maintenance")
   val Lighting = define("lighting")
   val ElectricalAppliances = define("electrical_appliances")

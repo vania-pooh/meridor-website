@@ -83,6 +83,11 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
   get("/services/telecommunication-technologies"){
     processView("/services/telecommunication_technologies", "servicesMap" -> loadServices(AvailableServiceGroups.TelecommunicationTechnologies :: Nil))
   }
+
+  get("/services/room-repair"){
+    processView("/services/room_repair", "servicesMap" -> loadServices(AvailableServiceGroups.RoomRepair :: Nil))
+  }
+
   logger.info("Done initializing routes.")
 
 

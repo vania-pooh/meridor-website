@@ -222,45 +222,44 @@ h3 {
     position: absolute;
     left: 50%;
     bottom: -16px;
-    background: url(../img/home9_2_03.png) no-repeat;
+    background: url(../img/jumbotron_arrow.png) no-repeat;
 }
 
 .jumbotron label, .jumbotron input, .jumbotron button, .jumbotron select, .jumbotron textarea {
     font-size: 16px;
 }
 
-[class*="header_ico"] {
+.index_section_ico {
     display: inline-block;
     min-height: 66px;
     padding-top: 13px;
     padding-left: 70px;
     font-size: 24px;
     color: #383b3e;
-    background-image: url(../img/header_ico.png);
-    background-repeat: no-repeat;
+    background: url(../img/index_section_ico.png) no-repeat;
 }
 
-.header_ico1 {
+.index_section_ico.call_electrician {
     background-position: 0 0;
 }
 
-.header_ico2 {
+.index_section_ico.electrical_works {
     background-position: 0 -116px;
 }
 
-.header_ico3 {
+.index_section_ico.technical_maintenance {
     background-position: 0 -214px;
 }
 
-.header_ico4 {
+.index_section_ico.lighting {
     background-position: 0 -329px;
 }
 
-.header_ico5 {
-    background-position: 0 -444px;
+.index_section_ico.room_repair {
+    background-position: 0 -438px;
 }
 
-.header_ico6 {
+.index_section_ico.electrical_appliances {
     background-position: 0 -558px;
 }
 
@@ -423,49 +422,52 @@ a.button[href]{
     /*text-decoration: none;*/
 }
 
-.breadcrumbs.pakety_uslug {
-    background-image: url(../img/pakety_uslug.png);
+.breadcrumbs_ico {
+    background: url(../img/breadcrumbs_ico.png) no-repeat;
 }
 
-.breadcrumbs.prochti {
-    background-image: url(../img/read.png);
-}
-
-[class*="breadcrumbs_ico"] {
-    background-image: url(../img/header_ico.png);
-    background-repeat: no-repeat;
-}
-
-.breadcrumbs_ico1 {
+.breadcrumbs_ico.call_electrician {
     background-position: 0 0;
 }
 
-.breadcrumbs_ico2 {
+.breadcrumbs_ico.electrical_works {
     background-position: 0 -116px;
 }
 
-.breadcrumbs_ico3 {
+.breadcrumbs_ico.technical_maintenance {
     background-position: 0 -214px;
 }
 
-.breadcrumbs_ico4 {
+.breadcrumbs_ico.lighting {
     background-position: 0 -329px;
 }
 
-.breadcrumbs_ico5 {
+.breadcrumbs_ico.telecommunication_technologies {
     background-position: 0 -444px;
 }
 
-.breadcrumbs_ico6 {
+.breadcrumbs_ico.electrical_appliances {
     background-position: 0 -558px;
 }
 
-.breadcrumbs.ceny {
-    background-image: url(../img/ceny.png);
+.breadcrumbs_ico.bundles {
+    background-position: 0 -650px;
 }
 
-.breadcrumbs.contacty {
-    background-image: url(../img/contacty.png);
+.breadcrumbs_ico.prices {
+    background-position: 0 -738px;
+}
+
+.breadcrumbs_ico.contact {
+    background-position: 0 -823px;
+}
+
+.breadcrumbs_ico.articles {
+    background-position: 0 -918px;
+}
+
+.breadcrumbs_ico.room_repair {
+    background-position: 0 -1012px;
 }
 
 .form-order {
@@ -670,48 +672,48 @@ img.pull-center {
     border-left-color: transparent;
 }
 
-.table-ceny {
+.table-prices {
     border: 0 none;
 }
 
-.table-ceny.withCaption thead, .table-ceny.withCaption tbody, .table-ceny.withCaption tfoot{
+.table-prices.withCaption thead, .table-prices.withCaption tbody, .table-prices.withCaption tfoot{
     display: none;
 }
 
-.table-ceny th, .table-ceny td {
+.table-prices th, .table-prices td {
     vertical-align: middle;
 }
 
-.table-ceny .subcategory_header a {
+.table-prices .subcategory_header a {
     font-size: 150%;
     text-decoration: underline;
     cursor: pointer;
 }
 
-.table-ceny tr td:first-child, .table-ceny tr th:first-child {
+.table-prices tr td:first-child, .table-prices tr th:first-child {
     width: 35%;
     padding-left: 25px;
 }
 
-.table.table-ceny {
+.table.table-prices {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
 }
 
-.table-ceny h1 {
+.table-prices h1 {
     margin-left: -36px;
     padding-left: 36px;
     text-align: left;
 }
 
-.table-ceny h2 {
+.table-prices h2 {
     margin-left: -36px;
     padding-left: 36px;
     text-align: left;
 }
 
-.table-ceny tfoot td {
+.table-prices tfoot td {
     font-size: 18px;
     color: #8f8f8f;
     background-color: #f9f9f9;
@@ -719,7 +721,7 @@ img.pull-center {
     border-right-color: transparent;
 }
 
-.table-ceny tr:last-child td {
+.table-prices tr:last-child td {
     width: 170px;
 }
 
@@ -742,48 +744,50 @@ th .i_clear {
     margin-top: 5px;
 }
 
-.table-ceny .inputs {
+.table-prices .inputs {
     width: 138px;
 }
 
-.table-ceny .inputs input {
+.table-prices .inputs input {
     margin-bottom: 0;
 }
 
-/*.total-summ {font-size: 18px; color: #8f8f8f;}
-.total-summ span {padding-left: 40px;}*/
-
-.electrical_works,
-.call_electrician,
-.technical_maintenance,
-.lighting,
-.electrical_appliances,
-.telecommunication_technologies {
-    background: url(../img/csg-51c1b5cedcdb1.png) no-repeat top left;
+.table-prices .electrical_works,
+.table-prices .call_electrician,
+.table-prices .technical_maintenance,
+.table-prices .lighting,
+.table-prices .electrical_appliances,
+.table-prices .telecommunication_technologies,
+.table-prices .room_repair {
+    background: url(../img/table_prices_ico.png) no-repeat top left;
 }
 
-.electrical_works {
+.table-prices .electrical_works {
     background-position: 0 14px;
 }
 
-.call_electrician {
+.table-prices .call_electrician {
     background-position: 0 -60px;
 }
 
-.technical_maintenance {
+.table-prices .technical_maintenance {
     background-position: 0 -140px;
 }
 
-.lighting {
+.table-prices .lighting {
     background-position: 0 -214px;
 }
 
-.electrical_appliances {
+.table-prices .electrical_appliances {
     background-position: 0 -364px;
 }
 
-.telecommunication_technologies {
+.table-prices .telecommunication_technologies {
     background-position: 0 -290px;
+}
+
+.table-prices .room_repair {
+    background-position: 0 -435px;
 }
 
 
@@ -807,7 +811,7 @@ th .i_clear {
 }
 
 #myTab > .active > a:before, #myTab > .active > a:hover:before, #myTab > .active > a:focus:before {
-    height: 0px;
+    height: 0;
 }
 
 #myTab > li > a {
@@ -829,31 +833,32 @@ th .i_clear {
     line-height: 45px;
     padding-left: 45px;
     font-size: 18px;
-    background-position: 13px 15px;
-    background-repeat: no-repeat;
+    background: no-repeat 13px 15px;
 }
 
-#myTab .ico-nav-tab1 a {
-    background-image: url(../img/services_open3_2_06.png);
+#myTab .ico-tab a {
+    background-image: url(../img/services_tab_ico.png);
 }
 
-#myTab .ico-nav-tab2 a {
-    background-image: url(../img/services_open3_2_08.png);
+#myTab .ico-tab.prices a {
+    background-position: 10px 15px;
 }
 
-#myTab .ico-nav-tab3 a {
-    background-image: url(../img/services_open3_2_03.png);
+#myTab .ico-tab.information a {
+    background-position: 10px -40px;
+}
+
+#myTab .ico-tab.order a {
+    background-position: 10px -99px;
+}
+
+#myTab .ico-tab.photos a {
+    background-position: 10px -152px;
 }
 
 .tab-content .tab-pane p, .tab-content .tab-pane ul, .tab-content .tab-pane ol {
     text-align: justify;
 }
-
-/*.case {position: relative; margin-bottom: 41px; padding: 20px 30px; border: 1px solid #e6e6e0; color: #555555; background-color: #f9f9f9;
--webkit-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;}
-.case:before {content: " "; display: block; width: 100%; height: 2px; position: absolute; left: 0; top: 0; background-color: #f4e816;}*/
 
 .muted_bg {
     margin: 0 55px;
@@ -968,7 +973,7 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
         width: 165px;
     }
 
-    .table-ceny .inputs input {
+    .table-prices .inputs input {
         width: 80px;
     }
 
@@ -976,7 +981,7 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
 
 @media (min-width: 979px) and (max-width: 1200px) {
 
-    .table-ceny .inputs input {
+    .table-prices .inputs input {
         width: 60px;
     }
 
@@ -1019,11 +1024,11 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
         font-size: 14px;
     }
 
-    .table-ceny h2 {
+    .table-prices h2 {
         margin-left: 0;
     }
 
-    .table-ceny .inputs input {
+    .table-prices .inputs input {
         width: 40px;
     }
 }
@@ -1064,7 +1069,7 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
         float: left;
     }
 
-    .table-ceny tr td:first-child, .table-ceny tr th:first-child {
+    .table-prices tr td:first-child, .table-prices tr th:first-child {
         padding-left: 5px;
     }
 
@@ -1076,12 +1081,12 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
         padding: 0;
     }
 
-    .table-ceny h1 {
+    .table-prices h1 {
         margin-left: 0;
         padding-left: 36px;
     }
 
-    table.prices caption h2, .table-ceny .subcategory_header a {
+    table.prices caption h2, .table-prices .subcategory_header a {
         font-size: 18px;
     }
 
@@ -1117,7 +1122,7 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
         font-size: 12px;
     }
 
-    .table-ceny h2 {
+    .table-prices h2 {
         margin-left: 0;
     }
 
@@ -1135,12 +1140,12 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
         font-size: 20px;
     }
 
-    table.table-ceny tfoot,
+    table.table-prices tfoot,
     .tables > tfoot,
-    table.table-ceny td.inputs,
-    table.table-ceny th.inputs,
-    table.table-ceny td.value,
-    table.table-ceny th.value{
+    table.table-prices td.inputs,
+    table.table-prices th.inputs,
+    table.table-prices td.value,
+    table.table-prices th.value{
         display: none !important;
     }
 
@@ -1189,11 +1194,11 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
         display: none;
     }
 
-    table.prices caption h2, .table-ceny .subcategory_header a {
+    table.prices caption h2, .table-prices .subcategory_header a {
         font-size: 16px;
     }
 
-    [class*="header_ico"] {
+    .index_section_ico {
         font-size: 16px;
         font-weight: bold;
         padding: 0;
