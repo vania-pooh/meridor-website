@@ -23,7 +23,7 @@
     .tab-content.mytab-tab-content
         #tab1.tab-pane.active
             - render("../pieces/pricesTable.jade", Map("servicesMap" -> servicesMap))
-            - render("../pieces/orderForm.jade", Map("phoneTitle" -> "Чтобы заказать установку приборов, введите номер телефона:", "additionalData" -> ad.ElectricalAppliances))
+            - render("../pieces/orderForm.jade", Map("phoneTitle" -> "Чтобы сделать заказ, введите номер телефона:", "additionalData" -> ad.ElectricalAppliances))
         #tab2.tab-pane
             p На первый взгляд может показаться, что подключение электроприборов – это пустяковая операция: купил – воткнул в розетку – работает. Действительно, это так для многих электроприборов, но не для всех. Существует целый класс мощных электроприборов, монтажу которых следует уделять особое внимание. Сюда относятся такие приборы как:
             ul
