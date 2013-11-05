@@ -170,14 +170,24 @@
                 saveTableStateToStorage(currentTable);
             });
 
+            //Fading duration
+            var FADING_DURATION = 500;
+
             //Fade toggle table main categories
             $('caption', currentTable).click(function(){
-                $('thead, tbody.services, tbody.subcategory_header, tfoot', currentTable).fadeToggle(500);
+                $('thead, tbody.services, tbody.subcategory_header, tfoot', currentTable).fadeToggle({
+                    duration: FADING_DURATION,
+                    start: function(){
+                        if ($('tbody.subcategory_services:visible', currentTable).length > 0){
+                            $('tbody.subcategory_services:visible', currentTable).fadeOut(FADING_DURATION);
+                        }
+                    }
+                });
             });
 
             //Fade toggle table subcategories
             $('th.subcategory_header', currentTable).find('a').click(function(){
-                $(this).parent().parent().parent().next('tbody.subcategory_services').fadeToggle(500);
+                $(this).parent().parent().parent().next('tbody.subcategory_services').fadeToggle(FADING_DURATION);
             });
 
             //Loading cells data
