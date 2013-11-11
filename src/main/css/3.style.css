@@ -860,6 +860,10 @@ th .i_clear {
     text-align: justify;
 }
 
+.tab-content .tab-pane a.big {
+    font-size: 120%;
+}
+
 .muted_bg {
     margin: 0 55px;
     padding: 20px 10px 10px 10px;
