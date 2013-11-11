@@ -860,6 +860,10 @@ th .i_clear {
     text-align: justify;
 }
 
+.tab-content .tab-pane a.big {
+    font-size: 120%;
+}
+
 .muted_bg {
     margin: 0 55px;
     padding: 20px 10px 10px 10px;
@@ -969,7 +973,7 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
         font-size: 32px;
     }
 
-    .form-order .input-fo-tell {
+    .form-order input[type=text] {
         width: 165px;
     }
 
@@ -987,6 +991,10 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
 
     .form-order label, .form-order input, .form-order button {
         font-size: 14px;
+    }
+
+    .form-order input[type=text] {
+        width: 120px;
     }
 
 }
