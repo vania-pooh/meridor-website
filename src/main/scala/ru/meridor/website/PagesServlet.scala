@@ -35,7 +35,7 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
 
     //Articles routes
     "/articles/electrical-tools" -> "/articles/electrical_tools",
-//    ("/articles/wires-and-cables" -> "/articles/wires_and_cables"),
+    ("/articles/wires-and-cables/classification" -> "/articles/wires_and_cables/classification"),
 //    ("/articles/apartment-wiring" -> "/articles/apartment_wiring"),
 //    ("/articles/safe-electricity" -> "/articles/safe_electricity"),
     "/articles/no-dust" -> "/articles/no_dust"
