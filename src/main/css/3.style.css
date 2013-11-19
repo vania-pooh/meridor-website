@@ -101,14 +101,22 @@ h3 {
 
 .main-nav .deeper > a {
     padding-right: 20px;
-    background-image: url(../img/home9_2_05.png);
     background-repeat: no-repeat;
-    background-position: 90% center;
     -webkit-border-radius: 5px 5px 0 0;
     -moz-border-radius: 5px 5px 0 0;
     border-radius: 5px 5px 0 0;
     text-decoration: none !important;
     cursor: default;
+}
+
+.main-nav > .deeper > a {
+    background-image: url(../img/menu_arrow_v.png);
+    background-position: 90% center;
+}
+
+.main-nav > .deeper > ul > .deeper > a {
+    background-image: url(../img/menu_arrow_h.png);
+    background-position: 98% center;
 }
 
 .main-nav .deeper.active > a {
@@ -128,8 +136,18 @@ h3 {
     border-color: #e6e6e0;
 }
 
-.main-nav .deeper:hover ul {
+.main-nav .deeper:hover > ul {
     display: block;
+}
+
+.main-nav .deeper .deeper {
+    position: relative;
+}
+
+.main-nav .deeper .deeper ul {
+    position: absolute;
+    top: 0;
+    left: 100%;
 }
 
 .main-nav ul {
@@ -158,7 +176,7 @@ h3 {
     font-size: 15px;
 }
 
-.main-nav ul li a:hover {
+.main-nav ul li a:hover, .main-nav .deeper .deeper:hover > a {
     text-decoration: none;
     background-color: #f4e816;
     -webkit-border-radius: 5px;
@@ -733,7 +751,7 @@ img.pull-center {
     height: 14px;
     margin-left: 13px;
     margin-top: 10px;
-    background: url(../img/i_clear.png) top no-repeat;
+    background: url(../img/clear_btn.png) top no-repeat;
 }
 
 .i_clear:hover {
