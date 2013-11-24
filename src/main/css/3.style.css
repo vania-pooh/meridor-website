@@ -20,12 +20,20 @@ h3 {
     font-size: 16px;
 }
 
+h4 {
+    font-size: 14px;
+}
+
 .case h2 {
     font-size: 24px;
 }
 
 .case h3 {
     font-size: 18px;
+}
+
+.case h4 {
+    font-size: 16px;
 }
 
 /* Custom container */
@@ -1193,6 +1201,10 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
         background-color: #f4f4f2;
     }
 
+    body {
+        font-size: 12px;
+    }
+
     .case {
         padding: 20px;
     }
@@ -1203,6 +1215,11 @@ table.prices caption h2, table.prices caption h2:hover, table.prices caption h2:
 
     .case h3{
         font-size: 14px;
+        font-weight: bold;
+    }
+
+    .case h4{
+        font-size: 12px;
         font-weight: bold;
     }
 
