@@ -160,8 +160,7 @@ html(lang='en' itemscope itemtype='http://schema.org/WebPage')
                                 img(src="http://counter.rambler.ru/top100.cnt?2955970" alt="Rambler's Top100" border="0")
                         |&nbsp;
                         -# Liveinternet.ru counter
-                        a(href="http://www.liveinternet.ru/click" target="_blank")<
-                            img(src="//counter.yadro.ru/logo?16.2" title="LiveInternet: показано число просмотров за 24 часа, посетителей за 24 часа и за сегодня" alt="" border="0" width="88" height="31")
+                        script(type="text/javascript") <!--document.write("<a href='http://www.liveinternet.ru/click' "+"target=_blank><img src='//counter.yadro.ru/hit?t39.2;r"+escape(document.referrer)+((typeof(screen)=="undefined")?"":";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+";"+Math.random()+"' alt='' title='LiveInternet' "+"border='0' width='31' height='31'><\/a>")//-->
         - if (includeAnalyticsScripts)
             -# Yandex.Metrika counter
             script(type="text/javascript") (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter22343563 = new Ya.Metrika({id:22343563, webvisor:true, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");
@@ -175,7 +174,5 @@ html(lang='en' itemscope itemtype='http://schema.org/WebPage')
             noscript
                 div(style='position: absolute; left: -10000px;')
                     img(src='//top-fwz1.mail.ru/counter?id=2415566;js=na' style='border: 0;' height='1' width='1' alt='Рейтинг@Mail.ru')
-            -# Liveinternet.ru Rating counter
-            script(type="text/javascript") //<![CDATA[ new Image().src = "//counter.yadro.ru/hit?r"+escape(document.referrer)+((typeof(screen)=="undefined")?"":";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+";"+Math.random();//]]>
         -# Compressed Javascript
         script(src='/script.js')
