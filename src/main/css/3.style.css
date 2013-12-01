@@ -552,8 +552,8 @@ form.well {
     padding-left: 20px;
 }
 
-.article img {
-    border: 9px solid #f4f4f2;
+.article img, .article iframe {
+    border: 9px solid #e4e4e2;
 }
 
 .article-nav-left, .article-nav-right {
@@ -582,20 +582,20 @@ form.well {
     background-position: 0 -20px;
 }
 
-img.pull-left {
+img.pull-left, iframe.pull-left {
     margin-right: 23px;
     margin-top: 5px;
 }
 
-p img.pull-left {
+p img.pull-left, p iframe.pull-left {
     margin-top: 20px;
 }
 
-img.pull-right {
+img.pull-right, iframe.pull-right {
     margin-left: 23px;
 }
 
-img.pull-center {
+img.pull-center, iframe.pull-center {
     display: block;
     margin: 0 auto;
 }
