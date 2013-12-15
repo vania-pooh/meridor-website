@@ -40,10 +40,10 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
     "/articles/wires-and-cables/connection" -> "/articles/wires_and_cables/connection",
 //    ("/articles/apartment-wiring" -> "/articles/apartment_wiring"),
 //    ("/articles/safe-electricity" -> "/articles/safe_electricity"),
-    "/articles/no-dust" -> "/articles/no_dust"
+    "/articles/no-dust" -> "/articles/no_dust",
 //    ("/articles/new-building-wiring" -> "/articles/new_building_wiring"),
 //    ("/articles/cottage-wiring" -> "/articles/cottage_wiring"),
-//    ("/articles/ground-connection" -> "/articles/ground_connection"),
+    "/articles/ground-connection/classification" -> "/articles/ground_connection/classification"
 //    ("/articles/standards" -> "/articles/standards")
   )){
     val route = staticRoute._1

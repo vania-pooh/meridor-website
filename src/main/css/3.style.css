@@ -317,7 +317,7 @@ h4 {
     text-align: center;
 }
 
-.case p {
+.case p, .case ul li, .case ol li {
     text-align: justify;
 }
 
