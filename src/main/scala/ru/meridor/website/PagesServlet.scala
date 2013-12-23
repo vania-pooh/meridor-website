@@ -43,7 +43,8 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
     "/articles/no-dust" -> "/articles/no_dust",
 //    ("/articles/new-building-wiring" -> "/articles/new_building_wiring"),
 //    ("/articles/cottage-wiring" -> "/articles/cottage_wiring"),
-    "/articles/ground-connection/classification" -> "/articles/ground_connection/classification"
+    "/articles/ground-connection/classification" -> "/articles/ground_connection/classification",
+    "/articles/lighting/classification" -> "/articles/lighting/classification"
 //    ("/articles/standards" -> "/articles/standards")
   )){
     val route = staticRoute._1
