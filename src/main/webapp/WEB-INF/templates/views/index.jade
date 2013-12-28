@@ -1,19 +1,13 @@
+- import ru.meridor.website.processing.{OrderFormAdditionalData => ad}
 - attributes("title") = "Электротехническая компания \"Меридор\""
-
 - attributes("useCustomTitle") = true
 - attributes("keywords") = "электромонтажные работы, техническое обслуживание, светодизайн, установка электроприборов, прокладка кабелей, ремонт электропроводки, установка розеток, установка выключателей, отделочные работы"
 - attributes("description") = "Проектирование, монтаж и техническое обслуживание электрических сетей в квартирах, торговых площадях и офисах. Дизайн и монтаж систем освещения."
 
 -# Jumbotron section
 .jumbotron
-    .container
-        p.text
-            | По результатам опросов 83% граждан России
-            br
-            | не уверены в безопасности своего жилища.
-            br
-            span.highlighted А Вы хотите быть уверены?
-            |&nbsp;Поверьте, нам есть что вам предложить.
+    .container.order-index
+        - render("pieces/orderFormJumbotron.jade", Map("phoneTitle" -> "Чтобы сделать заказ, введите номер телефона:", "additionalData" -> ad.Contact))
 -# Page content
 .container.text-center
     .row-fluid

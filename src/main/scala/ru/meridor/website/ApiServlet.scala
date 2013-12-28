@@ -172,6 +172,7 @@ object MessageProvider {
 
   def operatorMessage(order: Order): String = "Номер: " + order.phone + ", клиент: " + order.clientName + ", информация: " +
     (order.getAdditionalData match {
+      case Index => "главная страница"
       case ElectricalWorks => "электромонтажные работы"
       case TechnicalMaintenance => "техническое обслуживание"
       case Lighting => "освещение"
