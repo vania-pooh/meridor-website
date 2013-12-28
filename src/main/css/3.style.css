@@ -500,6 +500,11 @@ a.button[href]{
     padding-bottom: 10px;
 }
 
+.order-index .form-order {
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
 .form-order label {
     font-weight: bold;
 }

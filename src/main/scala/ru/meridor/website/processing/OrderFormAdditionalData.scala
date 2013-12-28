@@ -14,6 +14,7 @@ object OrderFormAdditionalData {
   private val availableValues = scala.collection.mutable.Map[String, OrderFormAdditionalData]()
 
   val None = define("none")
+  val Index = define("index")
   val ElectricalWorks = define("electrical_works")
   val CallElectrician = define("call_electrician")
   val RoomRepair = define("room_repair")
