@@ -71,6 +71,44 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
     processView("/services/call_electrician", "servicesMap" -> loadServices(AvailableServiceGroups.CallElectrician :: Nil))
   }
 
+  //St-Petersburg
+  for (district <- List(
+    "admiralteyskiy",
+    "vasileostrovskiy",
+    "viborgskiy",
+    "kalininskiy",
+    "kirovskiy",
+    "kolpinskiy",
+    "krasnogvardeyskiy",
+    "krasnoselskiy",
+    "kronshtadtskiy",
+    "kurortniy",
+    "moskovskiy",
+    "nevskiy",
+    "petrogradskiy",
+    "petrodvortsoviy",
+    "primorskiy",
+    "pushkinskiy",
+    "frunzenskiy",
+    "centralniy"
+  )){
+    get("/services/call-electrician/spb/" + district){
+      processView("/services/call_electrician/district/spb/" + district, "servicesMap" -> loadCallElectricianDistrictServices)
+    }
+  }
+
+  //Leningrad Oblast
+  for (district <- List(
+    "vsevologskiy",
+    "gatchinskiy",
+    "kirovskiy",
+    "tosnenskiy"
+  )){
+    get("/services/call-electrician/lo/" + district){
+      processView("/services/call_electrician/lo/" + district, "servicesMap" -> loadCallElectricianDistrictServices)
+    }
+  }
+
   get("/services/technical-maintenance"){
     processView("/services/technical_maintenance", "servicesMap" -> loadServices(AvailableServiceGroups.TechnicalMaintenance :: Nil))
   }
@@ -126,8 +164,20 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
     jade(viewName, attributes:_*)
   }
 
-  private def loadServices(topGroups: List[String]): Map[ServiceGroup, ServiceGroupContents] = Service.getByGroups(
-    ServiceGroup.topGroups filter (tg => topGroups.contains(tg.name)) map (g => g.name)
-  )
+  type ServicesData = Map[ServiceGroup, ServiceGroupContents]
 
+  private def loadServices(topGroups: List[String], randomize: Boolean = false, limit: Int = 10): ServicesData = {
+    val groupNames = ServiceGroup.topGroups filter (tg => topGroups.contains(tg.name)) map (g => g.name)
+    if (randomize)
+      Service.getRandom(groupNames, limit)
+    else
+      Service.getByGroups(groupNames)
+  }
+
+  private def loadCallElectricianDistrictServices: ServicesData =
+    Service.merge(
+      AvailableServiceGroups.CallElectrician,
+      loadServices(AvailableServiceGroups.CallElectrician :: Nil),
+      loadServices(AvailableServiceGroups.ElectricalWorks :: Nil, randomize = true)
+    )
 }

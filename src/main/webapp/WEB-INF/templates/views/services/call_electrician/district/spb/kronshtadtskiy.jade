@@ -1,0 +1,13 @@
+- import ru.meridor.diana.db.entities.{Service, ServiceGroup}
+-@ val servicesMap: Map[ServiceGroup, List[Service]]
+- render(
+-   "../common_template.jade",
+-   Map(
+-       "servicesMap" -> servicesMap,
+-       "districtTitle" -> "Кронштадтском",
+-       "districtTitleNominative" -> "Кронштадтский",
+-       "possibleLocations" -> "в Кронштадте",
+-       "additionalText" -> "Кронштадт - город с трехсотлетней историей. Вот почему большая часть жилых построек в городе - дореволюционного времени. Кроме того имеется несколько кварталов с кирпичными и панельными пятиэтажками, а также так называемый 19 квартал - с многоэтажными домами из кирпича 80-х годов постройки.",
+-       "organizations" -> Map("СПб ГУ \"Жилищное агентство Кронштадтского района\" (ГУ ЖА Кронштадтского района)" -> "http://www.gilkom-complex.ru/index.php?option=com_mtree&task=viewlink&link_id=12&Itemid=100", "Управляющие компании Кронштадтского района" -> "http://www.gilkom-complex.ru/index.php?option=com_mtree&task=listcats&cat_id=101&Itemid=100")
+-   )
+- )
