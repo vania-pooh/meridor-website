@@ -1,0 +1,13 @@
+- import ru.meridor.diana.db.entities.{Service, ServiceGroup}
+-@ val servicesMap: Map[ServiceGroup, List[Service]]
+- render(
+-   "../common_template.jade",
+-   Map(
+-       "servicesMap" -> servicesMap,
+-       "districtTitle" -> "Центральном",
+-       "districtTitleNominative" -> "Центральный",
+-       "possibleLocations" -> "в Санкт-Петербурге вблизи станций метро Чернышевская, Площадь Восстания, Владимирская, Невский проспект, Гостиный двор, Маяковская, Площадь Александра Невского, Достоевская, Лиговский проспект, Адмиралтейская",
+-       "additionalText" -> "Центральный район полностью расположен в историческом центре Санкт-Петербурга, вот почему подавляющее большинство строений здесь являются памятниками архитектуры XVIII, XIX и XX веков. Здания отличает большая толщина стен (в несколько кирпичей), высокие потолки и окна, обилие устаревшей электропроводки. Кроме того в связи с особым статусом зданий проведение сложных строительных работ требует согласования с надзорными органами.",
+-       "organizations" -> Map("СПб ГУ \"Жилищное агентство Центрального района\" (ГУ ЖА Центрального района)" -> "http://www.gilkom-complex.ru/index.php?option=com_mtree&task=viewlink&link_id=21&Itemid=100", "Управляющие компании Центрального района" -> "http://www.gilkom-complex.ru/index.php?option=com_mtree&task=listcats&cat_id=110&Itemid=100")
+-   )
+- )

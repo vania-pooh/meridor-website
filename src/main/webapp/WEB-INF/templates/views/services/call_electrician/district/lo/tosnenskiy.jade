@@ -1,0 +1,14 @@
+- import ru.meridor.diana.db.entities.{Service, ServiceGroup}
+-@ val servicesMap: Map[ServiceGroup, List[Service]]
+- render(
+-   "../common_template.jade",
+-   Map(
+-       "servicesMap" -> servicesMap,
+-       "districtTitle" -> "Тосненском",
+-       "districtTitleNominative" -> "Тосненский",
+-       "regionTitle" -> "Лениградской области",
+-       "possibleLocations" -> "в Лениградской области в городе Тосно и Любань, в поселках им. Тельмана, Ушаки, Никольское, Нурма, Рябово, Красный Бор, Трубников Бор, Ульяновка, Федоровское, Форносово, Шапки",
+-       "additionalText" -> "Район в основном застроен частными домами. Многоэтажные дома располагаются в городах Тосно и Любань, поселке им. Тельмана и других крупных поселках. В Тосно в настоящее время ведется новое строительство.",
+-       "organizations" -> Map("ГУ \"Жилищное агентство Тосненского района\" (ГУ ЖА Тосненского района)" -> "http://www.yp.ru/spb/detail/id/zhilischnoe_agentstvo_tosnenskogo_raiona_leningradskoi_oblasti_250839", "Управляющие компании Тосненского района" -> "http://archive.tosno-online.com/economics/zhkh/")
+-   )
+- )

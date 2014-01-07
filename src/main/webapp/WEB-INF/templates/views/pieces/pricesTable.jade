@@ -2,6 +2,9 @@
 -@ val servicesMap: Map[ServiceGroup, ServiceGroupContents]
 -@ val showGlobalTotals: Boolean = false
 - val showTableCaption = servicesMap.size > 1
+-@ val totalPerGroupTitle: String = if (showTableCaption) "Итого по разделу:" else "Итого:"
+-@ val totalPerGroupHint: String = if (showTableCaption) "Отображает стоимость работ в данном разделе" else "Отображает суммарную стоимость выбранных работ"
+
 table.table.tables
     tbody
         tr
@@ -9,7 +12,7 @@ table.table.tables
                 - for ((serviceGroup, serviceGroupContents) <- servicesMap)
                     - val childGroupsData: Map[ServiceGroup, ServiceGroupContents] = serviceGroupContents.childGroupsData
                     - val services: List[Service] = serviceGroupContents.services
-                    - render("serviceGroupPriceTable.jade", Map("serviceGroup" -> serviceGroup, "services" -> services, "childGroupsData" -> childGroupsData, "showTableCaption" -> showTableCaption))
+                    - render("serviceGroupPriceTable.jade", Map("serviceGroup" -> serviceGroup, "services" -> services, "childGroupsData" -> childGroupsData, "showTableCaption" -> showTableCaption, "totalPerGroupTitle" -> totalPerGroupTitle, "totalPerGroupHint" -> totalPerGroupHint))
     - if (showGlobalTotals)
         tfoot
             tr

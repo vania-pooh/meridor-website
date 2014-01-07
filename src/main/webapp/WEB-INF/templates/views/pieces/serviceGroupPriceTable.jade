@@ -4,6 +4,8 @@
 -@ val services: List[Service]
 -@ val childGroupsData: Map[ServiceGroup, ServiceGroupContents]
 -@ val showTableCaption: Boolean = true
+-@ val totalPerGroupTitle: String
+-@ val totalPerGroupHint: String
 - val serviceGroupName: String = serviceGroup.name
 - var tableClass = "table table-prices table-striped table-bordered table-bordered-custom prices"
 - if (showTableCaption)
@@ -40,5 +42,5 @@ table{:id => serviceGroupName, :class => tableClass}
     tfoot
         tr
             td(colspan='3')
-            td(colspan='1') Итого по разделу:
-            td.total{:title => 'Отображает стоимость работ в данном разделе'} 0
+            td(colspan='1')=totalPerGroupTitle
+            td.total{:title => totalPerGroupHint} 0
