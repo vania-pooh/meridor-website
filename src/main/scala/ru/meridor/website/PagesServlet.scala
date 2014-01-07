@@ -105,7 +105,7 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
     "tosnenskiy"
   )){
     get("/services/call-electrician/lo/" + district){
-      processView("/services/call_electrician/lo/" + district, "servicesMap" -> loadCallElectricianDistrictServices)
+      processView("/services/call_electrician/district/lo/" + district, "servicesMap" -> loadCallElectricianDistrictServices)
     }
   }
 
