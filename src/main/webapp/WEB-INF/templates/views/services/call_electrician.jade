@@ -16,19 +16,19 @@
         .lead Не рискуйте своим здоровьем и имуществом! Вызывайте компетентного электрика чаще, ведь каждый шестой вызов - в подарок.
 .container
     ul#myTab.nav.nav-tabs
-        li.active.ico-tab.prices
+        li.ico-tab.prices
             a(href='#tab1') Стоимость
-        li.ico-tab.information
+        li.active.ico-tab.information
             a(href='#tab2') Зачем вызывать электрика
     .tab-content.mytab-tab-content
-        #tab1.tab-pane.active
+        #tab1.tab-pane
             p
                 |Стоимость работ при вызове электрика расчитывается как сумма расценок на отдельные виды работ, приведенных на странице&nbsp;
                 a(href='/services/electrical-works') "Электромонтажные работы"
                 |. Перед тем как делать заказ, вы можете узнать ориентировочную стоимость работ, заполнив поля в колонке "Объем" таблицы цен. Все цены являются актуальными. Использование калькулятора стоимости не обязывает вас делать заказ всех выбранных позиций.
             - render("../pieces/pricesTable.jade", Map("servicesMap" -> servicesMap))
             - render("../pieces/orderForm.jade", Map("phoneTitle" -> "Чтобы вызвать электрика, введите номер телефона:", "additionalData" -> ad.CallElectrician))
-        #tab2.tab-pane
+        #tab2.tab-pane.active
             h2 Зачем вызывать электрика
             img.pull-right(src='/photos/services/electrician.jpg' alt='Так выглядит наш электрик со спины' title='Так выглядит наш электрик со спины')
             p Существует множество проблем, с которыми нам приходится сталкиваться практически каждый день:
