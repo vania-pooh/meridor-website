@@ -2,18 +2,23 @@ package ru.meridor.website
 
 import org.fusesource.scalate.scaml.ScamlOptions
 import ru.meridor.diana.db.entities.Service
-import ru.meridor.website.processing.{LastModifiedSupport, AvailableServiceGroups}
+import ru.meridor.website.processing.{AutoSitemapSupport, LastModifiedSupport, AvailableServiceGroups}
 import ru.meridor.diana.log.LoggingSupport
 import ru.meridor.website.processing.RequestUtils._
 import java.util.Date
 import ru.meridor.diana.db.entities.ServiceGroup
 import ru.meridor.diana.db.entities.ServiceGroupContents
 import scala.Some
+import com.redfin.sitemapgenerator.ChangeFreq
+import org.joda.time.format.DateTimeFormat
+import javax.servlet.ServletConfig
+import java.io.File
+import scala.Some
 
 /**
  * A servlet used to process HTML pages requests
  */
-class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSupport {
+class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSupport with AutoSitemapSupport {
 
   /**
    * HTML minification settings
@@ -30,44 +35,45 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
   for (staticRoute <- Array(
     //Core routes
     "/" -> "/index",
-    "/bundles" -> "/bundles",
-    "/contact" -> "/contact",
 
     //Articles routes
     "/articles/electrical-tools" -> "/articles/electrical_tools",
     "/articles/wires-and-cables/classification" -> "/articles/wires_and_cables/classification",
     "/articles/wires-and-cables/marking" -> "/articles/wires_and_cables/marking",
     "/articles/wires-and-cables/connection" -> "/articles/wires_and_cables/connection",
-//    ("/articles/apartment-wiring" -> "/articles/apartment_wiring"),
-//    ("/articles/safe-electricity" -> "/articles/safe_electricity"),
     "/articles/no-dust" -> "/articles/no_dust",
-//    ("/articles/new-building-wiring" -> "/articles/new_building_wiring"),
-//    ("/articles/cottage-wiring" -> "/articles/cottage_wiring"),
     "/articles/ground-connection/classification" -> "/articles/ground_connection/classification",
     "/articles/lighting/classification" -> "/articles/lighting/classification"
-//    ("/articles/standards" -> "/articles/standards")
   )){
     val route = staticRoute._1
     val viewName = staticRoute._2
-    get(route){
+    get(route, lastMod = "2013-12-23"){
 	    processView(viewName)
     }
   }
 
+  get("/contact", priority = 0.9, lastMod = "2013-12-23"){
+    processView("/contact")
+  }
+
+  get("/bundles", priority = 0.8, lastMod = "2013-12-23"){
+    processView("/bundles")
+  }
+
   logger.info("Initializing dynamic pages routes...")
-  get("/prices"){
+  get("/prices", priority = 0.9){
     processView("/prices", "servicesMap" -> loadServices(AvailableServiceGroups.*))
   }
 
-  get("/services/electrical-works"){
+  get("/services/electrical-works", priority = 0.8){
     processView("/services/electrical_works", "servicesMap" -> loadServices(AvailableServiceGroups.ElectricalWorks :: Nil))
   }
 
-  get("/services/husband-for-an-hour"){
+  get("/services/husband-for-an-hour", priority = 0.8){
     permanentRedirect("/services/call-electrician")
   }
 
-  get("/services/call-electrician"){
+  get("/services/call-electrician", priority = 0.8){
     processView("/services/call_electrician", "servicesMap" -> loadServices(AvailableServiceGroups.CallElectrician :: Nil))
   }
 
@@ -92,7 +98,7 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
     "frunzenskiy",
     "centralniy"
   )){
-    get("/services/call-electrician/spb/" + district){
+    get(url = "/services/call-electrician/spb/" + district, lastMod = "2014-01-07"){
       processView("/services/call_electrician/district/spb/" + district, "servicesMap" -> loadCallElectricianDistrictServices)
     }
   }
@@ -104,33 +110,60 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
     "kirovskiy",
     "tosnenskiy"
   )){
-    get("/services/call-electrician/lo/" + district){
+    get("/services/call-electrician/lo/" + district, lastMod = "2014-01-07"){
       processView("/services/call_electrician/district/lo/" + district, "servicesMap" -> loadCallElectricianDistrictServices)
     }
   }
 
-  get("/services/technical-maintenance"){
+  get("/services/technical-maintenance", priority = 0.8){
     processView("/services/technical_maintenance", "servicesMap" -> loadServices(AvailableServiceGroups.TechnicalMaintenance :: Nil))
   }
 
-  get("/services/lighting"){
+  get("/services/lighting", priority = 0.8){
     processView("/services/lighting", "servicesMap" -> loadServices(AvailableServiceGroups.Lighting :: Nil))
   }
 
-  get("/services/electrical-appliances"){
+  get("/services/electrical-appliances", priority = 0.8){
     processView("/services/electrical_appliances", "servicesMap" -> loadServices(AvailableServiceGroups.ElectricalAppliances :: Nil))
   }
 
-  get("/services/telecommunication-technologies"){
+  get("/services/telecommunication-technologies", priority = 0.8){
     processView("/services/telecommunication_technologies", "servicesMap" -> loadServices(AvailableServiceGroups.TelecommunicationTechnologies :: Nil))
   }
 
-  get("/services/room-repair"){
+  get("/services/room-repair", priority = 0.8){
     processView("/services/room_repair", "servicesMap" -> loadServices(AvailableServiceGroups.RoomRepair :: Nil))
+  }
+
+  //We would like to avoid linking to itself in the sitemap.xml file. That's why we call super.get() instead of get().
+  super.get("/sitemap.xml"){
+    val file = new File(rootPath, "sitemap.xml")
+    if (!file.exists()){
+      logger.info("Generating sitemap.xml...")
+      addSitemapUrl(url = absoluteUrlFromRelative("/doc/oferta.pdf"), lastMod = "2013-09-24", changeFreq = ChangeFreq.MONTHLY, priority = 0.6)
+      addSitemapUrl(url = absoluteUrlFromRelative("/services/husband-for-an-hour"), lastMod = "2013-11-03", changeFreq = ChangeFreq.WEEKLY, priority = 0.8)
+      generateSitemap(rootUrl, rootPath)
+      logger.info("Saved generated sitemap.xml to " + file.toString + ".")
+    }
+    contentType = "text/xml"
+    file
   }
 
   logger.info("Done initializing routes.")
 
+  /**
+   * An extended version of get() which adds URLs to sitemap
+   * @param url should be relative
+   * @param lastMod
+   * @param changeFreq
+   * @param priority
+   * @param action
+   * @return
+   */
+  protected def get(url: String, lastMod: String = DateTimeFormat.forPattern("yyyy-MM-dd").print(new Date().getTime), changeFreq: ChangeFreq = ChangeFreq.WEEKLY, priority: Double = 0.7)(action: => Any) = {
+    super.get(url)(action)
+    addSitemapUrl(url, lastMod, changeFreq, priority)
+  }
 
   /**
    * Processes view with the specified name and set of attributes to be passed to this view.

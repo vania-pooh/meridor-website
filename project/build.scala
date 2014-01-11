@@ -34,7 +34,8 @@ object WebsiteBuild extends Build {
         "org.eclipse.jetty" % "jetty-webapp" % "8.1.10.v20130312" % "container",
         "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar")),
         "com.jolbox" % "bonecp" % "0.7.1.RELEASE",
-        "com.typesafe.slick" % "slick_2.10" % "1.0.0"
+        "com.typesafe.slick" % "slick_2.10" % "1.0.0",
+        "com.google.code" % "sitemapgen4j" % "1.0.1"
       ),
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>
         Seq(
