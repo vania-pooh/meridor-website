@@ -28,12 +28,21 @@ object RequestUtils extends Control {
   def absoluteUrlFromRelative(relativeUrl: String)(implicit request: HttpServletRequest) =
     new URL(rootUrl, relativeUrl).toString
 
-  def rootUrl(implicit request: HttpServletRequest) = new URL(
-    request.getScheme,
-    request.getServerName,
-    request.getServerPort,
-    "/"
-  )
+  def rootUrl(implicit request: HttpServletRequest) = {
+    val serverPort = request.getServerPort
+    if (serverPort == 80)
+      new URL(
+        request.getScheme,
+        request.getServerName,
+        "/"
+      )
+      else new URL(
+        request.getScheme,
+        request.getServerName,
+        request.getServerPort,
+        "/"
+      )
+  }
 
   def rootPath(implicit request: HttpServletRequest) = new File(request.getServletContext.getRealPath("/"))
 
