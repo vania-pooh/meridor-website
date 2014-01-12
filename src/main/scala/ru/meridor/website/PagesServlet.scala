@@ -35,6 +35,7 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
   for (staticRoute <- Array(
     //Core routes
     "/" -> "/index",
+    "/help" -> "/help",
 
     //Articles routes
     "/articles/electrical-tools" -> "/articles/electrical_tools",
@@ -61,19 +62,19 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
   }
 
   logger.info("Initializing dynamic pages routes...")
-  get("/prices", priority = 0.9){
+  get("/prices", priority = 0.9, lastMod = "2013-12-23"){
     processView("/prices", "servicesMap" -> loadServices(AvailableServiceGroups.*))
   }
 
-  get("/services/electrical-works", priority = 0.8){
+  get("/services/electrical-works", priority = 0.8, lastMod = "2013-12-23"){
     processView("/services/electrical_works", "servicesMap" -> loadServices(AvailableServiceGroups.ElectricalWorks :: Nil))
   }
 
-  get("/services/husband-for-an-hour", priority = 0.8){
+  get("/services/husband-for-an-hour", priority = 0.8, lastMod = "2013-11-03"){
     permanentRedirect("/services/call-electrician")
   }
 
-  get("/services/call-electrician", priority = 0.8){
+  get("/services/call-electrician", priority = 0.8, lastMod = "2014-01-07"){
     processView("/services/call_electrician", "servicesMap" -> loadServices(AvailableServiceGroups.CallElectrician :: Nil))
   }
 
@@ -98,7 +99,7 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
     "frunzenskiy",
     "centralniy"
   )){
-    get(url = "/services/call-electrician/spb/" + district, lastMod = "2014-01-07"){
+    get("/services/call-electrician/spb/" + district, lastMod = "2014-01-07"){
       processView("/services/call_electrician/district/spb/" + district, "servicesMap" -> loadCallElectricianDistrictServices)
     }
   }
@@ -115,23 +116,23 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
     }
   }
 
-  get("/services/technical-maintenance", priority = 0.8){
+  get("/services/technical-maintenance", priority = 0.8, lastMod = "2013-12-23"){
     processView("/services/technical_maintenance", "servicesMap" -> loadServices(AvailableServiceGroups.TechnicalMaintenance :: Nil))
   }
 
-  get("/services/lighting", priority = 0.8){
+  get("/services/lighting", priority = 0.8, lastMod = "2013-12-23"){
     processView("/services/lighting", "servicesMap" -> loadServices(AvailableServiceGroups.Lighting :: Nil))
   }
 
-  get("/services/electrical-appliances", priority = 0.8){
+  get("/services/electrical-appliances", priority = 0.8, lastMod = "2013-12-23"){
     processView("/services/electrical_appliances", "servicesMap" -> loadServices(AvailableServiceGroups.ElectricalAppliances :: Nil))
   }
 
-  get("/services/telecommunication-technologies", priority = 0.8){
+  get("/services/telecommunication-technologies", priority = 0.8, lastMod = "2013-12-23"){
     processView("/services/telecommunication_technologies", "servicesMap" -> loadServices(AvailableServiceGroups.TelecommunicationTechnologies :: Nil))
   }
 
-  get("/services/room-repair", priority = 0.8){
+  get("/services/room-repair", priority = 0.8, lastMod = "2013-12-23"){
     processView("/services/room_repair", "servicesMap" -> loadServices(AvailableServiceGroups.RoomRepair :: Nil))
   }
 

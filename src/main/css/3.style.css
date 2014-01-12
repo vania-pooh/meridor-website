@@ -496,6 +496,10 @@ a.button[href]{
     background-position: 0 -1012px;
 }
 
+.breadcrumbs_ico.help {
+    background-position: 0 -1125px;
+}
+
 .form-order {
     padding-bottom: 10px;
 }

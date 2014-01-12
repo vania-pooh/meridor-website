@@ -1,0 +1,26 @@
+- import ru.meridor.website.ui.PageCategory._
+- import ru.meridor.website.processing.{OrderFormAdditionalData => ad}
+- attributes("title") = "Помощь"
+- attributes("keywords") = "помощь по сайту, помощь по работе с сайтом, вопросы и ответы"
+- attributes("description") = "Помощь по работе с сайтом. Как заказать услуги онлайн. Как пользоваться калькулятором стоимости."
+- attributes("pageCategory") = Help
+
+.jumbotron
+    .container
+        ul.breadcrumbs.breadcrumbs_ico.help
+            li.active
+                h1 Помощь
+            li
+                a(href='/') Главная
+        p.lead На этой странице вы можете найти ответы на часто задаваемые вопросы по работе с сайтом и узнать обо всех его возможностях.
+.container
+    .case.justify
+        .row-fluid
+            .span12
+                h2 Видео
+        .row-fluid
+            .span6
+                iframe.pull-center(width="420" height="315" src="//www.youtube.com/embed/6Af15BazUAE?rel=0" allowfullscreen)
+                em.img-signature Как вызвать электрика с помощью формы заказа
+                p Все услуги компании можно в два клика заказать с помощью простой формы заказа. Форма размещена на каждой странице из раздела "Услуги". Для того чтобы сделать заказ, просто введите свое имя, контактный телефон и нажмите кнопку "Заказать". Если вы ввели номер мобильного телефона, то получите SMS сообщение с подтверждением заказа.
+            .span6
