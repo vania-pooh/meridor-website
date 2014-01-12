@@ -156,12 +156,12 @@ html(lang='en' itemscope itemtype='http://schema.org/WebPage')
                 ul.nav
                     li{:class => {if (pageCategory.equals(Home)) "active" else ""}}
                         a(href='/') Главная
-                    li{:class => {if (pageCategory.equals(Bundles)) "active" else ""}}
-                        a(href='/bundles') Пакеты услуг
                     li{:class => {if (pageCategory.equals(Prices)) "active" else ""}}
                         a(href='/prices') Цены
                     li{:class => {if (pageCategory.equals(Contact)) "active" else ""}}
                         a(href='/contact') Контакты
+                    li{:class => {if (pageCategory.equals(Help)) "active" else ""}}
+                        a(href='/help') Помощь
                 - if (includeAnalyticsScripts)
                     .nav
                         -# Rambler Top100 counter

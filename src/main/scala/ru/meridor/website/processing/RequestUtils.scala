@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat
 import javax.servlet.http.HttpServletRequest
 import scala.Some
 import org.scalatra.Control
+import java.io.File
 
 /**
  * Contains some utility methods for request
@@ -33,6 +34,8 @@ object RequestUtils extends Control {
     request.getServerPort,
     "/"
   )
+
+  def rootPath(implicit request: HttpServletRequest) = new File(request.getServletContext.getRealPath("/"))
 
   def isRootUrl(url: String)(implicit request: HttpServletRequest) = url == rootUrl.toString
 
