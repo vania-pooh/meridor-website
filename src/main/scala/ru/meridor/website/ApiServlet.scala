@@ -6,6 +6,10 @@ import ru.meridor.diana.util.PropertiesFileSupport
 import org.scalatra.json._
 import org.json4s.JValue
 import java.util.Date
+import ru.meridor.website.processing.ValidationSupport
+import ru.meridor.diana.export.{Job, Exporter}
+import ru.meridor.diana.export.reader.{ServicesList, ServicesListReader}
+import ru.meridor.website.processing.export.ServiceListPDFWriter
 
 /**
  * A servlet used to process JSON API requests
@@ -16,14 +20,40 @@ class ApiServlet extends WebsiteStack with LoggingSupport with JacksonJsonSuppor
    * Request handlers definitions
    */
   post("/order"){
-    try{
       processOrderRequest(parsedBody.extract[Order])
+  }
+
+  get("/prices/export/pdf"){
+      processPdfRequest(ServiceExportRequest())
+  }
+
+  post("/prices/export/pdf"){
+      processPdfRequest(parsedBody.extract[ServiceExportRequest])
+  }
+
+  protected def get(url: String)(action: => Any) = {
+    try{
+      super.get(url)(action)
     } catch {
-      case e: Exception => {
-        e.printStackTrace()
-        Response.error("An exception while processing request: " + e.getMessage)
-      }
+      case e: Exception => handleRequestException(e)
     }
+  }
+
+  protected def post(url: String)(action: => Any) = {
+    try{
+      super.post(url)(action)
+    } catch {
+      case e: Exception => handleRequestException(e)
+    }
+  }
+
+  /**
+   * Global exception handler for requests
+   * @param e
+   */
+  private def handleRequestException(e: Exception){
+    e.printStackTrace()
+    Response.error("An exception while processing request: " + e.getMessage)
   }
 
   private def processOrderRequest(order: Order): Response = if (order.isValid) {
@@ -82,6 +112,18 @@ class ApiServlet extends WebsiteStack with LoggingSupport with JacksonJsonSuppor
     }
   }
 
+  private def processPdfRequest(request: ServiceExportRequest) = if (request.isValid){
+    contentType = "application/pdf"
+    response.setHeader("Content-Disposition", "attachment; filename=\"price.pdf\"")
+    val outputStream = response.getOutputStream
+    val serviceIds = if (request.exportAllServices) List() else request.serviceIds
+    Exporter.export(Job[ServicesList, ServicesList](
+      reader = ServicesListReader(serviceIds),
+      writer = new ServiceListPDFWriter(outputStream)
+    ))
+    outputStream.close()
+  } else Response.error("You should specify a list of service IDs to be exported")
+
   /**
    * Sets up automatic case class to JSON output serialization, required by the JValueResult trait.
    */
@@ -130,7 +172,7 @@ object ResponseCode {
   val Error = "error"
 }
 
-case class Order(phone: String, clientName: String, additionalData: String){
+case class Order(phone: String, clientName: String, additionalData: String) extends ValidationSupport {
 
   import ru.meridor.website.processing.OrderFormAdditionalData
   import java.util.regex.{Matcher, Pattern}
@@ -187,5 +229,13 @@ object MessageProvider {
       case Contact => "контакты"
       case _ => "другое"
     }) + "."
+
+}
+
+case class ServiceExportRequest(exportAllServices: Boolean = true, serviceIds: List[Long] = List()) extends ValidationSupport {
+
+  def isValid: Boolean = exportAllServices || (!exportAllServices && areServiceIdsPresent)
+
+  def areServiceIdsPresent = serviceIds.length > 0
 
 }

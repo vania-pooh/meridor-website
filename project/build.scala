@@ -10,7 +10,7 @@ import ScalateKeys._
 object WebsiteBuild extends Build {
   val Organization = "ru.meridor"
   val Name = "website"
-  val Version = "0.1.13"
+  val Version = "0.2.0"
   val ScalaVersion = "2.10.0"
   val ScalatraVersion = "2.2.2"
 
@@ -35,7 +35,8 @@ object WebsiteBuild extends Build {
         "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar")),
         "com.jolbox" % "bonecp" % "0.7.1.RELEASE",
         "com.typesafe.slick" % "slick_2.10" % "1.0.0",
-        "com.google.code" % "sitemapgen4j" % "1.0.1"
+        "com.google.code" % "sitemapgen4j" % "1.0.1",
+        "com.lowagie" % "itext" % "4.2.1"
       ).map(_.excludeAll(ExclusionRule(organization = "commons-logging"))),
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>
         Seq(
