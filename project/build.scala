@@ -31,7 +31,7 @@ object WebsiteBuild extends Build {
         "org.scalatra" %% "scalatra-json" % ScalatraVersion,
         "org.json4s"   %% "json4s-jackson" % "3.2.4",
         "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
-        "org.eclipse.jetty" % "jetty-webapp" % "8.1.10.v20130312" % "container",
+        "org.eclipse.jetty" % "jetty-webapp" % "9.1.0.v20131115" % "container",
         "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar")),
         "com.jolbox" % "bonecp" % "0.7.1.RELEASE",
         "com.typesafe.slick" % "slick_2.10" % "1.0.0",
