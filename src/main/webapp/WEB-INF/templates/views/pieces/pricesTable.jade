@@ -20,10 +20,12 @@ table.table.tables
                     table.table
                         tr
                             td
-                                | &nbsp;
-                                -# a.button(href='javascript:void(0)')
-                                -#    | Сохранить расчет
-                                -#    i.icon-download-alt
+                                a#downloadPrices.button(href='/api/prices/pdf/export' title='Скачать все расценки' target='_blank')
+                                    | Скачать
+                                    i.icon-download-alt
+                                a#downloadSelectedPrices.button.hidden(href='javascript:void(0)' title='Скачать только выбранные расценки')
+                                    | Скачать выбранное
+                                    i.icon-download-alt
                             td &nbsp;
                             td &nbsp;
                             td Итого:

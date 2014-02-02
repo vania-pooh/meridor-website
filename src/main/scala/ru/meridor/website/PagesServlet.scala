@@ -147,7 +147,7 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
     file
   }
 
-  logger.info("Done initializing routes.")
+  logger.info("Done initializing pages routes.")
 
   /**
    * An extended version of get() which adds URLs to sitemap

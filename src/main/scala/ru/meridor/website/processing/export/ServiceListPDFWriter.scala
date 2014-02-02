@@ -46,14 +46,26 @@ class ServiceListPDFWriter(outputStream: OutputStream) extends Writer[ServicesLi
       Array(0.5f, 0.125f, 0.125f, 0.125f, 0.125f)
       else Array(0.6f, 0.2f, 0.2f)
     val table = new PdfPTable(relativeColumnWidths)
-    renderData(table, data, headerLevel = 1, quantitiesSpecified)
+    renderData(table, data, headerLevel = 1, quantitiesSpecified, isTopLevel = true)
     table
   }
 
-  private def renderData(table: PdfPTable, data: ServicesList, headerLevel: Int, quantitiesSpecified: Boolean) {
-  val numCols = if (quantitiesSpecified) 5 else 3
+  private def renderData(table: PdfPTable, data: ServicesList, headerLevel: Int, quantitiesSpecified: Boolean, isTopLevel: Boolean = false): Double = {
+    var totalValue = 0d
+    val numCols = if (quantitiesSpecified) 5 else 3
+    if (isTopLevel){
+      val boldFont = new Font(baseFont, 10, Font.BOLD)
+      table.addCell(new PdfPCell(text("Наименование", boldFont)))
+      table.addCell(new PdfPCell(text("Ед. изм.", boldFont)))
+      table.addCell(new PdfPCell(text("Цена за ед.изм.", boldFont)))
+      if (quantitiesSpecified){
+        table.addCell(new PdfPCell(text("Объем", boldFont)))
+        table.addCell(new PdfPCell(text("Полная стоимость", boldFont)))
+      }
+    }
     data.servicesData foreach {
       el => {
+        var groupValue = 0d
         val groupName = el._1.displayName
         val servicesData = el._2
         if (servicesData.size > 0){
@@ -67,18 +79,38 @@ class ServiceListPDFWriter(outputStream: OutputStream) extends Writer[ServicesLi
           s => {
             table.addCell(text(s.displayName))
             table.addCell(text(s.unitOfMeasure.displayName))
-            table.addCell(text(s.price.toString))
+            table.addCell(text(formatPrice(s.price)))
             if (quantitiesSpecified){
               val quantity = data.quantity(s)
               val value = quantity * s.price
+              groupValue += value
               table.addCell(text(quantity.toString))
-              table.addCell(text(value.toString))
+              table.addCell(text(formatPrice(value)))
             }
           }
         }
-        renderData(table, ServicesList(servicesData.childGroupsData, data.quantities), headerLevel + 1, quantitiesSpecified)
+        groupValue += renderData(table, ServicesList(servicesData.childGroupsData, data.quantities), headerLevel + 1, quantitiesSpecified)
+        if (quantitiesSpecified){
+          val totalValueText = "Итого по разделу \"" + groupName + "\": " + formatPrice(groupValue) + " руб."
+          table.addCell(new PdfPCell(text(totalValueText, headerFont(headerLevel + 1))){
+            {
+              setColspan(numCols)
+              setHorizontalAlignment(Element.ALIGN_RIGHT)
+            }
+          })
+        }
+        totalValue += groupValue
       }
     }
+    if (isTopLevel && quantitiesSpecified){
+      table.addCell(new PdfPCell(text("Итого: " + formatPrice(totalValue) + " руб.", headerFont(headerLevel))){
+        {
+          setColspan(numCols)
+          setHorizontalAlignment(Element.ALIGN_RIGHT)
+        }
+      })
+    }
+    totalValue
   }
 
   private def aboutSection: PdfPTable = {
@@ -162,5 +194,7 @@ class ServiceListPDFWriter(outputStream: OutputStream) extends Writer[ServicesLi
   }
 
   private val currentDateTime = new java.text.SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date())
+
+  private def formatPrice(price: Double) = new java.text.DecimalFormat("#.##").format(price)
 
 }

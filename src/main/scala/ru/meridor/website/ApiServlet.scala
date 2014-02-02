@@ -10,6 +10,8 @@ import ru.meridor.website.processing.ValidationSupport
 import ru.meridor.diana.export.{Job, Exporter}
 import ru.meridor.diana.export.reader.{ServicesList, ServicesListReader}
 import ru.meridor.website.processing.export.ServiceListPDFWriter
+import org.json4s.JsonAST.JNothing
+import javax.servlet.http.HttpServletRequest
 
 /**
  * A servlet used to process JSON API requests
@@ -19,17 +21,18 @@ class ApiServlet extends WebsiteStack with LoggingSupport with JacksonJsonSuppor
   /**
    * Request handlers definitions
    */
+  logger.info("Initializing API routes...")
+
   post("/order"){
       processOrderRequest(parsedBody.extract[Order])
   }
 
   get("/prices/export/pdf"){
-      processPdfRequest(ServiceExportRequest())
+    val jsonData = jsonFromRequestParameter("data")
+    processPdfRequest(jsonData.extract[ServiceExportRequest])
   }
 
-  post("/prices/export/pdf"){
-      processPdfRequest(parsedBody.extract[ServiceExportRequest])
-  }
+  logger.info("Done initializing API routes.")
 
   protected def get(url: String)(action: => Any) = {
     try{
@@ -44,6 +47,17 @@ class ApiServlet extends WebsiteStack with LoggingSupport with JacksonJsonSuppor
       super.post(url)(action)
     } catch {
       case e: Exception => handleRequestException(e)
+    }
+  }
+
+  private def jsonFromRequestParameter(name: String)(implicit request: HttpServletRequest) = {
+    try {
+      val pv = request.getParameter(name)
+      if ( (pv != null) && pv.length > 0 )
+        readJsonFromBody(pv.asInstanceOf[String])
+        else JNothing
+    } catch {
+      case _: Throwable => JNothing
     }
   }
 
@@ -112,17 +126,19 @@ class ApiServlet extends WebsiteStack with LoggingSupport with JacksonJsonSuppor
     }
   }
 
-  private def processPdfRequest(request: ServiceExportRequest) = if (request.isValid){
+  private def processPdfRequest(exportRequest: ServiceExportRequest) = if (exportRequest.isValid){
     contentType = "application/pdf"
     response.setHeader("Content-Disposition", "attachment; filename=\"price.pdf\"")
     val outputStream = response.getOutputStream
-    val serviceIds = if (request.exportAllServices) List() else request.serviceIds
+    val servicesListReader = if (exportRequest.exportAllServices)
+      ServicesListReader(List[Long]())
+      else ServicesListReader(exportRequest.serviceIds.zip(exportRequest.quantities).toMap)
     Exporter.export(Job[ServicesList, ServicesList](
-      reader = ServicesListReader(serviceIds),
+      reader = servicesListReader,
       writer = new ServiceListPDFWriter(outputStream)
     ))
     outputStream.close()
-  } else Response.error("You should specify a list of service IDs to be exported")
+  } else Response.error("You should specify a list of service IDs to be exported and a list of quantities for each service. Both lists should have the same length.")
 
   /**
    * Sets up automatic case class to JSON output serialization, required by the JValueResult trait.
@@ -232,10 +248,16 @@ object MessageProvider {
 
 }
 
-case class ServiceExportRequest(exportAllServices: Boolean = true, serviceIds: List[Long] = List()) extends ValidationSupport {
+case class ServiceExportRequest(exportAllServices: Boolean = true, serviceIds: List[Long] = List(), quantities: List[Double] = List()) extends ValidationSupport {
 
-  def isValid: Boolean = exportAllServices || (!exportAllServices && areServiceIdsPresent)
+  def isValid: Boolean = exportAllServices || (
+      !exportAllServices && areServiceIdsPresent && (
+        !areQuantitiesPresent || (areQuantitiesPresent && (quantities.length == serviceIds.length) )
+      )
+    )
 
   def areServiceIdsPresent = serviceIds.length > 0
+
+  def areQuantitiesPresent = quantities.length > 0
 
 }
