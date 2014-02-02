@@ -1,13 +1,12 @@
 package ru.meridor.website
 
 import org.fusesource.scalate.scaml.ScamlOptions
-import ru.meridor.diana.db.entities.Service
 import ru.meridor.website.processing.{AutoSitemapSupport, LastModifiedSupport, AvailableServiceGroups}
 import ru.meridor.diana.log.LoggingSupport
 import ru.meridor.website.processing.RequestUtils._
 import java.util.Date
+import ru.meridor.diana.db.entities._
 import ru.meridor.diana.db.entities.ServiceGroup
-import ru.meridor.diana.db.entities.ServiceGroupContents
 import com.redfin.sitemapgenerator.ChangeFreq
 import org.joda.time.format.DateTimeFormat
 import java.io.File
@@ -148,7 +147,7 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
     file
   }
 
-  logger.info("Done initializing routes.")
+  logger.info("Done initializing pages routes.")
 
   /**
    * An extended version of get() which adds URLs to sitemap
@@ -195,8 +194,6 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
     contentType = "text/html"
     jade(viewName, attributes:_*)
   }
-
-  type ServicesData = Map[ServiceGroup, ServiceGroupContents]
 
   private def loadServices(topGroups: List[String], randomize: Boolean = false, limit: Int = 10): ServicesData = {
     val groupNames = ServiceGroup.topGroups filter (tg => topGroups.contains(tg.name)) map (g => g.name)
