@@ -22,7 +22,7 @@
                 quantityField.val(0);
             }
             var unitPriceCell = $('td.unit_price', row);
-            var unitPrice = parsePrice(unitPriceCell.html());
+            var unitPrice = stringToFloat(unitPriceCell.html());
             var valueCell = $('td.value', row);
             valueCell.html(formatPrice(parseFloat(unitPrice * quantity)));
         };
@@ -32,20 +32,25 @@
             return (!!value && (value > 0));
         };
 
-        var parsePrice = function(s){
-            var price = parseFloat(s.replace(/\s|&nbsp;|,|\.|'/g, ''));
+        var stringToFloat = function(s){
+            var price = parseFloat(s.replace(/\s|&nbsp;|,|'/g, ''));
             return !isNaN(price) ? price : 0;
         };
 
+        var stringToInt = function(s){
+            var price = parseInt(s);
+            return !isNaN(price) ? price : 0;
+        }
+
         var formatPrice = function(p){
-            return p.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+            return p.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
         };
 
         //Updates total price of a single table
         var updateTableTotal = function(table){
             var perTableTotalPrice = 0;
             $('td.value', table).each(function(){
-                perTableTotalPrice += parsePrice($(this).html());
+                perTableTotalPrice += stringToFloat($(this).html());
             });
             var tableTotalPriceCell = $('td.total', table);
             tableTotalPriceCell.html(formatPrice(perTableTotalPrice));
@@ -54,12 +59,18 @@
         //Updates sum of total prices at the bottom of the table
         var updateGlobalTotal = function(){
             var totalPriceCell = $('td#totalPrice');
+            var globalTotalPrice = 0;
+            $('table.prices td.total').each(function(){
+                globalTotalPrice += stringToFloat($(this).html());
+            });
             if (totalPriceCell.length > 0){
-                var globalTotalPrice = 0;
-                $('table.prices td.total').each(function(){
-                    globalTotalPrice += parsePrice($(this).html());
-                });
                 totalPriceCell.html(formatPrice(globalTotalPrice));
+            }
+
+            if (globalTotalPrice > 0){
+                $('a#downloadSelectedPrices').removeClass('hidden');
+            }else{
+                $('a#downloadSelectedPrices').addClass('hidden');
             }
         };
 
@@ -68,24 +79,14 @@
         var saveTableStateToStorage = function(table){
             if (!!$.getStorage()){
                 var tableState = {};
-                $('tr.price', table).each(function(){
-                    var priceRow = $(this);
-                    var priceCell = $('span.id', priceRow);
-                    var quantityField = $('input.quantity', priceRow);
+                foreachPriceRow(function(priceRow, priceId, quantity, priceCell, quantityField){
                     if (
-                        (priceCell.length == 1)
-                        && (quantityField.length == 1)
-                    ){
-                        var priceId = priceCell.html();
-                        var quantityFieldVal = quantityField.val();
-                        if (
-                            isPositiveNumber(priceId)
-                            && isPositiveNumber(quantityFieldVal)
+                        isPositiveNumber(priceId)
+                            && isPositiveNumber(quantity)
                         ){
-                            tableState[priceId] = quantityFieldVal;
-                        }
+                        tableState[priceId] = quantity;
                     }
-                });
+                }, table);
 
                 $.getStorage().setItem(
                     getStorageKey(table),
@@ -103,24 +104,15 @@
                     )
                 );
                 if (!!tableState){
-                    $('tr.price', table).each(function(){
-                        var priceRow = $(this);
-                        var priceCell = $('span.id', priceRow);
-                        var quantityField = $('input.quantity', priceRow);
-                        if (
-                            (priceCell.length == 1)
-                            && (quantityField.length == 1)
-                        ){
-                            var priceId = priceCell.html();
-                            if (isPositiveNumber(priceId)){
-                                var quantityFromStorage = tableState[priceId];
-                                if (isPositiveNumber(quantityFromStorage)){
-                                    quantityField.val(quantityFromStorage);
-                                    updateRowValue(quantityField, priceRow);
-                                }
+                    foreachPriceRow(function(priceRow, priceId, quantity, priceCell, quantityField){
+                        if (isPositiveNumber(priceId)){
+                            var quantityFromStorage = tableState[priceId];
+                            if (isPositiveNumber(quantityFromStorage)){
+                                quantityField.val(quantityFromStorage);
+                                updateRowValue(quantityField, priceRow);
                             }
                         }
-                    });
+                    }, table);
                     updateTableTotal(table);
                     updateGlobalTotal();
                 }
@@ -130,6 +122,25 @@
         //Returns a key to be used for accessing storage property for this table
         var getStorageKey = function(table){
             return 'mr_price_' + table.attr('id');
+        };
+
+        var foreachPriceRow = function(fn, table){
+            var priceRows = (!!table) ? $('tr.price', table) : $('tr.price');
+            if (!!fn){
+                priceRows.each(function(){
+                    var priceRow = $(this);
+                    var priceCell = $('span.id', priceRow);
+                    var quantityField = $('input.quantity', priceRow);
+                    if (
+                        (priceCell.length == 1)
+                        && (quantityField.length == 1)
+                    ){
+                        var priceId = priceCell.html();
+                        var quantityFieldVal = quantityField.val();
+                        fn(priceRow, priceId, quantityFieldVal, priceCell, quantityField);
+                    }
+                });
+            }
         };
 
         //Adding event handlers and loading cells data
@@ -192,6 +203,28 @@
 
             //Loading cells data
             loadTableStateFromStorage(currentTable);
+        });
+
+        //Download button click handlers
+        var PDF_EXPORT_URL = '/api/prices/export/pdf';
+        $('a#downloadPrices').attr('href', 'javascript:void(0)').click(function(e){
+            e.preventDefault();
+            window.location = PDF_EXPORT_URL;
+        });
+
+        $('a#downloadSelectedPrices').click(function(e){
+            e.preventDefault();
+            var priceIds = [];
+            var quantities = [];
+            foreachPriceRow(function(priceRow, priceId, quantity){
+                if(quantity > 0){
+                    priceIds[priceIds.length] = stringToInt(priceId);
+                    quantities[quantities.length] = stringToFloat(quantity);
+                }
+            });
+            var url = PDF_EXPORT_URL
+                + '?data=' + JSON.stringify({"exportAllServices": false, "serviceIds": priceIds, "quantities": quantities});
+            window.location.href = url;
         });
 
         return this;

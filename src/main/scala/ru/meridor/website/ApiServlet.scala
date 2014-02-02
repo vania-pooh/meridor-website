@@ -6,6 +6,12 @@ import ru.meridor.diana.util.PropertiesFileSupport
 import org.scalatra.json._
 import org.json4s.JValue
 import java.util.Date
+import ru.meridor.website.processing.ValidationSupport
+import ru.meridor.diana.export.{Job, Exporter}
+import ru.meridor.diana.export.reader.{ServicesList, ServicesListReader}
+import ru.meridor.website.processing.export.ServiceListPDFWriter
+import org.json4s.JsonAST.JNothing
+import javax.servlet.http.HttpServletRequest
 
 /**
  * A servlet used to process JSON API requests
@@ -15,15 +21,53 @@ class ApiServlet extends WebsiteStack with LoggingSupport with JacksonJsonSuppor
   /**
    * Request handlers definitions
    */
+  logger.info("Initializing API routes...")
+
   post("/order"){
-    try{
       processOrderRequest(parsedBody.extract[Order])
+  }
+
+  get("/prices/export/pdf"){
+    val jsonData = jsonFromRequestParameter("data")
+    processPdfRequest(jsonData.extract[ServiceExportRequest])
+  }
+
+  logger.info("Done initializing API routes.")
+
+  protected def get(url: String)(action: => Any) = {
+    try{
+      super.get(url)(action)
     } catch {
-      case e: Exception => {
-        e.printStackTrace()
-        Response.error("An exception while processing request: " + e.getMessage)
-      }
+      case e: Exception => handleRequestException(e)
     }
+  }
+
+  protected def post(url: String)(action: => Any) = {
+    try{
+      super.post(url)(action)
+    } catch {
+      case e: Exception => handleRequestException(e)
+    }
+  }
+
+  private def jsonFromRequestParameter(name: String)(implicit request: HttpServletRequest) = {
+    try {
+      val pv = request.getParameter(name)
+      if ( (pv != null) && pv.length > 0 )
+        readJsonFromBody(pv.asInstanceOf[String])
+        else JNothing
+    } catch {
+      case _: Throwable => JNothing
+    }
+  }
+
+  /**
+   * Global exception handler for requests
+   * @param e
+   */
+  private def handleRequestException(e: Exception){
+    e.printStackTrace()
+    Response.error("An exception while processing request: " + e.getMessage)
   }
 
   private def processOrderRequest(order: Order): Response = if (order.isValid) {
@@ -82,6 +126,20 @@ class ApiServlet extends WebsiteStack with LoggingSupport with JacksonJsonSuppor
     }
   }
 
+  private def processPdfRequest(exportRequest: ServiceExportRequest) = if (exportRequest.isValid){
+    contentType = "application/pdf"
+    response.setHeader("Content-Disposition", "attachment; filename=\"price.pdf\"")
+    val outputStream = response.getOutputStream
+    val servicesListReader = if (exportRequest.exportAllServices)
+      ServicesListReader(List[Long]())
+      else ServicesListReader(exportRequest.serviceIds.zip(exportRequest.quantities).toMap)
+    Exporter.export(Job[ServicesList, ServicesList](
+      reader = servicesListReader,
+      writer = new ServiceListPDFWriter(outputStream)
+    ))
+    outputStream.close()
+  } else Response.error("You should specify a list of service IDs to be exported and a list of quantities for each service. Both lists should have the same length.")
+
   /**
    * Sets up automatic case class to JSON output serialization, required by the JValueResult trait.
    */
@@ -130,7 +188,7 @@ object ResponseCode {
   val Error = "error"
 }
 
-case class Order(phone: String, clientName: String, additionalData: String){
+case class Order(phone: String, clientName: String, additionalData: String) extends ValidationSupport {
 
   import ru.meridor.website.processing.OrderFormAdditionalData
   import java.util.regex.{Matcher, Pattern}
@@ -187,5 +245,19 @@ object MessageProvider {
       case Contact => "контакты"
       case _ => "другое"
     }) + "."
+
+}
+
+case class ServiceExportRequest(exportAllServices: Boolean = true, serviceIds: List[Long] = List(), quantities: List[Double] = List()) extends ValidationSupport {
+
+  def isValid: Boolean = exportAllServices || (
+      !exportAllServices && areServiceIdsPresent && (
+        !areQuantitiesPresent || (areQuantitiesPresent && (quantities.length == serviceIds.length) )
+      )
+    )
+
+  def areServiceIdsPresent = serviceIds.length > 0
+
+  def areQuantitiesPresent = quantities.length > 0
 
 }
