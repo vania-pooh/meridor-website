@@ -123,7 +123,7 @@ private object YuiCompressorTaskProvider {
   private lazy val allSettings: Seq[Setting[_]] = Seq(
     jsInputDirectory <<= sourceDirectory / "js",
     cssInputDirectory <<= sourceDirectory / "css",
-    jsOutputFile <<= (sourceDirectory in Runtime)( _ / "webapp/script.js"),
+    jsOutputFile <<= (sourceDirectory in Runtime)( _ / "webapp/script20.js"),
     cssOutputFile <<= (sourceDirectory in Runtime)( _ / "webapp/style.css"),
     jsCompressor <<= compressJsFilesTask(jsInputDirectory, jsOutputFile),
     cssCompressor <<= compressCSSFilesTask(cssInputDirectory, cssOutputFile),
