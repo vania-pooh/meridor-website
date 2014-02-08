@@ -5,7 +5,7 @@ package ru.meridor.website.ui
  */
 object PageCategory extends Enumeration {
   type PageCategory = Value
-  val Home, Services, Bundles, Contact, Prices, Articles, Help = Value //Possible active menu items
+  val Home, Services, Bundles, Contact, Prices, Articles, Help, News = Value //Possible active menu items
 
   def getPageTitleCategory(pageCategory: PageCategory): String = pageCategory match{
       case Services => "Услуги"

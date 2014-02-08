@@ -45,25 +45,25 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
   )){
     val route = staticRoute._1
     val viewName = staticRoute._2
-    get(route, lastMod = "2014-01-12"){
+    get(route, lastMod = "2014-02-09"){
 	    processView(viewName)
     }
   }
 
-  get("/contact", priority = 0.9, lastMod = "2014-01-12"){
+  get("/contact", priority = 0.9, lastMod = "2014-02-09"){
     processView("/contact")
   }
 
-  get("/bundles", priority = 0.8, lastMod = "2014-01-12"){
+  get("/bundles", priority = 0.8, lastMod = "2014-02-09"){
     processView("/bundles")
   }
 
   logger.info("Initializing dynamic pages routes...")
-  get("/prices", priority = 0.9, lastMod = "2014-01-12"){
+  get("/prices", priority = 0.9, lastMod = "2014-02-09"){
     processView("/prices", "servicesMap" -> loadServices(AvailableServiceGroups.*))
   }
 
-  get("/services/electrical-works", priority = 0.8, lastMod = "2014-01-12"){
+  get("/services/electrical-works", priority = 0.8, lastMod = "2014-02-09"){
     processView("/services/electrical_works", "servicesMap" -> loadServices(AvailableServiceGroups.ElectricalWorks :: Nil))
   }
 
@@ -71,8 +71,12 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
     permanentRedirect("/services/call-electrician")
   }
 
-  get("/services/call-electrician", priority = 0.8, lastMod = "2014-01-12"){
+  get("/services/call-electrician", priority = 0.8, lastMod = "2014-02-09"){
     processView("/services/call_electrician", "servicesMap" -> loadServices(AvailableServiceGroups.CallElectrician :: Nil))
+  }
+
+  get("/news", priority = 0.8, lastMod = "2014-02-09"){
+    processView("/news", "newsList" -> News.get)
   }
 
   //St-Petersburg
@@ -96,7 +100,7 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
     "frunzenskiy",
     "centralniy"
   )){
-    get("/services/call-electrician/spb/" + district, lastMod = "2014-01-12"){
+    get("/services/call-electrician/spb/" + district, lastMod = "2014-02-09"){
       processView("/services/call_electrician/district/spb/" + district, "servicesMap" -> loadCallElectricianDistrictServices)
     }
   }
@@ -108,28 +112,28 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
     "kirovskiy",
     "tosnenskiy"
   )){
-    get("/services/call-electrician/lo/" + district, lastMod = "2014-01-12"){
+    get("/services/call-electrician/lo/" + district, lastMod = "2014-02-09"){
       processView("/services/call_electrician/district/lo/" + district, "servicesMap" -> loadCallElectricianDistrictServices)
     }
   }
 
-  get("/services/technical-maintenance", priority = 0.8, lastMod = "2014-01-12"){
+  get("/services/technical-maintenance", priority = 0.8, lastMod = "2014-02-09"){
     processView("/services/technical_maintenance", "servicesMap" -> loadServices(AvailableServiceGroups.TechnicalMaintenance :: Nil))
   }
 
-  get("/services/lighting", priority = 0.8, lastMod = "2014-01-12"){
+  get("/services/lighting", priority = 0.8, lastMod = "2014-02-09"){
     processView("/services/lighting", "servicesMap" -> loadServices(AvailableServiceGroups.Lighting :: Nil))
   }
 
-  get("/services/electrical-appliances", priority = 0.8, lastMod = "2014-01-12"){
+  get("/services/electrical-appliances", priority = 0.8, lastMod = "2014-02-09"){
     processView("/services/electrical_appliances", "servicesMap" -> loadServices(AvailableServiceGroups.ElectricalAppliances :: Nil))
   }
 
-  get("/services/telecommunication-technologies", priority = 0.8, lastMod = "2014-01-12"){
+  get("/services/telecommunication-technologies", priority = 0.8, lastMod = "2014-02-09"){
     processView("/services/telecommunication_technologies", "servicesMap" -> loadServices(AvailableServiceGroups.TelecommunicationTechnologies :: Nil))
   }
 
-  get("/services/room-repair", priority = 0.8, lastMod = "2014-01-12"){
+  get("/services/room-repair", priority = 0.8, lastMod = "2014-02-09"){
     processView("/services/room_repair", "servicesMap" -> loadServices(AvailableServiceGroups.RoomRepair :: Nil))
   }
 

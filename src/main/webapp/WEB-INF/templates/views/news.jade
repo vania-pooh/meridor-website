@@ -1,0 +1,28 @@
+- import ru.meridor.website.ui.PageCategory._
+- import ru.meridor.website.processing.{OrderFormAdditionalData => ad}
+- import ru.meridor.diana.util.Formatters._
+- import ru.meridor.diana.db.entities.{News => NewsRecord}
+- attributes("title") = "Новости"
+- attributes("keywords") = "обновления сайта, последние новости, новости компании"
+- attributes("description") = "Новости компании. Обновления сайта. Скидки и специальные предложения."
+- attributes("pageCategory") = News
+-@ val newsList: List[NewsRecord]
+
+.jumbotron
+    .container
+        ul.breadcrumbs.breadcrumbs_ico.news
+            li.active
+                h1 Новости
+            li
+                a(href='/') Главная
+        p.lead На этой странице вы можете узнать все последние новости компании: изменения цен, появление новых услуг, добавление новых материалов и так далее.
+.container
+    .case.justify
+        - for (newsRecord <- newsList)
+            - val date = timestampToDate(newsRecord.date)
+            .row-fluid
+                .span2.text-center
+                    b=date
+                .span10.my-bordered
+                    :&markdown
+                        #{newsRecord.markdown}

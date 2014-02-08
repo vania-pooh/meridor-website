@@ -36,7 +36,8 @@ object WebsiteBuild extends Build {
         "com.jolbox" % "bonecp" % "0.7.1.RELEASE",
         "com.typesafe.slick" % "slick_2.10" % "1.0.0",
         "com.google.code" % "sitemapgen4j" % "1.0.1",
-        "com.lowagie" % "itext" % "4.2.1"
+        "com.lowagie" % "itext" % "4.2.1",
+        "org.fusesource.scalamd" % "scalamd_2.10" % "1.6"
       ).map(_.excludeAll(ExclusionRule(organization = "commons-logging"))),
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>
         Seq(
@@ -124,7 +125,7 @@ private object YuiCompressorTaskProvider {
     jsInputDirectory <<= sourceDirectory / "js",
     cssInputDirectory <<= sourceDirectory / "css",
     jsOutputFile <<= (sourceDirectory in Runtime)( _ / "webapp/script20.js"),
-    cssOutputFile <<= (sourceDirectory in Runtime)( _ / "webapp/style.css"),
+    cssOutputFile <<= (sourceDirectory in Runtime)( _ / "webapp/style21.css"),
     jsCompressor <<= compressJsFilesTask(jsInputDirectory, jsOutputFile),
     cssCompressor <<= compressCSSFilesTask(cssInputDirectory, cssOutputFile),
     resourceGenerators <++= (jsCompressor, cssCompressor)(_ :: _ :: Nil)
