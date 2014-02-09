@@ -19,7 +19,7 @@
 .container
     .case.justify
         - for (newsRecord <- newsList)
-            - val date = timestampToDate(newsRecord.date)
+            - val date = timestampToDate(newsRecord.date.getTime)
             .row-fluid
                 .span2.text-center
                     b=date

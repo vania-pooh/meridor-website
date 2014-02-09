@@ -1,7 +1,10 @@
 - import ru.meridor.website.ui.PageCategory._
 - import ru.meridor.website.processing.{OrderFormAdditionalData => ad}
 - import ru.meridor.diana.db.entities.{ServiceGroup, ServiceGroupContents}
-- attributes("title") = "Цены на электромонтажные работы"
+- import ru.meridor.diana.util.Formatters._
+- val currentDate = timestampToDate(new java.util.Date().getTime)
+- val pageTitle = "Цены на электромонтажные работы от " + currentDate
+- attributes("title") = pageTitle
 - attributes("keywords") = "цены на электромонтажные работы, электромонтаж цены, цены электромонтажных работ, электромонтажные работы прайс, электромонтаж прайс"
 - attributes("description") = "Текущие расценки на все виды выполняемых работ. Калькулятор стоимости работ. Отправить заявку на выполнение работ."
 - attributes("pageCategory") = Prices
@@ -12,7 +15,7 @@
     .container
         ul.breadcrumbs.breadcrumbs_ico.prices
             li.active
-                h1 Цены
+                h1 Цены (от #{currentDate})
             li
                 a(href='/') Главная
         - render("pieces/orderFormJumbotron.jade", Map("phoneTitle" -> phoneTitle, "additionalData" -> ad.Prices))
