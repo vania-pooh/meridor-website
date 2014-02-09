@@ -449,7 +449,7 @@ a.button[href]{
 }
 
 .breadcrumbs_ico {
-    background: url(../img/breadcrumbs_ico.png) no-repeat;
+    background: url(../img/breadcrumbs_ico_20.png) no-repeat;
 }
 
 .breadcrumbs_ico.call_electrician {
@@ -498,6 +498,10 @@ a.button[href]{
 
 .breadcrumbs_ico.help {
     background-position: 0 -1125px;
+}
+
+.breadcrumbs_ico.news {
+    background-position: 0 -1230px;
 }
 
 .form-order {

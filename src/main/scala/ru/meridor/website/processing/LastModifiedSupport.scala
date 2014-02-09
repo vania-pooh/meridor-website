@@ -1,6 +1,6 @@
 package ru.meridor.website.processing
 
-import java.util.{Calendar, TimeZone, Date}
+import java.util.{Calendar, TimeZone}
 
 /**
  * This trait adds support for dynamic pages last modification date by storing data hash codes
