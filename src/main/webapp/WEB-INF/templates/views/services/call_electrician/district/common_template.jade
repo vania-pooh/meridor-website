@@ -1,12 +1,12 @@
 - import ru.meridor.website.ui.PageCategory._
 - import ru.meridor.website.processing.{OrderFormAdditionalData => ad}
-- import ru.meridor.diana.db.entities.{Service, ServiceGroup}
+- import ru.meridor.diana.db.entities.{ServiceGroup, ServiceGroupContents}
 -@ val districtTitle: String
 -@ val districtTitleNominative: String
 -@ val regionTitle: String = "Санкт-Петербурга"
 -@ val possibleLocations: String
 -@ val additionalText: String = ""
--@ val servicesMap: Map[ServiceGroup, List[Service]]
+-@ val servicesMap: Map[ServiceGroup, ServiceGroupContents]
 -@ val organizations: Map[String, String]
 - attributes("title") = "Вызов электрика в " + districtTitle + " районе " + regionTitle
 - attributes("keywords") = "вызов электрика в " + districtTitle + " районе " + regionTitle + ", вызвать электрика в " + districtTitle + " районе " + regionTitle
@@ -23,7 +23,7 @@
                 |&nbsp;→&nbsp;
             li
                 a(href='/services/call-electrician') Вызов электрика
-        - render("../../../pieces/orderFormJumbotron.jade", Map("phoneTitle" -> "Чтобы вызвать электрика, введите номер телефона:", "additionalData" -> ad.Contact))
+        - render("../../../pieces/orderFormJumbotron.jade", Map("phoneTitle" -> "Чтобы вызвать электрика, введите номер телефона:", "additionalData" -> ad.CallElectrician))
 .container
     .case.justify
         .row-fluid

@@ -113,8 +113,10 @@ h4 {
     -webkit-border-radius: 5px 5px 0 0;
     -moz-border-radius: 5px 5px 0 0;
     border-radius: 5px 5px 0 0;
+}
+
+.main-nav .deeper > a:not([href]) {
     text-decoration: none !important;
-    cursor: default;
 }
 
 .main-nav > .deeper > a {
@@ -185,11 +187,13 @@ h4 {
 }
 
 .main-nav ul li a:hover, .main-nav .deeper .deeper:hover > a {
-    text-decoration: none;
     background-color: #f4e816;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+}
+.main-nav ul li a:not([href]):hover, .main-nav .deeper .deeper:hover > a:not([href]) {
+    text-decoration: none;
 }
 
 .main-nav ul li a {

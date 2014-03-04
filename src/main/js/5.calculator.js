@@ -201,8 +201,21 @@
                 $(this).parent().parent().parent().next('tbody.subcategory_services').fadeToggle(FADING_DURATION);
             });
 
-            //Loading cells data
-            loadTableStateFromStorage(currentTable);
+            if (currentTable.hasClass('readOnly')){
+                //Updating totals one time manually
+                $('tr.price', currentTable).each(function(){
+                    var priceRow = $(this);
+                    var quantityInput = $('input.quantity', priceRow);
+                    if (quantityInput.length > 0){
+                        updateRowValue(quantityInput, priceRow);
+                    }
+                });
+                updateTableTotal(currentTable);
+                updateGlobalTotal();
+            } else {
+                //Loading cells data
+                loadTableStateFromStorage(currentTable);
+            }
         });
 
         //Download button click handlers

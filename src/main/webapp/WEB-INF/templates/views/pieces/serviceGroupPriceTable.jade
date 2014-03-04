@@ -4,12 +4,15 @@
 -@ val services: List[Service]
 -@ val childGroupsData: Map[ServiceGroup, ServiceGroupContents]
 -@ val showTableCaption: Boolean = true
+-@ val readOnly: Boolean
 -@ val totalPerGroupTitle: String
 -@ val totalPerGroupHint: String
 - val serviceGroupName: String = serviceGroup.name
 - var tableClass = "table table-prices table-striped table-bordered table-bordered-custom prices"
 - if (showTableCaption)
     - tableClass += " withCaption"
+- if (readOnly)
+    - tableClass += " readOnly"
 table{:id => serviceGroupName, :class => tableClass}
     - if (showTableCaption)
         caption
@@ -22,7 +25,8 @@ table{:id => serviceGroupName, :class => tableClass}
             th{:title => 'Цена за одну единицу измерения'} Цена за ед.изм.
             th.inputs{:title => 'Сколько единиц измерения требуется выполнить'}
                 | Объем
-                a.i_clear{:href => 'javascript:void(0)', :title => 'Очистить раздел'}
+                - if (!readOnly)
+                    a.i_clear{:href => 'javascript:void(0)', :title => 'Очистить раздел'}
             th.value{:title => 'Стоимость каждого вида работ с учетом количества'} Полная стоимость
 
     tbody.services
@@ -38,7 +42,7 @@ table{:id => serviceGroupName, :class => tableClass}
                         a(title='Нажмите, чтобы скрыть или показать содержимое данной категории')= childServiceGroupName
             tbody.subcategory_services
                 - for (childServiceGroupService <- childServiceGroupServices)
-                    - render("individualServiceRow.jade", Map("service" -> childServiceGroupService))
+                    - render("individualServiceRow.jade", Map("service" -> childServiceGroupService, "readOnly" -> readOnly))
     tfoot
         tr
             td(colspan='3')

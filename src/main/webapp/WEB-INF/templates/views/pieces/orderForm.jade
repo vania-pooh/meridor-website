@@ -16,7 +16,7 @@ form.well.form-order.form-inline{:action => '/api/order', :method => 'post'}
     label(for=clientNameId)
         = nameTitle
     input.input-large.client_name{:name => 'client_name', :id => clientNameId, :type => 'text', :placeholder => 'Иван Иванов'}
-    - val additionalDataVal: String = additionalData.toString
+    - val additionalDataVal: String = additionalData.toString()
     input{:name => 'additional_data', :type => 'hidden', :value => additionalDataVal}
     button.button{:title => 'Нажмите, чтобы отправить заказ'}
         | Заказать
