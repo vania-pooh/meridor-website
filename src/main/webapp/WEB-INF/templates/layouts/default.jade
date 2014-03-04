@@ -38,7 +38,7 @@ html(lang='en' itemscope itemtype='http://schema.org/WebPage')
         title= finalTitle
 
         -# Stylesheets
-        link{:href => '/style21.css', :rel => 'stylesheet'}
+        link{:href => '/style22.css', :rel => 'stylesheet'}
 
         -# HTML5 shim, for IE6-8 support of HTML5 elements
         /[if lt IE 9]
@@ -79,8 +79,21 @@ html(lang='en' itemscope itemtype='http://schema.org/WebPage')
                                         a(href='/services/technical-maintenance') Техническое обслуживание
                                     li
                                         a(href='/services/lighting') Светодизайн
-                                    li
-                                        a(href='/services/electrical-appliances') Электроприборы
+                                    li{:class => 'deeper'}
+                                        a(href='/services/electrical-appliances') Установка электроприборов
+                                        ul
+                                            li
+                                                a(href='/services/electrical-appliances/electric-range') Электроплита
+                                            li
+                                                a(href='/services/electrical-appliances/washing-machine') Стиральная машина
+                                            li
+                                                a(href='/services/electrical-appliances/dishwashing-machine') Посудомоечная машина
+                                            li
+                                                a(href='/services/electrical-appliances/oven') Духовой шкаф
+                                            li
+                                                a(href='/services/electrical-appliances/hob') Варочная панель
+                                            li
+                                                a(href='/services/electrical-appliances/microwave-oven') Микроволновая печь
                                     li
                                         a(href='/services/telecommunication-technologies') Телекоммуникации
                             li{:class => {if (pageCategory.equals(Bundles)) "active" else ""}}
@@ -188,4 +201,4 @@ html(lang='en' itemscope itemtype='http://schema.org/WebPage')
                 div(style='position: absolute; left: -10000px;')
                     img(src='//top-fwz1.mail.ru/counter?id=2415566;js=na' style='border: 0;' height='1' width='1' alt='Рейтинг@Mail.ru')
         -# Compressed Javascript
-        script(src='/script20.js')
+        script(src='/script22.js')

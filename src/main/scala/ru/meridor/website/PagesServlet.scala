@@ -4,6 +4,7 @@ import org.fusesource.scalate.scaml.ScamlOptions
 import ru.meridor.website.processing.{AutoSitemapSupport, LastModifiedSupport, AvailableServiceGroups}
 import ru.meridor.diana.log.LoggingSupport
 import ru.meridor.website.processing.RequestUtils._
+import ru.meridor.website.processing.AvailableComplexServices._
 import java.util.Date
 import ru.meridor.diana.db.entities._
 import ru.meridor.diana.db.entities.ServiceGroup
@@ -127,6 +128,30 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
 
   get("/services/electrical-appliances", priority = 0.8, lastMod = "2014-02-09"){
     processView("/services/electrical_appliances", "servicesMap" -> loadServices(AvailableServiceGroups.ElectricalAppliances :: Nil))
+  }
+
+  get("/services/electrical-appliances/electric-range", priority = 0.8, lastMod = "2014-02-09"){
+    processView("/services/electrical_appliances/electric_range", "servicesMap" -> ComplexService.getByName(ElectricRange))
+  }
+
+  get("/services/electrical-appliances/washing-machine", priority = 0.8, lastMod = "2014-02-09"){
+    processView("/services/electrical_appliances/washing_machine", "servicesMap" -> ComplexService.getByName(WashingMachine))
+  }
+
+  get("/services/electrical-appliances/dishwashing-machine", priority = 0.8, lastMod = "2014-02-09"){
+    processView("/services/electrical_appliances/dishwashing_machine", "servicesMap" -> ComplexService.getByName(DishWashingMachine))
+  }
+
+  get("/services/electrical-appliances/oven", priority = 0.8, lastMod = "2014-02-09"){
+    processView("/services/electrical_appliances/oven", "servicesMap" -> ComplexService.getByName(Oven))
+  }
+
+  get("/services/electrical-appliances/hob", priority = 0.8, lastMod = "2014-02-09"){
+    processView("/services/electrical_appliances/hob", "servicesMap" -> ComplexService.getByName(Hob))
+  }
+
+  get("/services/electrical-appliances/microwave-oven", priority = 0.8, lastMod = "2014-02-09"){
+    processView("/services/electrical_appliances/microwave_oven", "servicesMap" -> ComplexService.getByName(MicrowaveOven))
   }
 
   get("/services/telecommunication-technologies", priority = 0.8, lastMod = "2014-02-09"){

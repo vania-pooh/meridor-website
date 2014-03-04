@@ -6,7 +6,7 @@ package ru.meridor.website.processing
 
 class OrderFormAdditionalData(data: String) extends Enumeration{
   def getData = data
-  override def toString: String = getData
+  override def toString(): String = getData
 }
 
 object OrderFormAdditionalData {
@@ -20,7 +20,15 @@ object OrderFormAdditionalData {
   val RoomRepair = define("room_repair")
   val TechnicalMaintenance = define("technical_maintenance")
   val Lighting = define("lighting")
+
   val ElectricalAppliances = define("electrical_appliances")
+  val ElectricRange = define("electric_range")
+  val WashingMachine = define("washing_machine")
+  val DishWashingMachine = define("dishwashing_machine")
+  val Oven = define("oven")
+  val Hob = define("hob")
+  val MicrowaveOven = define("microwave_oven")
+
   val Telecommunication = define("telecommunication")
   val Prices = define("prices")
   val ElectricalBundle = define("electrical_bundle")

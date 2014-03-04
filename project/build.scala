@@ -10,7 +10,7 @@ import ScalateKeys._
 object WebsiteBuild extends Build {
   val Organization = "ru.meridor"
   val Name = "website"
-  val Version = "0.2.1"
+  val Version = "0.2.2"
   val ScalaVersion = "2.10.0"
   val ScalatraVersion = "2.2.2"
 
@@ -32,7 +32,8 @@ object WebsiteBuild extends Build {
         "org.json4s"   %% "json4s-jackson" % "3.2.4",
         "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
         "org.eclipse.jetty" % "jetty-webapp" % "9.1.0.v20131115" % "container",
-        "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar")),
+        "org.eclipse.jetty" % "jetty-plus"   % "9.1.0.v20131115" % "container",
+        "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts Artifact("javax.servlet", "jar", "jar"),
         "com.jolbox" % "bonecp" % "0.7.1.RELEASE",
         "com.typesafe.slick" % "slick_2.10" % "1.0.0",
         "com.google.code" % "sitemapgen4j" % "1.0.1",
@@ -124,8 +125,8 @@ private object YuiCompressorTaskProvider {
   private lazy val allSettings: Seq[Setting[_]] = Seq(
     jsInputDirectory <<= sourceDirectory / "js",
     cssInputDirectory <<= sourceDirectory / "css",
-    jsOutputFile <<= (sourceDirectory in Runtime)( _ / "webapp/script20.js"),
-    cssOutputFile <<= (sourceDirectory in Runtime)( _ / "webapp/style21.css"),
+    jsOutputFile <<= (sourceDirectory in Runtime)( _ / "webapp/script22.js"),
+    cssOutputFile <<= (sourceDirectory in Runtime)( _ / "webapp/style22.css"),
     jsCompressor <<= compressJsFilesTask(jsInputDirectory, jsOutputFile),
     cssCompressor <<= compressCSSFilesTask(cssInputDirectory, cssOutputFile),
     resourceGenerators <++= (jsCompressor, cssCompressor)(_ :: _ :: Nil)
