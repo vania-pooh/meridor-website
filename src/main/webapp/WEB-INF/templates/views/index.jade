@@ -1,8 +1,11 @@
 - import ru.meridor.website.processing.{OrderFormAdditionalData => ad}
+- import ru.meridor.diana.db.entities.{News => NewsRecord}
+- import ru.meridor.diana.util.Formatters._
 - attributes("title") = "Электротехническая компания \"Меридор\""
 - attributes("useCustomTitle") = true
 - attributes("keywords") = "электромонтажные работы, техническое обслуживание, светодизайн, установка электроприборов, прокладка кабелей, ремонт электропроводки, установка розеток, установка выключателей, отделочные работы"
 - attributes("description") = "Проектирование, монтаж и техническое обслуживание электрических сетей в квартирах, торговых площадях и офисах. Дизайн и монтаж систем освещения."
+-@ val newsList: List[NewsRecord]
 
 -# Jumbotron section
 .jumbotron
@@ -37,3 +40,16 @@
             h2.index_section_ico.electrical_appliances Электроприборы
             p Многие мощные электроприборы: электроплиты, стиральные машины, водонагреватели являются пожароопасными и должны подключаться специальным образом. Доверьте эту работу профессионалам!
             a.button.button-center(href='/services/electrical-appliances') Подробнее →
+    - if (newsList.size > 0)
+        .case.justify
+            .row-fluid
+                .span-12
+                    h2 Последние новости
+            - for (newsRecord <- newsList)
+                .row-fluid
+                    - val date = timestampToDate(newsRecord.date.getTime)
+                    .span2.text-center
+                        b=date
+                    .span10.my-bordered
+                        :&markdown
+                            #{newsRecord.markdown}
