@@ -3,14 +3,13 @@ import sbt.Keys._
 import org.scalatra.sbt._
 import org.scalatra.sbt.PluginKeys._
 import com.mojolly.scalate.ScalatePlugin._
-import sbt.ScalaVersion
-import scala.Some
 import ScalateKeys._
+import com.earldouglas.xsbtwebplugin.PluginKeys._
 
 object WebsiteBuild extends Build {
   val Organization = "ru.meridor"
   val Name = "website"
-  val Version = "0.2.3"
+  val Version = "0.2.4"
   val ScalaVersion = "2.10.0"
   val ScalatraVersion = "2.2.2"
 
@@ -51,6 +50,13 @@ object WebsiteBuild extends Build {
             Some("templates")
           )
         )
+      },
+      warPostProcess in Compile <<= target map {
+        t => {
+          () =>
+            val webapp = t / "webapp"
+            IO.delete(webapp / "sitemap.xml")
+        }
       }
     )
   ) dependsOn diana settings(net.virtualvoid.sbt.graph.Plugin.graphSettings: _*) settings(YuiCompressorTaskProvider.settings: _*)
