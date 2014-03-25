@@ -79,13 +79,12 @@ class ApiServlet extends WebsiteStack with LoggingSupport with JacksonJsonSuppor
           case Some(person) => {
             val message = MessageProvider.clientMessage(order.getAdditionalData)
             if (
-              //TODO: we also need to send a single message to operator if account balance < 100 RUB
               //TODO: we also need to check whether user number is a mobile phone number by city code and send message only to mobile phones
               (getOperatorPhoneNumber match {
                 case Some(opn) => sendSMS(opn, MessageProvider.operatorMessage(order))
                 case None => false
               })
-              && sendSMS(pn, message)
+              && sendSMS(pn, message, warnAboutLowFunds = true)
             )
               Response.ok()
               else Response.error("An error while sending SMS")
@@ -99,17 +98,25 @@ class ApiServlet extends WebsiteStack with LoggingSupport with JacksonJsonSuppor
     else if (!order.isAdditionalDataValid) Response.error("Invalid additional data")
     else Response.error("Unknown error")
 
-  private def sendSMS(phoneNumber: Long, msg: String): Boolean = {
+  private def sendSMS(phoneNumber: Long, msg: String, warnAboutLowFunds: Boolean = false): Boolean = {
     import ru.meridor.diana.notification.Notifier
-    import ru.meridor.diana.notification.entities.SMSNotification
-    Notifier.sendNotification(
-      new SMSNotification(
-        id = new Date().getTime,
-        phone = phoneNumber,
-        sender = "Meridor",
-        message = msg
-      )
+    import ru.meridor.diana.notification.entities.{SMSNotification, LowFundsEvent}
+    val notification = new SMSNotification(
+      id = new Date().getTime,
+      phone = phoneNumber,
+      sender = "Meridor",
+      message = msg,
+      supportsLowFundsEvent = warnAboutLowFunds
     )
+    notification.addEventHandler(LowFundsEvent){
+      funds: Double => {
+        getOperatorPhoneNumber match {
+          case Some(pn) => sendSMS(pn, "Заканчиваются средства на отправку сообщений клиентам. Текущий баланс " + funds + ".")
+          case None => ()
+        }
+      }
+    }
+    Notifier.sendNotification(notification)
   }
 
   private def getOperatorPhoneNumber: Option[Long] = {
