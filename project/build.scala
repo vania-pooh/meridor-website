@@ -26,7 +26,8 @@ object WebsiteBuild extends Build {
       libraryDependencies ++= Seq(
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
-        "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
+        "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test" exclude("org.specs2", "specs2_2.10"),
+        "org.specs2" % "specs2_2.10" % "2.3.10" % "test",
         "org.scalatra" %% "scalatra-json" % ScalatraVersion,
         "org.json4s"   %% "json4s-jackson" % "3.2.4",
         "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
