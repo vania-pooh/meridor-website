@@ -245,6 +245,7 @@ object MessageProvider {
       case ElectricalWorks => "электромонтажные работы"
       case TechnicalMaintenance => "техническое обслуживание"
       case Lighting => "освещение"
+      case LightingSystem => "система освещения"
       case CallElectrician => "вызов электрика"
       case RoomRepair => "ремонт квартир и офисов"
       case ElectricalAppliances => "электроприборы"
