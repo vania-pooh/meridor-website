@@ -1,7 +1,6 @@
 import sbt._
 import sbt.Keys._
 import org.scalatra.sbt._
-import org.scalatra.sbt.PluginKeys._
 import com.mojolly.scalate.ScalatePlugin._
 import ScalateKeys._
 import com.earldouglas.xsbtwebplugin.PluginKeys._
@@ -9,7 +8,7 @@ import com.earldouglas.xsbtwebplugin.PluginKeys._
 object WebsiteBuild extends Build {
   val Organization = "ru.meridor"
   val Name = "website"
-  val Version = "0.2.4"
+  val Version = "0.2.5"
   val ScalaVersion = "2.10.0"
   val ScalatraVersion = "2.2.2"
 
@@ -26,7 +25,8 @@ object WebsiteBuild extends Build {
       libraryDependencies ++= Seq(
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
-        "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
+        "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test" exclude("org.specs2", "specs2_2.10"),
+        "org.specs2" % "specs2_2.10" % "2.3.10" % "test",
         "org.scalatra" %% "scalatra-json" % ScalatraVersion,
         "org.json4s"   %% "json4s-jackson" % "3.2.4",
         "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
@@ -129,13 +129,14 @@ private object YuiCompressorTaskProvider {
     compressFilesTask(inputDirectory, "*.css", "css", outputFile, cssCompressor)
 
   private lazy val allSettings: Seq[Setting[_]] = Seq(
-    jsInputDirectory <<= sourceDirectory / "js",
-    cssInputDirectory <<= sourceDirectory / "css",
+    jsInputDirectory <<= (sourceDirectory in Runtime)( _ / "js"),
+    cssInputDirectory <<= (sourceDirectory in Runtime)( _ / "css"),
     jsOutputFile <<= (sourceDirectory in Runtime)( _ / "webapp/script22.js"),
-    cssOutputFile <<= (sourceDirectory in Runtime)( _ / "webapp/style22.css"),
+    cssOutputFile <<= (sourceDirectory in Runtime)( _ / "webapp/style25.css"),
     jsCompressor <<= compressJsFilesTask(jsInputDirectory, jsOutputFile),
     cssCompressor <<= compressCSSFilesTask(cssInputDirectory, cssOutputFile),
-    resourceGenerators <++= (jsCompressor, cssCompressor)(_ :: _ :: Nil)
+    resourceGenerators <+= jsCompressor,
+    resourceGenerators <+= cssCompressor
   )
 
   lazy val settings: Seq[Setting[_]] = inConfig(Compile)(allSettings) ++ inConfig(Test)(allSettings)

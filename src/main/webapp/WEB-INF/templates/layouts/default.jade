@@ -38,7 +38,7 @@ html(lang='en' itemscope itemtype='http://schema.org/WebPage')
         title= finalTitle
 
         -# Stylesheets
-        link{:href => '/style22.css', :rel => 'stylesheet'}
+        link{:href => '/style25.css', :rel => 'stylesheet'}
 
         -# HTML5 shim, for IE6-8 support of HTML5 elements
         /[if lt IE 9]
@@ -77,8 +77,11 @@ html(lang='en' itemscope itemtype='http://schema.org/WebPage')
                                         a(href='/services/room-repair') Ремонт квартир и офисов
                                     li
                                         a(href='/services/technical-maintenance') Техническое обслуживание
-                                    li
-                                        a(href='/services/lighting') Светодизайн
+                                    li{:class => 'deeper'}
+                                        a(href='/services/lighting') Освещение
+                                        ul
+                                            li
+                                                a(href='/services/lighting/lighting-system') Управление освещением
                                     li{:class => 'deeper'}
                                         a(href='/services/electrical-appliances') Установка электроприборов
                                         ul
@@ -186,7 +189,17 @@ html(lang='en' itemscope itemtype='http://schema.org/WebPage')
                                 img(src="http://counter.rambler.ru/top100.cnt?2955970" alt="Rambler's Top100" border="0")
                         |&nbsp;
                         -# Liveinternet.ru counter
-                        script(type="text/javascript") <!--document.write("<a href='http://www.liveinternet.ru/click' "+"target=_blank><img src='//counter.yadro.ru/hit?t39.2;r"+escape(document.referrer)+((typeof(screen)=="undefined")?"":";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+";"+Math.random()+"' alt='' title='LiveInternet' "+"border='0' width='31' height='31'><\/a>")//-->
+                        script(type="text/javascript")
+                            |<!--
+                            |document.write("<a href='http://www.liveinternet.ru/click' "+
+                            |"target=_blank><img src='//counter.yadro.ru/hit?t44.1;r"+
+                            |escape(document.referrer)+((typeof(screen)=="undefined")?"":
+                            |";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+                            |screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+                            |";"+Math.random()+
+                            |"' alt='' title='LiveInternet' "+
+                            |"border='0' width='31' height='31'><\/a>")
+                            |//-->
         - if (includeAnalyticsScripts)
             -# Yandex.Metrika counter
             script(type="text/javascript") (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter22343563 = new Ya.Metrika({id:22343563, webvisor:true, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");

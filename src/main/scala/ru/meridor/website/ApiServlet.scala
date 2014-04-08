@@ -7,7 +7,8 @@ import org.scalatra.json._
 import org.json4s.JValue
 import java.util.Date
 import ru.meridor.website.processing.ValidationSupport
-import ru.meridor.diana.export.{Job, Exporter}
+import ru.meridor.diana.export.ExportSupport
+import ru.meridor.diana.notification.NotificationSupport
 import ru.meridor.diana.export.reader.{ServicesList, ServicesListReader}
 import ru.meridor.website.processing.export.ServiceListPDFWriter
 import org.json4s.JsonAST.JNothing
@@ -16,7 +17,10 @@ import javax.servlet.http.HttpServletRequest
 /**
  * A servlet used to process JSON API requests
  */
-class ApiServlet extends WebsiteStack with LoggingSupport with JacksonJsonSupport with PropertiesFileSupport {
+class ApiServlet extends WebsiteStack
+  with LoggingSupport with JacksonJsonSupport
+  with PropertiesFileSupport with NotificationSupport
+  with ExportSupport {
 
   /**
    * Request handlers definitions
@@ -99,7 +103,6 @@ class ApiServlet extends WebsiteStack with LoggingSupport with JacksonJsonSuppor
     else Response.error("Unknown error")
 
   private def sendSMS(phoneNumber: Long, msg: String, warnAboutLowFunds: Boolean = false): Boolean = {
-    import ru.meridor.diana.notification.Notifier
     import ru.meridor.diana.notification.entities.{SMSNotification, LowFundsEvent}
     val notification = new SMSNotification(
       id = new Date().getTime,
@@ -116,7 +119,7 @@ class ApiServlet extends WebsiteStack with LoggingSupport with JacksonJsonSuppor
         }
       }
     }
-    Notifier.sendNotification(notification)
+    sendNotification(notification)
   }
 
   private def getOperatorPhoneNumber: Option[Long] = {
@@ -134,13 +137,14 @@ class ApiServlet extends WebsiteStack with LoggingSupport with JacksonJsonSuppor
   }
 
   private def processPdfRequest(exportRequest: ServiceExportRequest) = if (exportRequest.isValid){
+    import ru.meridor.diana.export.Job
     contentType = "application/pdf"
     response.setHeader("Content-Disposition", "attachment; filename=\"price.pdf\"")
     val outputStream = response.getOutputStream
     val servicesListReader = if (exportRequest.exportAllServices)
       ServicesListReader(List[Long]())
       else ServicesListReader(exportRequest.serviceIds.zip(exportRequest.quantities).toMap)
-    Exporter.export(Job[ServicesList, ServicesList](
+    export(Job[ServicesList, ServicesList](
       reader = servicesListReader,
       writer = new ServiceListPDFWriter(outputStream)
     ))
@@ -241,6 +245,7 @@ object MessageProvider {
       case ElectricalWorks => "электромонтажные работы"
       case TechnicalMaintenance => "техническое обслуживание"
       case Lighting => "освещение"
+      case LightingSystem => "система освещения"
       case CallElectrician => "вызов электрика"
       case RoomRepair => "ремонт квартир и офисов"
       case ElectricalAppliances => "электроприборы"
