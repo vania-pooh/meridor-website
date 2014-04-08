@@ -26,6 +26,7 @@ object WebsiteBuild extends Build {
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test" exclude("org.specs2", "specs2_2.10"),
+        "org.mockito" % "mockito-all" % "1.9.5" % "test",
         "org.specs2" % "specs2_2.10" % "2.3.10" % "test",
         "org.scalatra" %% "scalatra-json" % ScalatraVersion,
         "org.json4s"   %% "json4s-jackson" % "3.2.4",

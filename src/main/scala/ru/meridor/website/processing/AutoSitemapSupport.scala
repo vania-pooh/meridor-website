@@ -31,14 +31,14 @@ trait AutoSitemapSupport {
     urls += urlEntry
   }
 
-  def generateSitemap(baseUrl: URL, outputDir: File)(implicit request: HttpServletRequest){
+  def generateSitemap(rootUrl: URL, outputDir: File)(implicit request: HttpServletRequest){
     val generator = WebSitemapGenerator
-      .builder(baseUrl, outputDir)
+      .builder(rootUrl, outputDir)
       .dateFormat(new W3CDateFormat(W3CDateFormat.Pattern.DAY))
       .autoValidate(true)
       .build()
     urls.foreach(url => generator.addUrl(new WebSitemapUrl(
-      new Options(RequestUtils.absoluteUrlFromRelative(url._1))
+      new Options(RequestUtils.absoluteUrlFromRelative(url._1).toString)
         .lastMod(url._2)
         .changeFreq(url._3)
         .priority(url._4)

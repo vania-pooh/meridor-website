@@ -13,7 +13,8 @@
 
 - implicit val request: HttpServletRequest = org.fusesource.scalate.servlet.ServletRenderContext.request
 - import ru.meridor.website.processing.RequestUtils._
-- val includeAnalyticsScripts: Boolean = (!absoluteUrl.contains("localhost") && !absoluteUrl.contains("dev"))
+- val absoluteUrlString = absoluteUrl.toString
+- val includeAnalyticsScripts: Boolean = (!absoluteUrlString.contains("localhost") && !absoluteUrlString.contains("dev"))
 
 !!! 5
 html(lang='en' itemscope itemtype='http://schema.org/WebPage')
@@ -32,7 +33,7 @@ html(lang='en' itemscope itemtype='http://schema.org/WebPage')
         meta{:property => "og:type", :content => ogType}
         meta{:property => "og:description", :content => description}
         meta{:property => "og:url", :content => absoluteUrl}
-        -val logoAbsoluteUrl = absoluteUrlFromRelative("/img/logo.png")
+        -val logoAbsoluteUrl = absoluteUrlFromRelative("/img/logo.png").toString
         meta{:property => "og:image", :content => logoAbsoluteUrl}
         meta{:name => "google-site-verification", :content => "v-BvO6GqQME1eOR3XSxqwYDg5_f1CSO-m_t_gxG7Rjk"}
         title= finalTitle

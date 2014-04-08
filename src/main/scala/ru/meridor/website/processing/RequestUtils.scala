@@ -16,19 +16,19 @@ object RequestUtils extends Control {
    * Returns absolute URL of current request (including request parameters)
    * @return
    */
-  def absoluteUrl(implicit request: HttpServletRequest) = {
+  def absoluteUrl(implicit request: HttpServletRequest): URL = {
     val requestURL = request.getRequestURL
     val queryString = request.getQueryString
 
     if (queryString == null)
-      requestURL.toString
-      else requestURL.append('?').append(queryString).toString
+      new URL(requestURL.toString)
+      else new URL(requestURL.append('?').append(queryString).toString)
   }
 
-  def absoluteUrlFromRelative(relativeUrl: String)(implicit request: HttpServletRequest) =
-    new URL(rootUrl, relativeUrl).toString
+  def absoluteUrlFromRelative(relativeUrl: String)(implicit request: HttpServletRequest): URL =
+    new URL(rootUrl, relativeUrl)
 
-  def rootUrl(implicit request: HttpServletRequest) = {
+  def rootUrl(implicit request: HttpServletRequest): URL = {
     val serverPort = request.getServerPort
     if (serverPort == 80)
       new URL(
@@ -46,7 +46,7 @@ object RequestUtils extends Control {
 
   def rootPath(implicit request: HttpServletRequest) = new File(request.getServletContext.getRealPath("/"))
 
-  def isRootUrl(url: String)(implicit request: HttpServletRequest) = url == rootUrl.toString
+  def isRootUrl(url: URL)(implicit request: HttpServletRequest) = url == rootUrl
 
   private val dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz"){
     {
@@ -66,20 +66,13 @@ object RequestUtils extends Control {
   }
 
   /**
-   * Returns base URL of current request
-   * @param request
-   * @return
-   */
-  def baseUrl(implicit request: HttpServletRequest) = request.getRequestURL.toString.replace(request.getRequestURI.substring(1), request.getContextPath)
-
-  /**
    * Returns 301 permanent redirect
    * @param relativeUrl
    */
   def permanentRedirect(relativeUrl: String)(implicit request: HttpServletRequest) =
     halt(status = 301,
       reason = "Moved Permanently",
-      headers = Map("Location" -> absoluteUrlFromRelative(relativeUrl))
+      headers = Map("Location" -> absoluteUrlFromRelative(relativeUrl).toString)
     )
 
   /**

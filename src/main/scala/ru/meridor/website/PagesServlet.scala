@@ -173,8 +173,8 @@ class PagesServlet extends WebsiteStack with LoggingSupport with LastModifiedSup
     val file = new File(rootPath, "sitemap.xml")
     if (!file.exists()){
       logger.info("Generating sitemap.xml...")
-      addSitemapUrl(url = absoluteUrlFromRelative("/doc/oferta.pdf"), lastMod = "2013-09-24", changeFreq = ChangeFreq.MONTHLY, priority = 0.6)
-      addSitemapUrl(url = absoluteUrlFromRelative("/services/husband-for-an-hour"), lastMod = "2013-11-03", changeFreq = ChangeFreq.WEEKLY, priority = 0.8)
+      addSitemapUrl(url = absoluteUrlFromRelative("/doc/oferta.pdf").toString, lastMod = "2013-09-24", changeFreq = ChangeFreq.MONTHLY, priority = 0.6)
+      addSitemapUrl(url = absoluteUrlFromRelative("/services/husband-for-an-hour").toString, lastMod = "2013-11-03", changeFreq = ChangeFreq.WEEKLY, priority = 0.8)
       generateSitemap(rootUrl, rootPath)
       logger.info("Saved generated sitemap.xml to " + file.toString + ".")
     }
