@@ -6,6 +6,12 @@ package ru.meridor.website.processing
 
 class OrderFormAdditionalData(data: String) extends Enumeration{
   def getData = data
+
+  override def hashCode() = data.hashCode
+
+  override def equals(obj: scala.Any) =
+    obj.isInstanceOf[OrderFormAdditionalData] && obj.asInstanceOf[OrderFormAdditionalData].getData.equals(getData)
+
   override def toString(): String = getData
 }
 
