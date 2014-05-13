@@ -8,7 +8,7 @@ import com.earldouglas.xsbtwebplugin.PluginKeys._
 object WebsiteBuild extends Build {
   val Organization = "ru.meridor"
   val Name = "website"
-  val Version = "0.2.5"
+  val Version = "0.3.0"
   val ScalaVersion = "2.10.0"
   val ScalatraVersion = "2.2.2"
 
@@ -132,7 +132,7 @@ private object YuiCompressorTaskProvider {
   private lazy val allSettings: Seq[Setting[_]] = Seq(
     jsInputDirectory <<= (sourceDirectory in Runtime)( _ / "js"),
     cssInputDirectory <<= (sourceDirectory in Runtime)( _ / "css"),
-    jsOutputFile <<= (sourceDirectory in Runtime)( _ / "webapp/script22.js"),
+    jsOutputFile <<= (sourceDirectory in Runtime)( _ / "webapp/script30.js"),
     cssOutputFile <<= (sourceDirectory in Runtime)( _ / "webapp/style25.css"),
     jsCompressor <<= compressJsFilesTask(jsInputDirectory, jsOutputFile),
     cssCompressor <<= compressCSSFilesTask(cssInputDirectory, cssOutputFile),

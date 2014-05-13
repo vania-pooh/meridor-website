@@ -119,6 +119,18 @@
             }
         };
 
+        var loadTableStateFromStoredCalculation = function(table, storedCalculation){
+            foreachPriceRow(function(priceRow, priceId, quantity, priceCell, quantityField){
+                if (isPositiveNumber(priceId)){
+                    var quantityFromCalculation = storedCalculation[priceId];
+                    if (isPositiveNumber(quantityFromCalculation)){
+                        quantityField.val(quantityFromCalculation);
+                        updateRowValue(quantityField, priceRow);
+                    }
+                }
+            }, table)
+        };
+
         //Returns a key to be used for accessing storage property for this table
         var getStorageKey = function(table){
             return 'mr_price_' + table.attr('id');
@@ -214,8 +226,41 @@
                 updateGlobalTotal();
             } else {
                 //Loading cells data
-                loadTableStateFromStorage(currentTable);
+                var storedCalculation = $('stored-calculation');
+                if (storedCalculation.length > 0) {
+                    loadTableStateFromStoredCalculation(currentTable, storedCalculation);
+                } else {
+                    loadTableStateFromStorage(currentTable);
+                }
             }
+        });
+
+        //Show save stored calculation button only when keys are pressed on keyboard
+        $(window).bind('keydown', 'alt+ctrl+shift+s', function(){
+            var quantities = {};
+            tables.each(function(){
+                var table = $(this);
+                foreachPriceRow(function(priceRow, priceId, quantityFieldVal, priceCell, quantityField){
+                    if (!!quantityFieldVal && quantityFieldVal > 0){
+                        quantities[priceId] = quantityFieldVal;
+                    }
+                }, table);
+            });
+            $.ajax({
+                url: '/api/prices/store',
+                data: JSON.stringify({"title": "Test", "data": quantities}),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                method: 'post'
+            })
+            .done(function(data){
+                if (!!data && !!data['code'] && (data['code'] == 'ok') && isPositiveNumber(data['id'])){
+                    var id = stringToInt(data['id']);
+                    window.location.src = '/prices/' + id;
+                } else {
+                    alert('Ошибка при сохранении расчета.');
+                }
+            });
         });
 
         //Download button click handlers

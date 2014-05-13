@@ -110,9 +110,29 @@ class RequestUtilsSpec extends Specification {
 
   }
 
+  "requestParameter" should {
+    val parameterName = "someName"
+    val parameterValue = "someValue"
+    "return Some(value) if request parameter is present" in {
+      implicit val request: HttpServletRequest = MockedRequest(parameters = Map(parameterName -> parameterValue)).get
+      requestParameter(parameterName) must beEqualTo(Some(parameterValue))
+    }
+
+    "return None if request parameter is not present" in {
+      implicit val request: HttpServletRequest = MockedRequest().get
+      requestParameter(parameterName) must beEqualTo(None)
+    }
+  }
+
 }
 
-case class MockedRequest(scheme: String = "http", serverName: String = "localhost", port: Int = 80, uri: String = "", queryString: String = ""){
+case class MockedRequest(
+                          scheme: String = "http",
+                          serverName: String = "localhost",
+                          port: Int = 80,
+                          uri: String = "",
+                          queryString: String = "",
+                          parameters: Map[String, String] = Map()){
 
   def get = {
     val request = mock(classOf[HttpServletRequest])
@@ -121,6 +141,9 @@ case class MockedRequest(scheme: String = "http", serverName: String = "localhos
     when(request.getServerPort).thenReturn(port)
     when(request.getRequestURI).thenReturn(uri)
     when(request.getQueryString).thenReturn(queryString)
+    parameters.foreach {
+      (entry: (String, String)) => when(request.getParameter(entry._1)).thenReturn(entry._2)
+    }
     request
   }
 

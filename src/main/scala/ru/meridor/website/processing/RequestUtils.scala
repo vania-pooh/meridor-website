@@ -65,6 +65,13 @@ object RequestUtils extends Control {
     else None
   }
 
+  def requestParameter(name: String)(implicit request: HttpServletRequest): Option[String] = {
+    val value = request.getParameter(name)
+    if (value != null)
+      Some(value)
+      else None
+  }
+
   /**
    * Returns 301 permanent redirect
    * @param relativeUrl
