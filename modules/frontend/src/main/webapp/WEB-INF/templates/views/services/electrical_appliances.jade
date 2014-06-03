@@ -1,0 +1,49 @@
+- import ru.meridor.website.ui.PageCategory._
+- import ru.meridor.website.processing.{OrderFormAdditionalData => ad}
+- import ru.meridor.website.db.entities.{Service, ServiceGroup}
+- attributes("title") = "Электроприборы: установка и ремонт"
+- attributes("keywords") = "электроприборы, бытовые электроприборы, защита электроприборов, подключение электроприборов, пользование электроприборами, установка электроприборов"
+- attributes("description") = "Профессиональное подключение бытовых электроприборов. Расчёт сечения кабеля. Как заказать. Стоимость работ. Вызвать мастера."
+- attributes("pageCategory") = Services
+-@ val servicesMap: Map[ServiceGroup, List[Service]]
+.jumbotron
+    .container
+        ul.breadcrumbs.breadcrumbs_ico.electrical_appliances
+            li.active
+                h1 Электроприборы
+            li
+                a(href='/') Главная
+        .lead При подключении любой бытовой техники: установке плиты, стиральной машины, холодильника мы проводим обязательный расчет сечения кабеля. Потому что мы хотим быть уверены в вашей безопасности.
+.container
+    ul#myTab.nav.nav-tabs
+        li.active.ico-tab.prices
+            a(href='#tab1') Стоимость
+        li.ico-tab.information
+            a(href='#tab2') Что это
+    .tab-content.mytab-tab-content
+        #tab1.tab-pane.active
+            - render("../pieces/pricesTable.jade", Map("servicesMap" -> servicesMap))
+            - render("../pieces/orderForm.jade", Map("phoneTitle" -> "Чтобы сделать заказ, введите номер телефона:", "additionalData" -> ad.ElectricalAppliances))
+        #tab2.tab-pane
+            p На первый взгляд может показаться, что подключение электроприборов – это пустяковая операция: купил – воткнул в розетку – работает. Действительно, это так для многих электроприборов, но не для всех. Существует целый класс мощных электроприборов, монтажу которых следует уделять особое внимание. Сюда относятся такие приборы как:
+            ul
+                li
+                    a(href='/services/electrical-appliances/washing-machine') Стиральные машины
+                li
+                    a(href='/services/electrical-appliances/dishwashing-machine') Посудомоечные машины
+                li
+                    a(href='/services/electrical-appliances/microwave-oven') Микроволновые печи
+                li
+                    a(href='/services/electrical-appliances/electric-range') Электроплиты
+                li
+                    a(href='/services/electrical-appliances/oven') Духовые шкафы
+                li
+                    a(href='/services/electrical-appliances/hob') Варочные панели
+                li Электрическое полотенцесушило
+                li Электрический камин или сауна
+            p Все дело в том, что все эти электроприборы рассеивают большую (несколько киловатт-час) электрическую мощность, которая при неправильном подключении может вызвать постоянный нагрев питающих проводов, плавление изоляции и в худшем случае – пожар. Вот почему в целях безопасности эти электроприборы всегда должны подключаться к вводно-распределительному щиту отдельным кабелем, диаметр сечения которого должен расчитываться опытным электриком.
+            p<
+                |Все работы по установке и подключению электроплиты и других мощных электроприборов проводятся в течение одного дня. Электрик делает соответствующие расчеты и приезжает к вам в день звонка или на следующий день. Вы можете сделать заказ одним из способов, указанных на странице&nbsp;
+                a(href='/contact') “Контакты”
+                |.
+    br

@@ -1,0 +1,13 @@
+- import ru.meridor.website.db.entities.{Service, ServiceGroup}
+-@ val servicesMap: Map[ServiceGroup, List[Service]]
+- render(
+-   "../common_template.jade",
+-   Map(
+-       "servicesMap" -> servicesMap,
+-       "districtTitle" -> "Кировском",
+-       "districtTitleNominative" -> "Кировский",
+-       "possibleLocations" -> "в Санкт-Петербурге вблизи одной из следующих станций метро: Нарвская, Кировский завод, Автово, Ленинский проспект, Проспект Ветеранов",
+-       "additionalText" -> "Кировский район отличается большим разнообразием типов построек: от дореволюционных жилых домов и промышленных помещений в районе метро Нарвская до современных многоэтажных жилых комплексов на Ленинском проспекте и проспекте Ветеранов.",
+-       "organizations" -> Map("СПб ГУ \"Жилищное агентство Кировского района\" (ГУ ЖА Кировского района)" -> "http://www.gilkom-complex.ru/index.php?option=com_mtree&task=viewlink&link_id=8&Itemid=100", "Управляющие компании Кировского района" -> "http://www.gilkom-complex.ru/index.php?option=com_mtree&task=listcats&cat_id=97&Itemid=100")
+-   )
+- )

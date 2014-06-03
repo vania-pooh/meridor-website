@@ -1,0 +1,1 @@
+ALTER TABLE service_groups ALTER COLUMN display_name SET NOT NULL;

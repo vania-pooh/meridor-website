@@ -1,0 +1,21 @@
+- import ru.meridor.website.db.entities.Service
+-@ val service: Service
+-@ val readOnly: Boolean
+
+tr.price
+    td
+        span.id(style='display: none;')= service.id
+        span.title
+            != service.displayName
+    td.uom
+        != service.unitOfMeasure.displayName
+    td.unit_price= service.price
+    td.inputs
+        - val inputType: String = if (readOnly) "hidden" else "text"
+        - val inputValue: String = if (readOnly) String.valueOf(service.quantity) else "0"
+        input.input-small.quantity{:value => inputValue, :type => inputType}
+        - if (readOnly)
+            |#{service.quantity}
+        - else
+            a.i_clear{:href => 'javascript:void(0)', :title => 'Очистить строку'}
+    td.value 0

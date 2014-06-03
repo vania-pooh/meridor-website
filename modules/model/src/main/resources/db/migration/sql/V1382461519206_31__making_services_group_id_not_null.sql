@@ -1,0 +1,1 @@
+ALTER TABLE services ALTER COLUMN group_id SET NOT NULL;

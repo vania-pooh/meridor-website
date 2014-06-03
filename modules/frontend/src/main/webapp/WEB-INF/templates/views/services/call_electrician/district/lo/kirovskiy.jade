@@ -1,0 +1,14 @@
+- import ru.meridor.website.db.entities.{Service, ServiceGroup}
+-@ val servicesMap: Map[ServiceGroup, List[Service]]
+- render(
+-   "../common_template.jade",
+-   Map(
+-       "servicesMap" -> servicesMap,
+-       "districtTitle" -> "Кировском",
+-       "districtTitleNominative" -> "Кировский",
+-       "regionTitle" -> "Лениградской области",
+-       "possibleLocations" -> "в Лениградской области в городе Кировск, Шлиссельбург, поселках Мга, Назия, Отрадное, Павлово (Павлово на Неве), Приладожский, Путилово, Синявино, Сухое, Шум",
+-       "additionalText" -> "В районе преобладает в основном малоэтажная застройка, частные дома. Пятиэтажные и девятиэтажные дома можно встретить только в городах: Кировске и Шлиссельбурге. В некоторых населенных пунктах ведется строительство современных жилых комплексов и дачных поселков.",
+-       "organizations" -> Map("Управляющие компании Кировского района" -> "http://gorod47.ru/kirovski_raion/jkh-kirovskiiraion/99-spisok-uk-kirovsk.html")
+-   )
+- )

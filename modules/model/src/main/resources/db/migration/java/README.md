@@ -1,0 +1,1 @@
+This folder contains Java-based migrations for Flyway.

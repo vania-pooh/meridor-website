@@ -1,0 +1,1 @@
+This folder contains plain-text SQL migrations for Flyway.

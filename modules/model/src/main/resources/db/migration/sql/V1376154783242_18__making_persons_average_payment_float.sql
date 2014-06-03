@@ -1,0 +1,1 @@
+ALTER TABLE persons ALTER COLUMN average_payment TYPE FLOAT;

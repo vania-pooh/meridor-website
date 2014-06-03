@@ -1,0 +1,13 @@
+- import ru.meridor.website.db.entities.{Service, ServiceGroup}
+-@ val servicesMap: Map[ServiceGroup, List[Service]]
+- render(
+-   "../common_template.jade",
+-   Map(
+-       "servicesMap" -> servicesMap,
+-       "districtTitle" -> "Фрунзенском",
+-       "districtTitleNominative" -> "Фрунзенский",
+-       "possibleLocations" -> "в Санкт-Петербурге вблизи станций метро Обводный канал, Волковская, Бухарестская, Международная, Купчино",
+-       "additionalText" -> "Фрунзенский район в районе Обводного канала застроен домами небольшой этажности, как дореволюционной, так и послевоенной застройки. При движении по Бухарестской улице на юг встречаются кварталы панельных пятиэтажек в районе улицы Белы Куна, блочные дома 80-х годов в районе улицы Димитрова и Купчинской, а также современные кирпично-монолитные многоэтажные комплексы, разбросанные по всему району.",
+-       "organizations" -> Map("СПб ГУ \"Жилищное агентство Фрунзенского района\" (ГУ ЖА Фрунзенского района)" -> "http://www.gilkom-complex.ru/index.php?option=com_mtree&task=viewlink&link_id=20&Itemid=100", "Управляющие компании Фрунзенского района" -> "http://www.gilkom-complex.ru/index.php?option=com_mtree&task=listcats&cat_id=109&Itemid=100")
+-   )
+- )

@@ -1,0 +1,13 @@
+- import ru.meridor.website.db.entities.{Service, ServiceGroup}
+-@ val servicesMap: Map[ServiceGroup, List[Service]]
+- render(
+-   "../common_template.jade",
+-   Map(
+-       "servicesMap" -> servicesMap,
+-       "districtTitle" -> "Адмиралтейском",
+-       "districtTitleNominative" -> "Адмиралтейский",
+-       "possibleLocations" -> "в Санкт-Петербурге вблизи одной из следующих станций метро: Балтийская, Звенигородская, Пушкинская, Садовая, Сенная площадь, Спасская, Технологический институт, Фрунзенская",
+-       "additionalText" -> "Большинство домов района - дореволюционной постройки или \"сталинского\" типа, вот почему в уже имеющейся электропроводке могут использоваться устаревшие технологии: наружная проводка на роликах, проводка, расчитанная на относительно малую мощность.",
+-       "organizations" -> Map("СПб ГУ \"Жилищное агентство Адмиралтейского района\" (ГУ ЖА Адмиралтейского района)" -> "http://gov.spb.ru/gov/terr/reg_admiral/zhilishnoe-agentstvo-admiraltejskogo-rajona/", "Управляющие компании Адмиралтейского района" -> "http://www.gilkom-complex.ru/index.php?option=com_mtree&task=listcats&cat_id=93&Itemid=100")
+-   )
+- )

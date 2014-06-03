@@ -1,0 +1,55 @@
+- import ru.meridor.website.processing.{OrderFormAdditionalData => ad}
+- import ru.meridor.website.db.tables.Tables.NewsRow
+- import ru.meridor.website.util.Formatters._
+- attributes("title") = "Электротехническая компания \"Меридор\""
+- attributes("useCustomTitle") = true
+- attributes("keywords") = "электромонтажные работы, техническое обслуживание, светодизайн, установка электроприборов, прокладка кабелей, ремонт электропроводки, установка розеток, установка выключателей, отделочные работы"
+- attributes("description") = "Проектирование, монтаж и техническое обслуживание электрических сетей в квартирах, торговых площадях и офисах. Дизайн и монтаж систем освещения."
+-@ val newsList: List[NewsRow]
+
+-# Jumbotron section
+.jumbotron
+    .container.order-index
+        - render("pieces/orderFormJumbotron.jade", Map("phoneTitle" -> "Чтобы сделать заказ, введите номер телефона:", "additionalData" -> ad.Contact))
+-# Page content
+.container.text-center
+    .row-fluid
+        .span6.case
+            h2.index_section_ico.electrical_works Электромонтажные работы
+            p Не знаете с чего начать ремонт в квартире, загородном доме или даче? Грамотное проектирование и монтаж электрических систем – один из первых шагов на пути к долгожданному комфорту и благополучию.
+            a.button.button-center(href='/services/electrical-works') Подробнее →
+        .span6.case
+            h2.index_section_ico.call_electrician Вызов электрика
+            p Выключился свет, сломалась розетка, перегорела лампочка, искрит выключатель? Компетентный электрик с набором нужного инструмента поможет привести все в порядок за пару часов.
+            a.button.button-center(href='/services/call-electrician') Подробнее →
+    .row-fluid
+        .span6.case
+            h2.index_section_ico.room_repair Ремонт квартир и офисов
+            p Хотите квартиру или офис на зависть остальным? Заказать косметический, капитальный или дизайнерский ремонт, выполненный профессионалами своего дела, можно здесь!
+            a.button.button-center(href='/services/room-repair') Подробнее →
+        .span6.case
+            h2.index_section_ico.lighting Светодизайн
+            p Неправильное освещение является одной из пяти основных причин ухудшения зрения. Защитите себя и ваших детей! Продуманный дизайн освещения – это красиво, практично и доступно каждому.
+            a.button.button-center(href='/services/lighting') Подробнее →
+    .row-fluid
+        .span6.case
+            h2.index_section_ico.technical_maintenance Техническое обслуживание
+            p Предупреждение опасности – лучший рецепт безопасности! Периодическое обследование состояния электропроводки, своевременная замена ламп и другие мероприятия практически исключают возможность пожара.
+            a.button.button-center(href='/services/technical-maintenance') Подробнее →
+        .span6.case
+            h2.index_section_ico.electrical_appliances Электроприборы
+            p Многие мощные электроприборы: электроплиты, стиральные машины, водонагреватели являются пожароопасными и должны подключаться специальным образом. Доверьте эту работу профессионалам!
+            a.button.button-center(href='/services/electrical-appliances') Подробнее →
+    - if (newsList.size > 0)
+        .case.justify
+            .row-fluid
+                .span-12
+                    h2 Последние новости
+            - for (newsRecord <- newsList)
+                .row-fluid
+                    - val date = timestampToDate(newsRecord.date.getTime)
+                    .span2.text-center
+                        b=date
+                    .span10.my-bordered
+                        :&markdown
+                            #{newsRecord.markdown}

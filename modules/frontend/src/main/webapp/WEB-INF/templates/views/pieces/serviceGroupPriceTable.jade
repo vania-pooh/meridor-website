@@ -1,0 +1,50 @@
+- import ru.meridor.website.db.entities.{Service, ServiceGroup, ServiceGroupContents}
+- import ru.meridor.website.processing.AvailableServiceGroups._
+-@ val serviceGroup: ServiceGroup
+-@ val services: List[Service]
+-@ val childGroupsData: Map[ServiceGroup, ServiceGroupContents]
+-@ val showTableCaption: Boolean = true
+-@ val readOnly: Boolean
+-@ val totalPerGroupTitle: String
+-@ val totalPerGroupHint: String
+- val serviceGroupName: String = serviceGroup.name
+- var tableClass = "table table-prices table-striped table-bordered table-bordered-custom prices"
+- if (showTableCaption)
+    - tableClass += " withCaption"
+- if (readOnly)
+    - tableClass += " readOnly"
+table{:id => serviceGroupName, :class => tableClass}
+    - if (showTableCaption)
+        caption
+            - val serviceGroupClass: String = headerClass(serviceGroupName)
+            h2{:class => serviceGroupClass, :title => 'Нажмите, чтобы скрыть или показать таблицу'}= serviceGroup.displayName
+    thead
+        tr
+            th{:title => 'Наименование вида работ'} Наименование
+            th{:title => 'Единица измерения (штуки, метры, часы и т.д.)'} Ед.изм.
+            th{:title => 'Цена за одну единицу измерения'} Цена за ед.изм.
+            th.inputs{:title => 'Сколько единиц измерения требуется выполнить'}
+                | Объем
+                - if (!readOnly)
+                    a.i_clear{:href => 'javascript:void(0)', :title => 'Очистить раздел'}
+            th.value{:title => 'Стоимость каждого вида работ с учетом количества'} Полная стоимость
+
+    tbody.services
+        - for (service <- services)
+            - render("individualServiceRow.jade", Map("service" -> service))
+    - for (childServiceGroup <- childGroupsData.keySet)
+        - val childServiceGroupName = childServiceGroup.displayName
+        - val childServiceGroupServices = childGroupsData(childServiceGroup).services
+        - if (childServiceGroupServices.size > 0)
+            tbody.subcategory_header
+                tr
+                    th(colspan='5' class='subcategory_header')
+                        a(title='Нажмите, чтобы скрыть или показать содержимое данной категории')= childServiceGroupName
+            tbody.subcategory_services
+                - for (childServiceGroupService <- childServiceGroupServices)
+                    - render("individualServiceRow.jade", Map("service" -> childServiceGroupService, "readOnly" -> readOnly))
+    tfoot
+        tr
+            td(colspan='3')
+            td(colspan='1')=totalPerGroupTitle
+            td.total{:title => totalPerGroupHint} 0

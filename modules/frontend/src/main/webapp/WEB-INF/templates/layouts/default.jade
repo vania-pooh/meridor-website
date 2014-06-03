@@ -1,0 +1,218 @@
+- import org.joda.time.DateTime
+- import ru.meridor.website.ui.PageCategory
+- import ru.meridor.website.ui.PageCategory._
+- import javax.servlet.http.HttpServletRequest
+
+-@ val title: String
+-@ val useCustomTitle: Boolean = false
+-@ val keywords: String
+-@ val description: String
+-@ val pageCategory: PageCategory = Home
+-@ val pageTitleCategory: String = PageCategory.getPageTitleCategory(pageCategory)
+-@ val body: String
+
+- implicit val request: HttpServletRequest = org.fusesource.scalate.servlet.ServletRenderContext.request
+- import ru.meridor.website.util.RequestUtils._
+- val absoluteUrlString = absoluteUrl.toString
+- val includeAnalyticsScripts: Boolean = (!absoluteUrlString.contains("localhost") && !absoluteUrlString.contains("dev"))
+
+!!! 5
+html(lang='en' itemscope itemtype='http://schema.org/WebPage')
+    head
+        -# Meta-tags
+        meta(charset='utf-8')
+        meta(http-equiv='content-type' content='text/html; charset=utf-8')
+        meta{:name => 'viewport', :content => 'width=device-width initial-scale=1.0'}
+        meta{:name => 'keywords', :content => keywords}
+        meta{:name => 'description', :content => description}
+        meta{:name => 'author', :content => 'Компания "Меридор"'}
+        meta{:property => "og:site_name", :content => 'Компания "Меридор"'}
+        - val finalTitle = if (useCustomTitle) title else {title + {if (pageTitleCategory.length() > 0) " | " + pageTitleCategory else "" } + " | Компания \"Меридор\""}
+        meta{:property => "og:title", :content => finalTitle}
+        - val ogType = if (isRootUrl(absoluteUrl)) "website" else "article.section"
+        meta{:property => "og:type", :content => ogType}
+        meta{:property => "og:description", :content => description}
+        meta{:property => "og:url", :content => absoluteUrl}
+        -val logoAbsoluteUrl = absoluteUrlFromRelative("/img/logo.png").toString
+        meta{:property => "og:image", :content => logoAbsoluteUrl}
+        meta{:name => "google-site-verification", :content => "v-BvO6GqQME1eOR3XSxqwYDg5_f1CSO-m_t_gxG7Rjk"}
+        title= finalTitle
+
+        -# Stylesheets
+        link{:href => '/style25.css', :rel => 'stylesheet'}
+
+        -# HTML5 shim, for IE6-8 support of HTML5 elements
+        /[if lt IE 9]
+            script(src='http://html5shiv.googlecode.com/svn/trunk/html5.js')
+
+        -# Favicon
+        link{:rel => 'apple-touch-icon-precomposed', :sizes => '144x144', :href => '/ico/apple-touch-icon-144-precomposed.png'}
+        link{:rel => 'apple-touch-icon-precomposed', :sizes => '114x114', :href => '/ico/apple-touch-icon-114-precomposed.png'}
+        link{:rel => 'apple-touch-icon-precomposed', :sizes => '72x72', :href => '/ico/apple-touch-icon-72-precomposed.png'}
+        link{:rel => 'apple-touch-icon-precomposed', :href => '/ico/apple-touch-icon-57-precomposed.png'}
+        link{:rel => 'shortcut icon', :href => '/ico/favicon.ico'}
+    body
+        -# Schema.org metadata
+        .hidden
+            span(itemprop="name")=title
+            span(itemprop="description")=description
+
+        -# Site header and navigation menu
+        .masthead
+            .container
+                .row-fluid
+                    .span3
+                        a.logo(href='/')
+                    .span6
+                        ul.nav.nav-pills.main-nav
+                            li{:class => {if (pageCategory.equals(Home)) "active" else ""}}
+                                a(href='/') Главная
+                            li{:class => {if (pageCategory.equals(Services)) "deeper active" else "deeper"}}
+                                a Услуги
+                                ul
+                                    li
+                                        a(href='/services/electrical-works') Электромонтажные работы
+                                    li
+                                        a(href='/services/call-electrician') Вызов электрика
+                                    li
+                                        a(href='/services/room-repair') Ремонт квартир и офисов
+                                    li
+                                        a(href='/services/technical-maintenance') Техническое обслуживание
+                                    li{:class => 'deeper'}
+                                        a(href='/services/lighting') Освещение
+                                        ul
+                                            li
+                                                a(href='/services/lighting/lighting-system') Управление освещением
+                                    li{:class => 'deeper'}
+                                        a(href='/services/electrical-appliances') Установка электроприборов
+                                        ul
+                                            li
+                                                a(href='/services/electrical-appliances/electric-range') Электроплита
+                                            li
+                                                a(href='/services/electrical-appliances/washing-machine') Стиральная машина
+                                            li
+                                                a(href='/services/electrical-appliances/dishwashing-machine') Посудомоечная машина
+                                            li
+                                                a(href='/services/electrical-appliances/oven') Духовой шкаф
+                                            li
+                                                a(href='/services/electrical-appliances/hob') Варочная панель
+                                            li
+                                                a(href='/services/electrical-appliances/microwave-oven') Микроволновая печь
+                                    li
+                                        a(href='/services/telecommunication-technologies') Телекоммуникации
+                            li{:class => {if (pageCategory.equals(Bundles)) "active" else ""}}
+                                a(href='/bundles') Пакеты услуг
+                            li{:class => {if (pageCategory.equals(Prices)) "active" else ""}}
+                                a(href='/prices') Цены
+                            li{:class => {if (pageCategory.equals(Contact)) "active" else ""}}
+                                a(href='/contact') Контакты
+                            li{:class => {if (pageCategory.equals(Articles)) "deeper active" else "deeper"}}
+                                a Прочти
+                                ul
+                                    li
+                                        a(href='/articles/electrical-tools') Инструмент электрика
+                                    li
+                                        a(href='/articles/no-dust') Работа без пыли
+                                    li{:class => 'deeper'}
+                                        a Провода и кабели
+                                        ul
+                                            li
+                                                a(href='/articles/wires-and-cables/classification') Классификация
+                                            li
+                                                a(href='/articles/wires-and-cables/marking') Маркировка
+                                            li
+                                                a(href='/articles/wires-and-cables/connection') Соединение
+                                    li{:class => 'deeper'}
+                                        a Заземление
+                                        ul
+                                            li
+                                                a(href='/articles/ground-connection/classification') Виды заземления
+                                    li{:class => 'deeper'}
+                                        a Светодизайн
+                                        ul
+                                            li
+                                                a(href='/articles/lighting/classification') Виды освещения
+                    .span3
+                        .tell.pull-right
+                            span (812) 929 89 96
+
+        != body
+
+        -# Site footer
+        .footer(itemscope itemtype='http://schema.org/LocalBusiness')
+            .container
+                a.logo.pull-left(href='/')
+                .pull-right.faddress
+                    address
+                        | ©
+                        = String.valueOf(new DateTime().getYear())
+                        | &nbsp;
+                        a(href='/')<
+                            |ООО "
+                            span(itemprop='name') Меридор
+                            |"
+                        br
+                        span(itemprop='address' itemscope itemtype='http://schema.org/PostalAddress')<
+                            span(itemprop="postalCode") 195067
+                            |, Россия,&nbsp;
+                            span(itemprop="addressLocality") Санкт-Петербург
+                            br
+                            span(itemprop="streetAddress") ул. Бестужевская, д. 75, лит. А
+                            span(itemprop="addressCountry" class="hidden") RU
+                        br
+                        span(itemprop="telephone") +7 812 929-89-96
+                        br
+                        a{:href => 'mailto:info@meridor.ru', :title => 'Нажмите, чтобы отправить нам электронное письмо'}
+                            span(itemprop="email") info@meridor.ru
+                        br
+                        | Дизайн и верстка -&nbsp;
+                        a(href='http://an-kor.net') an-kor.net
+                        br
+                        | Изображения -&nbsp;
+                        a(href='http://lori.ru') фотобанк Лори
+                ul.nav
+                    li{:class => {if (pageCategory.equals(Home)) "active" else ""}}
+                        a(href='/') Главная
+                    li{:class => {if (pageCategory.equals(Prices)) "active" else ""}}
+                        a(href='/prices') Цены
+                    li{:class => {if (pageCategory.equals(Contact)) "active" else ""}}
+                        a(href='/contact') Контакты
+                    li{:class => {if (pageCategory.equals(News)) "active" else ""}}
+                        a(href='/news') Новости
+                    li{:class => {if (pageCategory.equals(Help)) "active" else ""}}
+                        a(href='/help') Помощь
+                - if (includeAnalyticsScripts)
+                    .nav
+                        -# Rambler Top100 counter
+                        script(id="top100Counter" type="text/javascript" src="http://counter.rambler.ru/top100.jcn?2955970")
+                        noscript
+                            a(href="http://top100.rambler.ru/navi/2955970/")<
+                                img(src="http://counter.rambler.ru/top100.cnt?2955970" alt="Rambler's Top100" border="0")
+                        |&nbsp;
+                        -# Liveinternet.ru counter
+                        script(type="text/javascript")
+                            |<!--
+                            |document.write("<a href='http://www.liveinternet.ru/click' "+
+                            |"target=_blank><img src='//counter.yadro.ru/hit?t44.1;r"+
+                            |escape(document.referrer)+((typeof(screen)=="undefined")?"":
+                            |";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+                            |screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+                            |";"+Math.random()+
+                            |"' alt='' title='LiveInternet' "+
+                            |"border='0' width='31' height='31'><\/a>")
+                            |//-->
+        - if (includeAnalyticsScripts)
+            -# Yandex.Metrika counter
+            script(type="text/javascript") (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter22343563 = new Ya.Metrika({id:22343563, webvisor:true, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");
+            noscript
+                div
+                    img(src="//mc.yandex.ru/watch/22343563" style="position:absolute; left:-9999px;" alt="")
+            -# Google Analytics counter
+            script(type="text/javascript") (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-44153703-1', 'meridor.ru'); ga('send', 'pageview');
+            -# Mail.ru Rating counter
+            script(type='text/javascript') //<![CDATA[ var _tmr = _tmr || []; _tmr.push({id: "2415566", type: "pageView", start: (new Date()).getTime()}); (function (d, w) {var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//top-fwz1.mail.ru/js/code.js"; var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);}; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }})(document, window);//]]>
+            noscript
+                div(style='position: absolute; left: -10000px;')
+                    img(src='//top-fwz1.mail.ru/counter?id=2415566;js=na' style='border: 0;' height='1' width='1' alt='Рейтинг@Mail.ru')
+        -# Compressed Javascript
+        script(src='/script30.js')

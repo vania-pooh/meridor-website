@@ -1,0 +1,27 @@
+#!/bin/bash
+# A script to manage migrations
+
+description=""
+issue=""
+usage="Usage: migration -i <issue_number> -d <underscored_issue_description>"
+
+while [ "$1" != "" ]; do
+    case $1 in
+        -i | --issue )          shift
+                                issue=$1
+                                ;;
+        -d | --description )    shift
+                                description=$1
+                                ;;
+    esac
+    shift
+done
+
+if [[ -n "$issue" ]] && [[ -n "$description" ]];  then
+    timestamp=`date +%s%N | cut -b1-13`
+    filename="../modules/backend/src/main/resources/db/migration/sql/V"$timestamp"_"$issue"__"$description".sql"
+    touch $filename
+    echo "Created empty migration file $filename"
+else
+    echo $usage
+fi
